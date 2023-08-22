@@ -3,10 +3,12 @@
 namespace App\Models;
 
 
+use App\Auth\Data\TokenData;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Firebase\JWT\JWT;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property integer $id
@@ -96,6 +98,30 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'user_order');
+    }
+
+    public function jwt(): TokenData
+    {
+        $expiredAt    = now()->addSeconds(config('jwt-auth.ttl'));
+        $issuedAtTime = now();
+
+        $payload = array_merge($this->getJWTClaims(), [
+            'iat' => $issuedAtTime->timestamp,
+            'exp' => $expiredAt->timestamp,
+        ]);
+
+        return new TokenData(
+            JWT::encode($payload, config('jwt-auth.secret'), config('jwt-auth.algo')),
+            'bearer',
+            $expiredAt
+        );
+    }
+
+    public function getJWTClaims(): array
+    {
+        return [
+            "id" => $this->id,
+        ];
     }
 
     public function receivesBroadcastNotificationsOn()
