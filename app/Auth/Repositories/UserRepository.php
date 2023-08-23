@@ -2,13 +2,16 @@
 
 namespace App\Auth\Repositories;
 
+use App\Auth\Data\LoginData;
 use App\Auth\Data\RegisterData;
 use App\Auth\Data\TokenData;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserRepository
@@ -33,27 +36,15 @@ class UserRepository
         return $user;
     }
 
-    /**
-     * @param User|Authenticatable $user
-     *
-     * @return TokenData
-     */
-    public function createJwt(User|Authenticatable $user): TokenData
+    public function createJwtForLogin(LoginData $data): TokenData
     {
-        return $user->jwt();
-    }
+        $passHash = User::query()->where('email', $data->email);
 
-    /**
-     * @param User $user
-     *
-     * @return void
-     */
-    public function setPrimaryEmail(User $user): void
-    {
-        DB::update(
-            "UPDATE users SET email = (select JSON_UNQUOTE(JSON_EXTRACT(social_accounts.data, '$.email')) from social_accounts where users.id = social_accounts.user_id and social_accounts.primary = ?) where id = ?",
-            [1, $user->id]
-        );
+        if (Hash::check($data->password, $passHash->value('password'))) {
+            $user = $passHash->get()->first();
+            return $user->jwt();
+        }
+        return throw new Exception('Не правильный логин или пароль!');
     }
 
     /**

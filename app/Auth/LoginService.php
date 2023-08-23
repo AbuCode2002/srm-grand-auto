@@ -34,7 +34,7 @@ class LoginService
             $this->throwLoginOrPasswordException();
         }
 
-        return $this->userRepository->createJwt(Auth::user());
+        return $this->userRepository->createJwtForLogin($data);
     }
 
     /**

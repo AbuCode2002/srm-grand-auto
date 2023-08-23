@@ -8,7 +8,7 @@ class LoginRequest extends BaseRequest
 {
     public function rules(): array
     {
-        return [
+            return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
