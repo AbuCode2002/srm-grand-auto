@@ -16,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/{any}', [AppController::class, 'index'])->where('any', '.*');
-Route::get('login' , [AuthController::class, 'loginView'])->name('login');
+Route::get('login' , [AuthController::class, 'login'])->name('login');
 

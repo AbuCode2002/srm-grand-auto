@@ -22,7 +22,7 @@ class ApplicationController extends BaseController
     /**
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $applications = $this->applicationRepository->getAll();
 

@@ -27,13 +27,15 @@
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <input type="text" v-model="email" class="form-control" placeholder="Email" />
+                                        <input type="text" v-model="email" class="form-control" placeholder="Email"/>
                                     </div>
 
                                     <div id="password-field" class="field-wrapper input mb-2">
                                         <div class="d-flex justify-content-between">
                                             <label for="password">PASSWORD</label>
-                                            <router-link to="/auth/pass-recovery-boxed" class="forgot-pass-link">Forgot Password?</router-link>
+                                            <router-link to="/auth/pass-recovery-boxed" class="forgot-pass-link">Forgot
+                                                Password?
+                                            </router-link>
                                         </div>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +52,8 @@
                                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                         </svg>
-                                        <input :type="pwd_type" v-model="password" class="form-control" placeholder="Password" />
+                                        <input :type="pwd_type" v-model="password" class="form-control"
+                                               placeholder="Password"/>
                                         <svg
                                             @click="set_pwd_type"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +74,9 @@
                                     </div>
                                     <div class="d-sm-flex justify-content-between">
                                         <div class="field-wrapper">
-                                            <button type="submit" @click.prevent="getLogin" class="btn btn-primary">Log In</button>
+                                            <button type="submit" @click.prevent="login" class="btn btn-primary">Log
+                                                In
+                                            </button>
                                         </div>
                                     </div>
 
@@ -86,38 +91,41 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
-    import "../../assets/sass/authentication/auth-boxed.scss";
-
-    import { useMeta } from "../../composables/use-meta";
+import {ref} from "vue";
+import "../../assets/sass/authentication/auth-boxed.scss";
+import {useMeta} from "../../composables/use-meta";
 import axios from "axios";
-    useMeta({ title: "Login Boxed" });
+import router from "../../router";
 
-    const pwd_type = ref("password");
+useMeta({title: "Login Boxed"});
 
-    const set_pwd_type = () => {
-        if (pwd_type.value === "password") {
-            pwd_type.value = "text";
-        } else {
-            pwd_type.value = "password";
-        }
-    };
+const pwd_type = ref("password");
+
+const set_pwd_type = () => {
+    if (pwd_type.value === "password") {
+        pwd_type.value = "text";
+    } else {
+        pwd_type.value = "password";
+    }
+};
 
 const email = ref(null);
 
 const password = ref(null);
 
-const getLogin = async () => {
+const login = async () => {
     try {
-        const response = await axios.post('/api/auth/login',{
-                email: email.value,
-                password: password.value
+        const res = await axios.post('/api/auth/login', {
+            email: email.value,
+            password: password.value
         });
+        if (res.data.access_token) {
+            localStorage.setItem('access_token', res.data.access_token);
+                router.push({name: 'account-setting'})
+        }
     } catch (error) {
         console.error('Ошибка при введений данных:', error);
     }
 };
-
-onMounted(getLogin);
 
 </script>

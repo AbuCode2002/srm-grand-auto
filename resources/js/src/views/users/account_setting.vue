@@ -111,10 +111,12 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-    import "../../assets/sass/scrollspyNav.scss";
-    import "../../assets/sass/users/account-setting.scss";
+import "../../assets/sass/scrollspyNav.scss";
+import "../../assets/sass/users/account-setting.scss";
 
-    import { useMeta } from "../../composables/use-meta";
+import { useMeta } from "../../composables/use-meta";
+import api from "../../api";
+
     useMeta({ title: "Account Setting" });
 
     const selected = ref(null);
@@ -153,13 +155,11 @@ import {onMounted, ref} from "vue";
         });
     };
 
-    import axios from 'axios';
-
     const applications = ref(null);
 
     const getApplications = async () => {
         try {
-            const response = await axios.get('/api/client/application');
+            const response = await api.get('/api/auth/client/application');
             applications.value = response.data.applications;
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
@@ -172,7 +172,7 @@ const contracts = ref(null);
 
 const getContracts = async () => {
     try {
-        const response = await axios.get('/api/client/contract');
+        const response = await api.get('/api/client/contract');
         contracts.value = response.data.Contracts;
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
@@ -183,7 +183,7 @@ const regions = ref(null);
 
 const getRegions = async () => {
     try {
-        const response = await axios.get('/api/client/region');
+        const response = await api.get('/api/client/region');
         contracts.value = response.data;
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
