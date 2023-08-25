@@ -31,10 +31,8 @@ class TokenDataTransformer extends BaseTransformer
      */
     public function transform(TokenData $data): array
     {
-
         return [
-            'token'      => $data->token,
-            'token_type' => $data->token_type,
+            'access_token'      => $data->token,
             'expired_at' => $data->expired_at->format('Y-m-d H:i:s')
         ];
     }

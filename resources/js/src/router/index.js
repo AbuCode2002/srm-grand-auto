@@ -625,7 +625,7 @@ router.beforeEach((to, from, next) => {
 
     const accessToken = localStorage.getItem('access_token')
 
-    if (to.name !== 'login-boxed' && !accessToken) {
+    if (to.name !== 'login-boxed' && to.name !== 'register-boxed' && !accessToken) {
         return next({
             name: 'login-boxed'
         });

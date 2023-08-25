@@ -30,11 +30,10 @@ class RegisterService
 
     /**
      * @param RegisterData $data
-     *
-     * @return TokenData
+     * @return mixed
      * @throws Throwable
      */
-    public function register(RegisterData $data): TokenData
+    public function register(RegisterData $data)
     {
         $tokenData = null;
 
@@ -43,7 +42,8 @@ class RegisterService
 
             $user      = $this->userRepository->create($data);
 
-            $tokenData = $user->jwt();
+            $tokenData = auth()->tokenById($user->id);
+//            $tokenData = $user->jwt();
 
             DB::commit();
         } catch (Throwable $exception) {

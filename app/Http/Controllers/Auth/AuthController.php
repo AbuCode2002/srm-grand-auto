@@ -50,19 +50,20 @@ class AuthController extends BaseController
 
     /**
      * @param RegisterRequest $request
-     * @return JsonResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
      * @throws \Throwable
      */
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $data = RegisterData::from($request->validated());
 
         $tokenData = $this->registerService->register($data);
 
-        return $this->respondWithSuccess(
-            $this->transformItem($tokenData, new TokenDataTransformer()),
-            "success"
-        );
+        return response(['access_token' => $tokenData]);
+//        return $this->respondWithSuccess(
+//            $this->transformItem($tokenData, new TokenDataTransformer()),
+//            "success"
+//        );
     }
 
 
