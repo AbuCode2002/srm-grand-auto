@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Client\Contract;
 
 use App\Http\Controllers\BaseController;
 use App\Repositories\Client\Contract\ContractRepository;
-use App\Transformers\Api\Client\Application\ApplicationIndexTransformer;
 use App\Transformers\Api\Client\Contract\ContractIndexTransformer;
+use Illuminate\Http\JsonResponse;
 
 class ContractController extends BaseController
 {
+    /**
+     * @param ContractRepository $contractRepository
+     */
     public function __construct(
         private ContractRepository $contractRepository = new ContractRepository(),
     )
@@ -16,9 +19,12 @@ class ContractController extends BaseController
         //
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
-        $contracts = $this->contractRepository->getAll();
+        $contracts = $this->contractRepository->contractByUser();
 
             return $this->respondWithSuccess(
                 $this->transformCollection($contracts, new ContractIndexTransformer()),

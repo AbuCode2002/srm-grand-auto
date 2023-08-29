@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Client\Application\ApplicationController;
 use App\Http\Controllers\Client\Contract\ContractController;
 use App\Http\Controllers\Client\Order\OrderController;
+use App\Http\Controllers\Client\Region\RegionController;
 use App\Http\Controllers\Client\Role\RoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::group(['prefix' => 'role'], static function () {
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
+
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -42,6 +44,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 
             Route::get('/application', [ApplicationController::class, 'index']);
             Route::get('/contract', [ContractController::class, 'index']);
+            Route::get('/region', [RegionController::class, 'index']);
         });
     });
 

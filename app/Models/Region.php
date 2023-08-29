@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Region
@@ -24,5 +25,14 @@ class Region extends Model
     public function children()
     {
         return $this->hasMany(Region::class, 'parent_id');
+    }
+
+
+    /**
+     * @return HasMany
+     */
+    public function user(): HasMany
+    {
+        return $this->hasMany(UserToRegion::class);
     }
 }

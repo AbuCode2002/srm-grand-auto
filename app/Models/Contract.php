@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Contract
@@ -40,7 +41,7 @@ class Contract extends Model
         return $this->belongsTo(User::class, 'manager_id');
     }
 
-    public function company()
+    public function company() :BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
@@ -53,5 +54,10 @@ class Contract extends Model
     public function disable()
     {
         return $this->update(['enabled' => 0]);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'company_id');
     }
 }

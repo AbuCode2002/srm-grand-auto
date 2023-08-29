@@ -433,7 +433,7 @@
                                 </router-link>
                             </li>
                             <li role="presentation">
-                                <router-link to="/auth/login" class="dropdown-item">
+                                <router-link to="#" @click.prevent="logout" class="dropdown-item">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -1131,6 +1131,9 @@
     import { onMounted, ref, reactive } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useStore } from 'vuex';
+    import api from "../../api";
+    import router from "../../router";
+    import Buttons from "../../views/elements/buttons.vue";
     const store = useStore();
 
     const selectedLang = ref(null);
@@ -1151,5 +1154,15 @@
         selectedLang.value = item;
         i18n.locale = item.code;
         window.$appSetting.toggleLanguage(item);
+    };
+
+    const logout = async () => {
+        try {
+            const response = await api.post('/api/auth/logout');
+            localStorage.removeItem('access_token');
+            router.push({name: 'account-setting'})
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+        }
     };
 </script>

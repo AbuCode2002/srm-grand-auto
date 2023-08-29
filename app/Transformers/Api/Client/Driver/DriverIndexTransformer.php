@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Transformers\Api\Client\Contract;
+namespace App\Transformers\Api\Client\Driver;
 
 use App\Models\Contract;
+use App\Models\Region;
 use App\Transformers\BaseTransformer;
 
-class ContractIndexTransformer extends BaseTransformer
+class DriverIndexTransformer extends BaseTransformer
 {
 
 //    protected array $defaultIncludes = [];
@@ -15,7 +16,7 @@ class ContractIndexTransformer extends BaseTransformer
      */
     public function getItemKey(): string
     {
-        return 'contract';
+        return 'driver';
     }
 
     /**
@@ -23,18 +24,17 @@ class ContractIndexTransformer extends BaseTransformer
      */
     public function getCollectionKey(): string
     {
-        return 'contracts';
+        return 'drivers';
     }
 
-
     /**
-     * @param Contract $contract
+     * @param Region $region
      * @return array
      */
-    public function transform(Contract $contract): array
+    public function transform(Region $region): array
     {
         return [
-            "number_of_contract" => $contract->number_of_contract,
+            "region_name" => $region->region_name,
         ];
     }
 }

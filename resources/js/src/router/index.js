@@ -616,12 +616,6 @@ const router = new createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    // if (to.meta && to.meta.layout && to.meta.layout === 'auth') {
-    //     store.commit('setLayout', 'auth');
-    // } else {
-    //     store.commit('setLayout', 'app');
-    // }
-    // next(true);
 
     const accessToken = localStorage.getItem('access_token')
 

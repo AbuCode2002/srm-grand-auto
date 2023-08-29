@@ -17,11 +17,6 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends BaseController
 {
-//    /**
-//     * @var LoginService
-//     */
-//    private LoginService $loginService;
-
     /**
      * @var RegisterService
      */
@@ -48,12 +43,7 @@ class AuthController extends BaseController
         return $this->respondWithToken($token);
     }
 
-    /**
-     * @param RegisterRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
-     * @throws \Throwable
-     */
-    public function register(RegisterRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
+    public function register(RegisterRequest $request)
     {
         $data = RegisterData::from($request->validated());
 

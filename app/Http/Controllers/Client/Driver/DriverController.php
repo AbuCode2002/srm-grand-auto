@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Client\Region;
+namespace App\Http\Controllers\Client\Driver;
 
 use App\Http\Controllers\BaseController;
 use App\Repositories\Client\Contract\ContractRepository;
+use App\Repositories\Client\Driver\DriverRepository;
 use App\Repositories\Client\Region\RegionRepository;
 use App\Transformers\Api\Client\Application\ApplicationIndexTransformer;
 use App\Transformers\Api\Client\Contract\ContractIndexTransformer;
+use App\Transformers\Api\Client\Driver\DriverIndexTransformer;
 use App\Transformers\Api\Client\Region\RegionIndexTransformer;
 
-class RegionController extends BaseController
+class DriverController extends BaseController
 {
     public function __construct(
-        private RegionRepository $regionRepository = new RegionRepository(),
+        private DriverRepository $driverRepository = new DriverRepository(),
     )
     {
         //
@@ -20,10 +22,10 @@ class RegionController extends BaseController
 
     public function index()
     {
-        $contracts = $this->regionRepository->regionByUser();
+        $contracts = $this->driverRepository->getAll();
 
             return $this->respondWithSuccess(
-                $this->transformCollection($contracts, new RegionIndexTransformer()),
+                $this->transformCollection($contracts, new DriverIndexTransformer()),
                 "created",
             );
     }

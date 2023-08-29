@@ -5,6 +5,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
+
 
 /**
  * App\Driver
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Driver extends Model
 {
-    use  SoftDeletes;
+    use  SoftDeletes, Searchable;
 
     static protected $columns = [
         'phone' => ['ork'],
