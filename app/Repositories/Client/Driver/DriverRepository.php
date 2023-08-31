@@ -21,6 +21,6 @@ class DriverRepository extends BaseRepository
 
     public function showName(): Collection
     {
-        return $this->model::query()->select( 'name')->get();
+        return $this->model::query()->select( 'id', 'name')->get();
     }
 }

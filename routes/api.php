@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Client\Application\ApplicationController;
 use App\Http\Controllers\Client\Car\CarController;
+use App\Http\Controllers\Client\Client\ClientController;
 use App\Http\Controllers\Client\Contract\ContractController;
 use App\Http\Controllers\Client\Driver\DriverController;
 use App\Http\Controllers\Client\Order\OrderController;
@@ -51,6 +52,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/driver', [DriverController::class, 'index']);
             Route::get('/car', [CarController::class, 'show']);
             Route::get('/user', [UserController::class, 'show']);
+            Route::get('/client', [ClientController::class, 'index']);
         });
     });
 

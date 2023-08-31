@@ -35,6 +35,7 @@ class DriverIndexTransformer extends BaseTransformer
     public function transform(Driver $driver): array
     {
         return [
+            "id" => $driver->id,
             "name" => $driver->name,
         ];
     }

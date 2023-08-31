@@ -119,6 +119,7 @@ import VueMultiselect from 'vue-multiselect'
 useMeta({title: "Account Setting"});
 
 
+
 const selectedApplication = ref(null);
 const selectedContracts = ref(null);
 const selectedRegion = ref(null);
@@ -213,12 +214,12 @@ const getCars = async () => {
     }
 };
 
-const users = ref( 'Гос. номер');
+const clients = ref( 'id');
 
 const getUsers = async () => {
     try {
-        const response = await api.get('/api/auth/client/user');
-        users.value = response.data.users;
+        const response = await api.get('/api/auth/client/client');
+        clients.value = response.data.clients;
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -236,32 +237,28 @@ const typeDriver = [
     { name: 'Механик'},
 ];
 
-const order = ref({
-    car_id:              carModel.value.id,
-    client_id:           users.value[0].id,
-    region_id:           selectedRegion.value.id,
-    is_evacuated:        0,
-    // contract_id:         selectedContracts.value.id,
-    problem_description: description,
-    is_broken:           0,
-    service_type:        selectedApplication,
-    // driver_id:           driverModel.value.name,
-    // driver_type:         selectedTypeDriver.value.name,
-    mileage:             mileage.value,
-});
 
 const postOrder = async () => {
+    const order = {
+        "car_id": carModel.value ? carModel.value.id : null,
+        "client_id": clients.value[0].id,
+        "region_id": selectedRegion.value ? selectedRegion.value.id : null,
+        "is_evacuated": 0,
+        "contract_id": selectedContracts.value ? selectedContracts.value.id : null,
+        "problem_description": description.value,
+        "is_broken": 0,
+        "service_type": selectedApplication.value ? selectedApplication.value.type : null,
+        "driver_id": driverModel.value ? driverModel.value.id : null,
+        "driver_type": selectedTypeDriver.value ? selectedTypeDriver.value.name : null,
+        "mileage": mileage.value,
+    };
     try {
         const response = await api.post('/api/auth/client/order', order);
         regions.value = response.data.regions;
     } catch (error) {
-        console.log(selectedContracts.value.id);
-
         console.error('Ошибка при получении данных:', error);
     }
 };
-
-onMounted(postOrder);
 
 </script>
 
