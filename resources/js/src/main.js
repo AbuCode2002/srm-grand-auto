@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+
+
 const app = createApp(App);
 
 // bootstrap
@@ -18,6 +20,7 @@ import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
 //vue-meta
 import { createHead } from "@vueuse/head";
 const head = createHead();
+
 
 //Sweetalert
 import Swal from "sweetalert2";
@@ -56,4 +59,17 @@ window.$appSetting.init();
 import VueEasymde from 'vue3-easymde';
 import "easymde/dist/easymde.min.css";
 
-app.use(store).use(router).use(i18n).use(PerfectScrollbar).use(VueNouislider).use(Maska).use(ClientTable).use(vue3JsonExcel).use(VueFormWizard).use(head).use(VueEasymde).mount("#app");
+    app.use(store)
+    app.use(router)
+    app.use(i18n)
+    app.use(PerfectScrollbar)
+    app.use(VueNouislider)
+    app.use(Maska)
+    app.use(ClientTable)
+    app.use(vue3JsonExcel)
+    app.use(VueFormWizard)
+    app.use(head)
+    app.use(VueEasymde)
+    app.mount("#app");
+
+

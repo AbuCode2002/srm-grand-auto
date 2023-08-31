@@ -34,6 +34,7 @@ class ContractIndexTransformer extends BaseTransformer
     public function transform(Contract $contract): array
     {
         return [
+            "id" => $contract->id,
             "number_of_contract" => $contract->number_of_contract,
         ];
     }

@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Client\Driver;
 
 use App\Http\Controllers\BaseController;
-use App\Repositories\Client\Contract\ContractRepository;
+use App\Models\Driver;
 use App\Repositories\Client\Driver\DriverRepository;
-use App\Repositories\Client\Region\RegionRepository;
-use App\Transformers\Api\Client\Application\ApplicationIndexTransformer;
-use App\Transformers\Api\Client\Contract\ContractIndexTransformer;
 use App\Transformers\Api\Client\Driver\DriverIndexTransformer;
-use App\Transformers\Api\Client\Region\RegionIndexTransformer;
+use Illuminate\Http\Client\Request;
 
 class DriverController extends BaseController
 {
@@ -22,7 +19,7 @@ class DriverController extends BaseController
 
     public function index()
     {
-        $contracts = $this->driverRepository->getAll();
+        $contracts = $this->driverRepository->showName();
 
             return $this->respondWithSuccess(
                 $this->transformCollection($contracts, new DriverIndexTransformer()),

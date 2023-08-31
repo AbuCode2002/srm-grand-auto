@@ -19,8 +19,8 @@ class DriverRepository extends BaseRepository
         $this->model = Driver::class;
     }
 
-    public function driverByUser()
+    public function showName(): Collection
     {
-        //
+        return $this->model::query()->select( 'name')->get();
     }
 }

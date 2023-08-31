@@ -59,4 +59,11 @@ class Driver extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name
+        ];
+    }
 }

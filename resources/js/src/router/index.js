@@ -419,11 +419,6 @@ const routes = [
         name: 'markdown-editor',
         component: () => import(/* webpackChunkName: "forms-markdown-editor" */ '../views/forms/markdown_editor.vue'),
     },
-    {
-        path: '/forms/select2',
-        name: 'select2',
-        component: () => import(/* webpackChunkName: "forms-select2" */ '../views/forms/select2.vue'),
-    },
 
     //apps
     {

@@ -34,6 +34,7 @@ class RegionIndexTransformer extends BaseTransformer
     public function transform(Region $region): array
     {
         return [
+            "id" => $region->id,
             "region_name" => $region->region_name,
         ];
     }
