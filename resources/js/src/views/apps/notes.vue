@@ -304,7 +304,7 @@
             { id: 7, title: "Team meet at Starbucks", description: "Etiam a odio eget enim aliquet laoreet lobortis sed ornare nibh.", date: "11/10/2020", is_fav: false, tag: "" },
             {
                 id: 8,
-                title: "Create new users Profile",
+                title: "Create new order Profile",
                 description: "Duis aute irure in nulla pariatur. Etiam a odio eget enim aliquet.",
                 date: "11/11/2020",
                 is_fav: false,

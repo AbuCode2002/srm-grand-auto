@@ -697,7 +697,7 @@
                             <router-link to="/users/profile" @click="toggleMobileMenu">Profile</router-link>
                         </li>
                         <li>
-                            <router-link to="/users/account-setting" @click="toggleMobileMenu">Account Settings</router-link>
+                            <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
                         </li>
                     </ul>
                 </li>

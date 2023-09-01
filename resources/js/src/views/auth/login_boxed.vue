@@ -121,7 +121,7 @@ const login = async () => {
         });
         if (res.data.access_token) {
             localStorage.setItem('access_token', res.data.access_token);
-            router.push({name: 'account-setting'})
+            router.push({name: 'Home'})
         }
     } catch (error) {
         console.error('Ошибка при введений данных:', error);

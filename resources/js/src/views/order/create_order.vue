@@ -26,9 +26,6 @@
                                 <div class="info">
                                     <h5 class="">Work Experience</h5>
                                     <div class="row">
-                                        <div class="col-md-12 text-end mb-5">
-                                            <button type="button" id="add-work-exp" class="btn btn-primary">Add</button>
-                                        </div>
                                         <div class="col-md-11 mx-auto">
                                             <div class="work-section">
                                                 <div class="row">
@@ -115,6 +112,7 @@ import "../../assets/sass/users/account-setting.scss";
 import {useMeta} from "../../composables/use-meta";
 import api from "../../api";
 import VueMultiselect from 'vue-multiselect'
+import router from "../../router";
 
 useMeta({title: "Account Setting"});
 
@@ -255,11 +253,23 @@ const postOrder = async () => {
     try {
         const response = await api.post('/api/auth/client/order', order);
         regions.value = response.data.regions;
+
+        console.log(router.push({name: 'Home'}));
+
+        new window.Swal({
+            title: "Saved succesfully",
+            padding: "2em",
+        });
     } catch (error) {
+        new window.Swal({
+            icon: "warning",
+            title: "Ошибка",
+            text: "Что то пошло не так!",
+            padding: "2em"
+        });
         console.error('Ошибка при получении данных:', error);
     }
 };
-
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

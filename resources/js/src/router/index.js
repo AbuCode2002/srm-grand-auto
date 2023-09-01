@@ -315,16 +315,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "tables" */ '../views/tables.vue'),
     },
 
-    //users
+    //order
     {
-        path: '/users/profile',
+        path: '/order/profile',
         name: 'profile',
-        component: () => import(/* webpackChunkName: "users-profile" */ '../views/users/profile.vue'),
+        component: () => import(/* webpackChunkName: "order-profile" */ '../views/order/profile.vue'),
     },
     {
-        path: '/users/account-setting',
-        name: 'account-setting',
-        component: () => import(/* webpackChunkName: "users-account-setting" */ '../views/users/account_setting.vue'),
+        path: '/order/create-order',
+        name: 'order-create',
+        component: () => import(/* webpackChunkName: "order-account-setting" */ '../views/order/create_order.vue'),
     },
 
     //drag&drop
