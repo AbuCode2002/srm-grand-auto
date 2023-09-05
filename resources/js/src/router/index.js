@@ -326,6 +326,11 @@ const routes = [
         name: 'order-create',
         component: () => import(/* webpackChunkName: "order-account-setting" */ '../views/order/create_order.vue'),
     },
+    {
+        path: '/order/index',
+        name: 'order-index',
+        component: () => import(/* webpackChunkName: "order-order" */ '../views/order/order.vue'),
+    },
 
     //drag&drop
     {

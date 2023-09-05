@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\Order
  *
  * @property integer car_id,
- * @property integer client_id,
  * @property integer region_id,
  * @property $is_evacuated,
  * @property $location,
@@ -35,7 +34,7 @@ class Order extends Model
 
     static protected $columns = [
         'id'                        => ['*'],
-        'problem_description'       => ['ork', 'client', 'guest', 'orpu', 'orpa', 'station'],
+        'problem_description'       => ['ork', 'client_id', 'guest', 'orpu', 'orpa', 'station'],
         'client_name'               => ['ork', 'orpu', 'orpa', 'op', 'accountant'],
         'number'                    => ['*'],
         'car_model'                 => ['*'],
@@ -75,7 +74,6 @@ class Order extends Model
     protected $fillable = [
         'id',
         'car_id',
-        'client_id',
         'is_evacuated',
         'region_id',
         'driver_id',

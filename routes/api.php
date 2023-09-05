@@ -40,6 +40,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::group(['prefix' => 'client'], static function () {
             Route::group(['prefix' => 'order'], static function () {
                 Route::post('/', [OrderController::class, 'store']);
+                Route::get('/', [OrderController::class, 'index']);
+                Route::get('/show', [OrderController::class, 'show']);
             });
 
             Route::group(['prefix' => 'role'], static function () {

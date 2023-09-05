@@ -4,7 +4,9 @@ namespace App\Repositories\Client\Order;
 
 use App\Http\Controllers\Client\Order\Data\OrderData;
 use App\Models\Order;
+use App\Models\UserToRegion;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 
 class OrderRepository extends BaseRepository
 {
@@ -16,11 +18,15 @@ class OrderRepository extends BaseRepository
         $this->model = Order::class;
     }
 
+    public function index() {
+        return $this->model::query()->paginate($this->perPage);
+    }
+
     /**
      * @param OrderData $data
      * @return Order
      */
-    public function storeOrder(
+    public function store(
         OrderData $data
     ): Order
     {
@@ -39,6 +45,17 @@ class OrderRepository extends BaseRepository
         $order->mileage = $data->mileage;
 
         $order->save();
+
+        return $order;
+    }
+
+    public function show()
+    {
+        $userId = Auth::user()->id;
+
+        $regionId = UserToRegion::query()->where('user_id', $userId)->pluck('region_id')->toArray();
+
+        $order = $this->model::query()->whereIn('region_id', $regionId);
 
         return $order;
     }

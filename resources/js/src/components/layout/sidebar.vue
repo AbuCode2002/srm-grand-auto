@@ -672,7 +672,7 @@
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
-                            <span>{{ $t('users') }}</span>
+                            <span>{{ $t('Заявки') }}</span>
                         </div>
                         <div>
                             <svg
@@ -694,10 +694,13 @@
 
                     <ul id="users" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
                         <li>
-                            <router-link to="/users/profile" @click="toggleMobileMenu">Profile</router-link>
+                            <router-link to="/order/profile" @click="toggleMobileMenu">Profile</router-link>
                         </li>
                         <li>
                             <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>
                         </li>
                     </ul>
                 </li>

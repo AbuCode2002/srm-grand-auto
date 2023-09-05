@@ -20,6 +20,12 @@ class OrderController extends BaseController
         //
     }
 
+    public function index() {
+        $orders = $this->orderRepository->index();
+
+        return $orders;
+    }
+
     /**
      * @param OrderStoreRequest $request
      * @return mixed
@@ -28,11 +34,21 @@ class OrderController extends BaseController
     {
         $data = OrderData::from($request->validated());
 
-        $order = $this->orderRepository->storeOrder($data);
+        $orders = $this->orderRepository->store($data);
+
+            return $this->respondWithSuccess(
+                $this->transformCollection($orders, new OrderIndexTransformer),
+                'created',
+            );
+    }
+
+    public function show()
+    {
+        $order = $this->orderRepository->show();
 
         return $this->respondWithSuccess(
-            $this->transformItem($order, new OrderIndexTransformer()),
-            "created",
-        );
+        $this->transformCollection($order, new OrderIndexTransformer()),
+        "created",
+    );
     }
 }

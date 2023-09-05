@@ -32,6 +32,7 @@ trait ApiResponseTrait
             'page'  => $paginator->currentPage(),
             'by'    => $paginator->perPage(),
             'total' => $paginator->total(), //$paginator->lastPage() * $paginator->perPage()
+            'links' => $paginator->options(),
         ];
 
         return $this;
