@@ -65,7 +65,7 @@
                                                         <vue-multiselect v-model="driverModel" :options="drivers" :custom-label="nameDriver" placeholder="Водитель"></vue-multiselect>
                                                     </div>
 
-                                                    <div class="col-md-12 mb-4">
+                                                    <div class="col-md-12 mb-3">
                                                         <select v-model="selectedTypeDriver" class="form-select w-100">
                                                             <option :value="null">Тип водителя</option>
                                                             <option v-for="item in typeDriver" :value="item">
@@ -74,8 +74,19 @@
                                                         </select>
                                                     </div>
 
+                                                    <div class="col-12 s-success">
+                                                        <h6 class="text-success">Машина исправна?</h6>
+                                                    </div>
+
+                                                    <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                                        <label class="switch s-success mb-4 me-2">
+                                                            <input type="checkbox" :checked="isChecked" @change="toggleCheckbox" />
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+
                                                     <div class="col-md-12 mb-4">
-                                                        <input v-model="mileage" placeholder="Пробег" class="form-control"
+                                                        <input v-model="mileage" placeholder="Пробег" class="form-control success"
                                                                   style="height: 50px">
                                                     </div>
 
@@ -212,17 +223,6 @@ const getCars = async () => {
     }
 };
 
-const clients = ref( 'id');
-
-const getUsers = async () => {
-    try {
-        const response = await api.get('/api/auth/client/client');
-        clients.value = response.data.clients;
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
- onMounted(getUsers)
 
 const nameCar = ({number}) => {
     return `${number}`;
@@ -239,12 +239,11 @@ const typeDriver = [
 const postOrder = async () => {
     const order = {
         "car_id": carModel.value ? carModel.value.id : null,
-        "client_id": clients.value[0].id,
         "region_id": selectedRegion.value ? selectedRegion.value.id : null,
         "is_evacuated": 0,
         "contract_id": selectedContracts.value ? selectedContracts.value.id : null,
         "problem_description": description.value,
-        "is_broken": 0,
+        "is_broken": isChecked.value ? 1 : 0,
         "service_type": selectedApplication.value ? selectedApplication.value.type : null,
         "driver_id": driverModel.value ? driverModel.value.id : null,
         "driver_type": selectedTypeDriver.value ? selectedTypeDriver.value.name : null,
@@ -269,6 +268,12 @@ const postOrder = async () => {
         });
         console.error('Ошибка при получении данных:', error);
     }
+};
+
+const isChecked = ref(true);
+
+const toggleCheckbox = () => {
+    isChecked.value = !isChecked.value;
 };
 </script>
 

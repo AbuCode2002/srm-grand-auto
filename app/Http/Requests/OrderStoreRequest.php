@@ -14,7 +14,6 @@ class OrderStoreRequest extends FormRequest
     {
         return[
             "car_id"              =>["required", "integer"],
-            "client_id"           =>["required", "integer"],
             "region_id"           =>["required", "integer"],
             "is_evacuated"        =>["required", "bool"],
             "contract_id"         =>["required", "integer"],

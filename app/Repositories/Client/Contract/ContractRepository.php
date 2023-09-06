@@ -22,7 +22,7 @@ class ContractRepository extends BaseRepository
         $userId = Auth::user()->id;
 
             return $this->model::query()
-            ->withWhereHas('client', function ($q) use ($userId) {
+            ->withWhereHas('userCompany', function ($q) use ($userId) {
                 $q->where('user_id', $userId);
             })->get();
     }

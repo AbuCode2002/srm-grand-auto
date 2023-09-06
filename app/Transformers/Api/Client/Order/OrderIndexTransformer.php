@@ -34,7 +34,6 @@ class OrderIndexTransformer extends BaseTransformer
     {
         return [
             "car_id" => $order->car_id,
-            "client_id" => $order->client_id,
             "region_id" => $order->region_id,
             "is_evacuated" => $order->is_evacuated,
             "location" => $order->location,

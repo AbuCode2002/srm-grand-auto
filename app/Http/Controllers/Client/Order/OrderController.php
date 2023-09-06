@@ -7,6 +7,7 @@ use App\Http\Controllers\Client\Order\Data\OrderData;
 use App\Http\Requests\OrderStoreRequest;
 use App\Repositories\Client\Order\OrderRepository;
 use App\Transformers\Api\Client\Order\OrderIndexTransformer;
+use Illuminate\Http\Request;
 
 class OrderController extends BaseController
 {
@@ -20,8 +21,11 @@ class OrderController extends BaseController
         //
     }
 
-    public function index() {
-        $orders = $this->orderRepository->index();
+    public function index(Request $request) {
+
+        $page = $request->query('page', 1);
+
+        $orders = $this->orderRepository->index($page);
 
         return $orders;
     }
@@ -34,10 +38,10 @@ class OrderController extends BaseController
     {
         $data = OrderData::from($request->validated());
 
-        $orders = $this->orderRepository->store($data);
+        $order = $this->orderRepository->store($data);
 
             return $this->respondWithSuccess(
-                $this->transformCollection($orders, new OrderIndexTransformer),
+                $this->transformItem($order, new OrderIndexTransformer),
                 'created',
             );
     }

@@ -56,8 +56,8 @@ class Contract extends Model
         return $this->update(['enabled' => 0]);
     }
 
-    public function client()
+    public function userCompany()
     {
-        return $this->belongsTo(Client::class, 'company_id');
+        return $this->hasMany(UserCompany::class, 'company_id');
     }
 }

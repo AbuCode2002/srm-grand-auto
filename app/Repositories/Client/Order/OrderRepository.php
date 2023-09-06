@@ -4,9 +4,12 @@ namespace App\Repositories\Client\Order;
 
 use App\Http\Controllers\Client\Order\Data\OrderData;
 use App\Models\Order;
+use App\Models\Role;
+use App\Models\UserOrder;
 use App\Models\UserToRegion;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends BaseRepository
 {
@@ -18,8 +21,43 @@ class OrderRepository extends BaseRepository
         $this->model = Order::class;
     }
 
-    public function index() {
-        return $this->model::query()->paginate($this->perPage);
+    public function index(int $page)
+    {
+        $user = Auth::user();
+
+        $roleName = Role::query()->where('id', $user->role_id)->value('name');
+
+        if ($roleName === 'superAdmin') {
+
+            return $this->model::query()
+                ->with('users',
+                    'contract',
+                    'car',
+                    'status',
+                    'region')
+                ->with(['defectActs' => function ($q) {
+                    $q->with(['defectParts' => function ($q) {
+                        $q->sum('price_with_markup');
+                    }]);
+                }])
+                ->paginate($this->perPage, ['*'], 'page', $page);
+
+        }else if ($roleName === 'manager') {
+
+            return $this->model::query()
+                ->with('car')
+                ->with('status')
+                ->with('region')
+                ->paginate($this->perPage, ['*'], 'page', $page);
+
+        }else if ($roleName === 'client') {
+
+            return $this->model::query()
+                ->with('car')
+                ->with('status')
+                ->with('region')
+                ->paginate($this->perPage, ['*'], 'page', $page);
+        }
     }
 
     /**
@@ -33,7 +71,6 @@ class OrderRepository extends BaseRepository
         $order = new Order();
 
         $order->car_id = $data->car_id;
-        $order->client_id = $data->client_id;
         $order->region_id = $data->region_id;
         $order->is_evacuated = $data->is_evacuated;
         $order->contract_id = $data->contract_id;
@@ -45,6 +82,13 @@ class OrderRepository extends BaseRepository
         $order->mileage = $data->mileage;
 
         $order->save();
+
+        $userOrder = new UserOrder();
+
+        $userOrder->user_id = Auth::user()->id;
+        $userOrder->order_id = $order->id;
+
+        $userOrder->save();
 
         return $order;
     }

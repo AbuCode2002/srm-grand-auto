@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\StatusChanged;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -150,16 +151,6 @@ class Order extends Model
         return $this->hasMany(Comment::class);
     }
 
-
-    /**
-     * Get the Client for the Order.
-     */
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
-    }
-
-
     /**
      * Get the Driver for the Order.
      */
@@ -175,6 +166,11 @@ class Order extends Model
     public function car()
     {
         return $this->belongsTo(Car::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status', 'id');
     }
 
 
@@ -236,31 +232,31 @@ class Order extends Model
         return $this->hasOne(DefectActInProcess::class);
     }
 
-    public function shownStatus()
-    {
-        return $this->belongsTo(Status::class, 'status');
-    }
+//    public function shownStatus()
+//    {
+//        return $this->belongsTo(Status::class, 'status');
+//    }
 
-    public function checkPaid()
-    {
-        $parent    = Status::where('name', 'Ремонт выполнен')
-                           ->first()->id;
-        $status_id = Status::where('name', 'Оплата')
-                           ->where('parent_id', $parent)
-                           ->first()->id;
-
-        if ($this->media()
-                 ->where('media_type', 3)
-                 ->whereNull('media.paid_at')
-                 ->count() == 0) {
-            $this->status_internal == 21;
-            $this->save();
-
-            event(new StatusChanged($status_id, $this->chatroom->id));
-
-            return true;
-        }
-
-        return false;
-    }
+//    public function checkPaid()
+//    {
+//        $parent    = Status::where('name', 'Ремонт выполнен')
+//                           ->first()->id;
+//        $status_id = Status::where('name', 'Оплата')
+//                           ->where('parent_id', $parent)
+//                           ->first()->id;
+//
+//        if ($this->media()
+//                 ->where('media_type', 3)
+//                 ->whereNull('media.paid_at')
+//                 ->count() == 0) {
+//            $this->status_internal == 21;
+//            $this->save();
+//
+//            event(new StatusChanged($status_id, $this->chatroom->id));
+//
+//            return true;
+//        }
+//
+//        return false;
+//    }
 }

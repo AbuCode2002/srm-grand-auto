@@ -8,7 +8,6 @@ final class OrderData extends Data
 {
     /**
      * @param int $car_id
-     * @param int $client_id
      * @param int $region_id
      * @param bool $is_evacuated
      * @param int $contract_id
@@ -21,7 +20,6 @@ final class OrderData extends Data
      */
     public function __construct(
         public int $car_id,
-        public int $client_id,
         public int $region_id,
         public bool $is_evacuated,
         public int $contract_id,
