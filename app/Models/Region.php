@@ -35,4 +35,8 @@ class Region extends Model
     {
         return $this->hasMany(UserToRegion::class);
     }
+    public function station(): HasMany
+    {
+        return $this->hasMany(Station::class);
+    }
 }

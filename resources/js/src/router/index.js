@@ -331,6 +331,11 @@ const routes = [
         name: 'order-index',
         component: () => import(/* webpackChunkName: "order-order" */ '../views/order/order.vue'),
     },
+    {
+        path: '/ordr/index/station',
+        name: 'order-index-station',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/station.vue'),
+    },
 
     //drag&drop
     {

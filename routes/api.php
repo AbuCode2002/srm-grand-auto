@@ -9,6 +9,7 @@ use App\Http\Controllers\Client\Driver\DriverController;
 use App\Http\Controllers\Client\Order\OrderController;
 use App\Http\Controllers\Client\Region\RegionController;
 use App\Http\Controllers\Client\Role\RoleController;
+use App\Http\Controllers\Client\Station\StationController;
 use App\Http\Controllers\Client\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/car', [CarController::class, 'show']);
             Route::get('/user', [UserController::class, 'show']);
             Route::get('/client', [ClientController::class, 'index']);
+            Route::get('/station', [StationController::class, 'show']);
         });
     });
 

@@ -8,8 +8,11 @@ use App\Models\Role;
 use App\Models\UserOrder;
 use App\Models\UserToRegion;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\select;
 
 class OrderRepository extends BaseRepository
 {
@@ -34,15 +37,16 @@ class OrderRepository extends BaseRepository
                     'contract',
                     'car',
                     'status',
-                    'region')
-                ->with(['defectActs' => function ($q) {
-                    $q->with(['defectParts' => function ($q) {
-                        $q->sum('price_with_markup');
+                    'region',
+                    'station')
+                ->with(['defectActs' => function (hasOne $q) {
+                    $q->with(['defectParts' => function (hasMany $q) {
+                        $q->select('defect_act_id', DB::raw('SUM(price_with_markup) as sum'))->groupBy('defect_act_id');
                     }]);
                 }])
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
-        }else if ($roleName === 'manager') {
+        } else if ($roleName === 'manager') {
 
             return $this->model::query()
                 ->with('car')
@@ -50,7 +54,7 @@ class OrderRepository extends BaseRepository
                 ->with('region')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
-        }else if ($roleName === 'client') {
+        } else if ($roleName === 'client') {
 
             return $this->model::query()
                 ->with('car')

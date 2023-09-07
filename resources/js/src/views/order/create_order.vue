@@ -24,7 +24,7 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                             <form id="work-experience" class="section work-experience">
                                 <div class="info">
-                                    <h5 class="">Work Experience</h5>
+                                    <h5 class="">Создания заявки</h5>
                                     <div class="row">
                                         <div class="col-md-11 mx-auto">
                                             <div class="work-section">
@@ -49,7 +49,9 @@
                                                     </div>
 
                                                     <div class="col-md-12 mb-4">
-                                                        <vue-multiselect v-model="carModel" :options="cars" :custom-label="nameCar" placeholder="Гос. Номер"></vue-multiselect>
+                                                        <vue-multiselect v-model="carModel" :options="cars"
+                                                                         :custom-label="nameCar"
+                                                                         placeholder="Гос. Номер"></vue-multiselect>
                                                     </div>
 
                                                     <div class="col-md-12 mb-4">
@@ -62,7 +64,9 @@
                                                     </div>
 
                                                     <div class="col-md-12 mb-4">
-                                                        <vue-multiselect v-model="driverModel" :options="drivers" :custom-label="nameDriver" placeholder="Водитель"></vue-multiselect>
+                                                        <vue-multiselect v-model="driverModel" :options="drivers"
+                                                                         :custom-label="nameDriver"
+                                                                         placeholder="Водитель"></vue-multiselect>
                                                     </div>
 
                                                     <div class="col-md-12 mb-3">
@@ -80,18 +84,21 @@
 
                                                     <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                                         <label class="switch s-success mb-4 me-2">
-                                                            <input type="checkbox" :checked="isChecked" @change="toggleCheckbox" />
+                                                            <input type="checkbox" :checked="isChecked"
+                                                                   @change="toggleCheckbox"/>
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </div>
 
                                                     <div class="col-md-12 mb-4">
-                                                        <input v-model="mileage" placeholder="Пробег" class="form-control success"
-                                                                  style="height: 50px">
+                                                        <input v-model="mileage" placeholder="Пробег"
+                                                               class="form-control success"
+                                                               style="height: 50px">
                                                     </div>
 
-                                                    <div class="col-md-12 mb-4">
-                                                        <textarea v-model="description" placeholder="Описание" rows="10" class="form-control"
+                                                    <div class="col-md-12 mb-1">
+                                                        <textarea v-model="description" placeholder="Описание" rows="10"
+                                                                  class="form-control"
                                                                   style="height: 243px"></textarea>
                                                     </div>
                                                 </div>
@@ -105,12 +112,11 @@
                 </div>
             </div>
 
-            <div class="account-settings-footer">
-                <div class="as-footer-container">
-                    <button type="button" class="btn btn-primary">Reset All</button>
-                    <button type="button" class="btn btn-success" @click.prevent="postOrder()">Save Changes</button>
-                </div>
-            </div>
+                        <div class="account-settings-container">
+                            <div class="as-footer-container">
+                                <button type="button" class="btn btn-success" @click.prevent="postOrder()">Save Changes</button>
+                            </div>
+                        </div>
         </div>
     </div>
 </template>
@@ -126,7 +132,6 @@ import VueMultiselect from 'vue-multiselect'
 import router from "../../router";
 
 useMeta({title: "Account Setting"});
-
 
 
 const selectedApplication = ref(null);
@@ -194,8 +199,8 @@ const getRegions = async () => {
 
 onMounted(getRegions);
 
-const driverModel = ref( {name:'Водитель'});
-const drivers = ref( 'Водитель');
+const driverModel = ref({name: 'Водитель'});
+const drivers = ref('Водитель');
 
 const getDrivers = async () => {
     try {
@@ -211,8 +216,8 @@ const nameDriver = ({name}) => {
 
 onMounted(getDrivers);
 
-const carModel = ref( {number:'Гос. номер'});
-const cars = ref( 'Гос. номер');
+const carModel = ref({number: 'Гос. номер'});
+const cars = ref('Гос. номер');
 
 const getCars = async () => {
     try {
@@ -231,8 +236,8 @@ const nameCar = ({number}) => {
 onMounted(getCars);
 
 const typeDriver = [
-    { name: 'Водитель' },
-    { name: 'Механик'},
+    {name: 'Водитель'},
+    {name: 'Механик'},
 ];
 
 

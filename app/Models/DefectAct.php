@@ -70,7 +70,7 @@ class DefectAct extends Model
 
     public function defectParts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(DefectPart::class);
+        return $this->hasMany(DefectPart::class, 'defect_act_id', 'id');
     }
 
     public function defectWorks(): \Illuminate\Database\Eloquent\Relations\HasMany
