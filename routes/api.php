@@ -41,8 +41,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::group(['prefix' => 'client'], static function () {
             Route::group(['prefix' => 'order'], static function () {
                 Route::post('/', [OrderController::class, 'store']);
+                Route::post('/edit', [OrderController::class, 'edit']);
                 Route::get('/', [OrderController::class, 'index']);
-                Route::get('/show', [OrderController::class, 'show']);
+                Route::get('/show/{id}', [OrderController::class, 'show'])
+                    ->where('id', '[0-9]+');
             });
 
             Route::group(['prefix' => 'role'], static function () {
@@ -51,12 +53,26 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 
             Route::get('/application', [ApplicationController::class, 'index']);
             Route::get('/contract', [ContractController::class, 'index']);
-            Route::get('/region', [RegionController::class, 'index']);
+
+            Route::group(['prefix' => 'region'], static function () {
+                Route::get('/', [RegionController::class, 'index']);
+                Route::get('/show/{id}', [RegionController::class, 'show'])
+                    ->where('id', '[0-9]+');
+            });
+
             Route::get('/driver', [DriverController::class, 'index']);
-            Route::get('/car', [CarController::class, 'show']);
+
+            Route::group(['prefix' => 'car'], static function () {
+                Route::get('/', [CarController::class, 'index']);
+                Route::get('/{id}', [CarController::class, 'show'])
+                    ->where('id', '[0-9]+');
+            });
+
             Route::get('/user', [UserController::class, 'show']);
             Route::get('/client', [ClientController::class, 'index']);
-            Route::get('/station', [StationController::class, 'show']);
+            Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
+                ->where('regionId', '[0-9]+')
+                ->where('orderId', '[0-9]+');
         });
     });
 

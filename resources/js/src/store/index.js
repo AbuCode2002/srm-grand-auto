@@ -28,6 +28,7 @@ export default new createStore({
             { code: "sv", name: "Swedish" },
             { code: "tr", name: "Turkish" },
         ],
+        regionId: null
     },
     mutations: {
         setLayout(state, payload) {
@@ -88,12 +89,20 @@ export default new createStore({
             localStorage.setItem("layout_style", value);
             state.layout_style = value;
         },
+
+        setRegionId(state, newRegionId) {
+            state.regionId = newRegionId;
+        },
     },
     getters: {
         layout(state) {
             return state.layout;
         },
     },
-    actions: {},
+    actions: {
+        setRegionId(context, newRegionId) {
+            context.commit('setRegionId', newRegionId);
+        },
+    },
     modules: {},
 });

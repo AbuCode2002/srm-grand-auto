@@ -1,13 +1,12 @@
 <template>
-    <div class="layout-px-spacing apps-invoice-list">
+    <div class="container">
         <teleport to="#breadcrumb">
             <ul class="navbar-nav flex-row">
                 <li>
                     <div class="page-header">
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:;">Apps</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Invoice List</span></li>
+                                <li class="breadcrumb-item"><a href="javascript:;">Tables</a></li>
                             </ol>
                         </nav>
                     </div>
@@ -15,137 +14,143 @@
             </ul>
         </teleport>
 
-        <div class="row layout-top-spacing">
-            <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
-                <div class="panel br-6">
-                    <div class="custom-table">
-                        <v-client-table :data="items" :columns="columns" :options="table_option">
-                            <template #invoice="props">
-                                <router-link to="/apps/invoice/preview">
-                                    <span class="inv-number">#{{ props.row.invoice }}</span>
-                                </router-link>
-                            </template>
-                            <template #name="props">
-                                <div class="d-flex">
-                                    <div class="usr-img-frame me-2 rounded-circle">
-                                        <img :src="'/assets/images/' + props.row.thumb" class="img-fluid rounded-circle" alt="avatar" />
-                                    </div>
-                                    <p class="align-self-center mb-0 admin-name">{{ props.row.name }}</p>
+        <div class="container">
+            <div v-scroll-spy class="row layout-top-spacing">
+                <div id="tableSimple" class="col-lg-12 col-12 layout-spacing">
+                    <div class="statbox panel box box-shadow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xl-8 col-lg-7 col-md-6 col-sm-4 align-self-center">
+                                    <h3 class="inv-to text-success">Выберите СТО для ремонта</h3>
                                 </div>
-                            </template>
-                            <template #email="props">
-                                <span class="inv-email">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-mail"
-                                    >
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                    </svg>
-                                    {{ props.row.email }}
-                                </span>
-                            </template>
-                            <template #date="props">
-                                <span class="inv-date">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-calendar"
-                                    >
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    {{ props.row.date }}
-                                </span>
-                            </template>
-                            <template #amount="props"> ${{ props.row.amount }} </template>
-                            <template #status="props">
-                                <span class="badge inv-status" :class="'badge-' + props.row.status.class">{{ props.row.status.key }}</span>
-                            </template>
-                            <template #actions="props">
-                                <div class="mb-4 me-2 custom-dropdown dropdown btn-group">
-                                    <a class="btn dropdown-toggle btn-icon-only" href="#" role="button" id="pendingTask" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            style="width: 24px; height: 24px"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="feather feather-more-horizontal"
-                                        >
-                                            <circle cx="12" cy="12" r="1"></circle>
-                                            <circle cx="19" cy="12" r="1"></circle>
-                                            <circle cx="5" cy="12" r="1"></circle>
-                                        </svg>
-                                    </a>
+                                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 align-self-center order-sm-0 order-1 inv--payment-info">
+                                    <h6 class="inv-title"></h6>
+                                </div>
 
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="pendingTask">
-                                        <li>
-                                            <router-link href="javascript:void(0);" to="/apps/invoice/edit" class="dropdown-item action-edit"
-                                                ><svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-edit-3"
-                                                >
-                                                    <path d="M12 20h9"></path>
-                                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                                </svg>
-                                                Edit
-                                            </router-link>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" @click="delete_row(props.row)" class="dropdown-item action-delete"
-                                                ><svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-trash"
-                                                >
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                </svg>
-                                                Delete
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div class="col-xl-8 col-lg-7 col-md-6 col-sm-4">
+                                    <p class="inv-customer-name">Описание:</p>
+                                    <h4 class="text-dark">{{    order.problem_description}}</h4>
                                 </div>
-                            </template>
-                        </v-client-table>
+
+                                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 order-sm-0 order-1">
+                                    <div class="inv--payment-info">
+                                        <p v-for="item in region"><span class="inv-subtitle">Регион</span> <span class="text-dark">{{ item.region_name }}</span ></p>
+                                        <div v-for="item in car">
+                                            <p><span class="inv-subtitle">Brand </span> <span class="text-dark">{{item.brand}}</span></p>
+                                            <p><span class="inv-subtitle">Model </span> <span class="text-dark">{{ item.model }}</span></p>
+                                            <p><span class="inv-subtitle">Number </span> <span class="text-dark">{{item.number}}</span></p>
+                                        </div>
+                                        <p><span class="inv-subtitle">Mileage </span> <span class="text-dark">{{order.mileage}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table role="table" aria-busy="false" aria-colcount="5" class="table table-bordered"
+                                       id="__BVID__415">
+                                    <thead role="rowgroup">
+                                    <tr role="row">
+                                        <th role="columnheader" class="text-success" scope="col" aria-colindex="1">
+                                            <div>id</div>
+                                        </th>
+                                        <th role="columnheader" class="text-success" scope="col" aria-colindex="2">
+                                            <div>Название</div>
+                                        </th>
+                                        <th role="columnheader" class="text-success" scope="col" aria-colindex="3">
+                                            <div>Адрес</div>
+                                        </th>
+                                        <th role="columnheader" class="text-success" scope="col" aria-colindex="4">
+                                            <div>Телефон</div>
+                                        </th>
+                                        <th role="columnheader"  scope="col" aria-colindex="5" class="text-center text-success">
+                                            <div>BIN</div>
+                                        </th>
+                                        <th role="columnheader"  scope="col" aria-colindex="6" class="text-center text-success">
+                                            <div>BIK</div>
+                                        </th>
+                                        <th role="columnheader"  scope="col" aria-colindex="7" class="text-center text-success">
+                                            <div>IIK</div>
+                                        </th>
+                                        <th role="columnheader"  scope="col" aria-colindex="8" class="text-center text-success">
+                                            <div>Телефон</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody role="rowgroup">
+                                    <tr v-for="item in station" role="row">
+<!--                                        <td aria-colindex="1" role="cell">{{ item.id }}</td>-->
+                                        <td aria-colindex="1"  role="cell" class="mb-4">
+                                            <button @click.prevent="getOrder(item.id)" class="btn btn-success mb-2 me-1">
+                                                {{ item.id }}
+                                            </button>
+                                        </td>
+                                        <td aria-colindex="2" role="cell">{{ item.name }}</td>
+                                        <td aria-colindex="3" role="cell">{{ item.address }}</td>
+                                        <td aria-colindex="4" role="cell">{{ item.contact_phone }}</td>
+                                        <td aria-colindex="5" role="cell">{{ item.bin }}</td>
+                                        <td aria-colindex="6" role="cell">{{ item.bik }}</td>
+                                        <td aria-colindex="7" role="cell">{{ item.iik }}</td>
+                                        <td aria-colindex="8" role="cell">{{ item.fact_address }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="code-section-container show-code">
+                                <div v-if="code_arr.includes('code1')" class="code-section text-start">
+                                    <highlight>
+                                        <div v-pre>
+                                            <pre>
+&lt;div class=&quot;table-responsive&quot;&gt;
+    &lt;table role=&quot;table&quot; aria-busy=&quot;false&quot; aria-colcount=&quot;5&quot; class=&quot;table table-bordered&quot; id=&quot;__BVID__415&quot;&gt;
+        &lt;thead role=&quot;rowgroup&quot;&gt;
+            &lt;tr role=&quot;row&quot;&gt;
+                &lt;th role=&quot;columnheader&quot; scope=&quot;col&quot; aria-colindex=&quot;1&quot;&gt;&lt;div&gt;Name&lt;/div&gt;&lt;/th&gt;
+                &lt;th role=&quot;columnheader&quot; scope=&quot;col&quot; aria-colindex=&quot;2&quot;&gt;&lt;div&gt;Date&lt;/div&gt;&lt;/th&gt;
+                &lt;th role=&quot;columnheader&quot; scope=&quot;col&quot; aria-colindex=&quot;3&quot;&gt;&lt;div&gt;Sale&lt;/div&gt;&lt;/th&gt;
+                &lt;th role=&quot;columnheader&quot; scope=&quot;col&quot; aria-colindex=&quot;4&quot; class=&quot;text-center&quot;&gt;&lt;div&gt;status&lt;/div&gt;&lt;/th&gt;
+                &lt;th role=&quot;columnheader&quot; scope=&quot;col&quot; aria-colindex=&quot;5&quot; aria-label=&quot;Action&quot; class=&quot;text-center&quot;&gt;&lt;div&gt;&lt;/div&gt;&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody role=&quot;rowgroup&quot;&gt;
+            &lt;tr v-for=&quot;item in table_1&quot; :key=&quot;item.name&quot; role=&quot;row&quot;&gt;
+                &lt;td aria-colindex=&quot;1&quot; role=&quot;cell&quot;&gt;{{ item.name }}&lt;/td&gt;
+                &lt;td aria-colindex=&quot;2&quot; role=&quot;cell&quot;&gt;{{ item.date }}&lt;/td&gt;
+                &lt;td aria-colindex=&quot;3&quot; role=&quot;cell&quot;&gt;{{ item.sale }}&lt;/td&gt;
+                &lt;td aria-colindex=&quot;4&quot; role=&quot;cell&quot; class=&quot;text-center&quot;&gt;
+                    &lt;span :class=&quot;`text-${item.status_class}`&quot;&gt; {{ item.status }} &lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td aria-colindex=&quot;5&quot; role=&quot;cell&quot; class=&quot;text-center&quot;&gt;
+                    &lt;svg
+                        xmlns=&quot;http://www.w3.org/2000/svg&quot;
+                        width=&quot;24&quot;
+                        height=&quot;24&quot;
+                        viewBox=&quot;0 0 24 24&quot;
+                        fill=&quot;none&quot;
+                        stroke=&quot;currentColor&quot;
+                        stroke-width=&quot;2&quot;
+                        stroke-linecap=&quot;round&quot;
+                        stroke-linejoin=&quot;round&quot;
+                        class=&quot;feather feather-trash-2 icon&quot;
+                    &gt;
+                        &lt;polyline points=&quot;3 6 5 6 21 6&quot;&gt;&lt;/polyline&gt;
+                        &lt;path d=&quot;M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2&quot;&gt;&lt;/path&gt;
+                        &lt;line x1=&quot;10&quot; y1=&quot;11&quot; x2=&quot;10&quot; y2=&quot;17&quot;&gt;&lt;/line&gt;
+                        &lt;line x1=&quot;14&quot; y1=&quot;11&quot; x2=&quot;14&quot; y2=&quot;17&quot;&gt;&lt;/line&gt;
+                    &lt;/svg&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+</pre
+>
+                                        </div>
+                                    </highlight>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,108 +159,251 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from "vue";
-    import "../../assets/sass/apps/invoice-list.scss";
+import {onMounted, ref} from "vue";
 
-    import { useMeta } from "../../composables/use-meta";
-    import api from "../../api";
-    useMeta({ title: "Invoice List" });
+import "../../assets/sass/scrollspyNav.scss";
+import "../../assets/sass/tables/table-basic.scss";
+import highlight from "../../components/plugins/highlight.vue";
 
-    const items = ref([]);
-    const columns = ref(["id", "invoice", "name", "email", "date", "amount", "status", "actions"]);
-    const table_option = ref({
-        headings: {
-            id: (h, row, index) => {
-                return "#";
-            },
-        },
-        perPage: 10,
-        perPageValues: [5, 10, 20, 50],
-        skin: "table table-hover",
-        columnsClasses: { actions: "actions text-center" },
-        pagination: { nav: "scroll", chunk: 5 },
-        texts: {
-            count: "Showing {from} to {to} of {count}",
-            filter: "",
-            filterPlaceholder: "Search...",
-            limit: "Results:",
-        },
-        resizableColumns: false,
-        sortable: ["invoice", "name", "email", "date", "amount", "status"],
-        sortIcon: {
-            base: "sort-icon-none",
-            up: "sort-icon-asc",
-            down: "sort-icon-desc",
-        },
-    });
-    const selected_rows = ref([]);
+import {useMeta} from "../../composables/use-meta";
 
-    onMounted(() => {
-        bind_data();
-    });
+useMeta({title: "Tables"});
 
-    const bind_data = () => {
-        items.value = [
-            {
-                id: 1,
-                invoice: "081451",
-                thumb: "profile-28.jpeg",
-                name: "Laurie Fox",
-                email: "lauriefox@company.com",
-                date: "15 Dec 2020",
-                amount: "2275.45",
-                status: { key: "Paid", class: "success" },
-            },
-            {
-                id: 2,
-                invoice: "081452",
-                thumb: "profile-30.png",
-                name: "Alexander Gray",
-                email: "alexGray3188@gmail.com",
-                date: "20 Dec 2020",
-                amount: "1044.00",
-                status: { key: "Paid", class: "success" },
-            },
-            {
-                id: 3,
-                invoice: "081681",
-                thumb: "profile-32.jpeg",
-                name: "James Taylor",
-                email: "jamestaylor468@gmail.com",
-                date: "27 Dec 2020",
-                amount: "20.00",
-                status: { key: "Pending", class: "danger" },
-            },
-        ];
-    };
+const code_arr = ref([]);
+const table_1 = ref([]);
+const table_2 = ref([]);
 
-    const regionId = ref(null);
-    const station = ref(null);
-    const getStation = async () => {
-        const id = id;
-        regionId.value = {
-            "region_id": id.value,
-        };
-        try {
-            const response = await api.get(`/api/auth/client/station`, regionId);
-            station.value = response.stations
-        } catch (error) {
-            console.error('Ошибка при получении данных:', error);
-        }
-    };
+onMounted(() => {
+    initTooltip();
+    init_tables();
+});
 
-    items.value = [];
+const toggleCode = (name) => {
+    if (code_arr.value.includes(name)) {
+        code_arr.value = code_arr.value.filter((d) => d != name);
+    } else {
+        code_arr.value.push(name);
+    }
+};
 
-    station.forEach((item) => {
-        items.value.push({
-            id: item.id,
-            invoice: item.name,
-            thumb: item.address,
-            name: item.contact_phone,
-            email: item.bin,
-            date: item.bik,
-            amount: item.iik,
-            status: item.fact_address,
+const initTooltip = () => {
+    setTimeout(() => {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map((tooltipTriggerEl) => {
+            return new window.bootstrap.Tooltip(tooltipTriggerEl);
         });
     });
+};
+
+const init_tables = () => {
+    table_1.value = [
+        {
+            thumb: "boy.png",
+            name: "Shaun Park",
+            "first name": "John",
+            "last name": "Doe",
+            email: "johndoe@yahoo.com",
+            date: "10/08/2020",
+            sale: "320",
+            sales: "29.56",
+            status: "Complete",
+            status_class: "success",
+            register: "5 min ago",
+            position: "Developer",
+            office: "London",
+        },
+        {
+            thumb: "girl-1.png",
+            name: "Alma Clarke",
+            "first name": "Andy",
+            "last name": "King",
+            email: "andyking@gmail.com",
+            date: "11/08/2020",
+            sale: "420",
+            sales: "19.15",
+            status: "Pending",
+            status_class: "secondary",
+            register: "10 min ago",
+            position: "Designer",
+            office: "New York",
+        },
+        {
+            thumb: "girl-2.png",
+            name: "Xavier",
+            "first name": "Lisa",
+            "last name": "Doe",
+            email: "lisadoe@yahoo.com",
+            date: "12/08/2020",
+            sale: "130",
+            sales: "39.00",
+            status: "In progress",
+            status_class: "info",
+            register: "1 hour ago",
+            position: "Accountant",
+            office: "Amazon",
+        },
+        {
+            thumb: "boy-2.png",
+            name: "Vincent Carpenter",
+            "first name": "Vincent",
+            "last name": "Carpenter",
+            email: "vinnyc@yahoo.com",
+            date: "13/08/2020",
+            sale: "260",
+            sales: "88.03",
+            status: "Canceled",
+            status_class: "danger",
+            register: "1 day ago",
+            position: "Data Scientist",
+            office: "Canada",
+        },
+    ];
+
+    table_2.value = [
+        {
+            thumb: "boy.png",
+            name: "Amy Diaz",
+            "first name": "Amy",
+            "last name": "Diaz",
+            email: "amydiaz@yahoo.com",
+            date: "10/08/2020",
+            sale: "320",
+            sales: "29.56",
+            status: "Complete",
+            status_class: "success",
+            register: "5 min ago",
+        },
+        {
+            thumb: "girl-1.png",
+            name: "Nia Hillyer",
+            "first name": "Nia",
+            "last name": "Hillyer",
+            email: "niahill@gmail.com",
+            date: "11/08/2020",
+            sale: "420",
+            sales: "19.15",
+            status: "Pending",
+            status_class: "secondary",
+            register: "10 min ago",
+        },
+        {
+            thumb: "girl-2.png",
+            name: "Marry",
+            "first name": "Marry",
+            "last name": "McDonald",
+            email: "marryMcD@yahoo.com",
+            date: "12/08/2020",
+            sale: "130",
+            sales: "39.00",
+            status: "In progress",
+            status_class: "info",
+            register: "1 hour ago",
+        },
+        {
+            thumb: "boy-2.png",
+            name: "Shaun Park",
+            "first name": "Shaun",
+            "last name": "Park",
+            email: "park@yahoo.com",
+            date: "13/08/2020",
+            sale: "260",
+            sales: "88.03",
+            status: "Canceled",
+            status_class: "danger",
+            register: "1 day ago",
+        },
+    ];
+    table_2.value = table_1.value.concat(table_2.value);
+};
+
+const random_class = (index) => {
+    if (index == 0) {
+        return "default";
+    } else if (index == 1) {
+        return "primary";
+    } else if (index == 2) {
+        return "secondary";
+    } else if (index == 3) {
+        return "success";
+    } else if (index == 4) {
+        return "dark";
+    } else if (index == 5) {
+        return "danger";
+    } else if (index == 6) {
+        return "info";
+    } else if (index == 7) {
+        return "warning";
+    }
+    return "dark";
+};
+
+import {useRouter} from 'vue-router';
+import api from "../../api";
+
+const station = ref([]);
+
+const route = useRouter();
+const orderId = route.currentRoute.value.params.orderId;
+const getStation = async () => {
+    const regionId = route.currentRoute.value.params.regionId;
+
+    try {
+        const response = await api.get(`/api/auth/client/station/${regionId}/${orderId}`);
+        station.value = response.data.stations
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getStation)
+
+const order = ref([])
+
+const regionId = ref(null)
+
+const carId = ref(null)
+
+const region = ref([])
+
+const car = ref([])
+
+const getRegion = async () => {
+    try {
+        const responseOrder = await api.get(`/api/auth/client/order/show/${orderId}`);
+
+        order.value = responseOrder.data.orders[0]
+
+        regionId.value = responseOrder.data.orders[0].region_id
+
+        carId.value = responseOrder.data.orders[0].car_id
+
+        const responseRegion = await api.get(`/api/auth/client/region/show/${regionId.value}`);
+
+        region.value = responseRegion.data.regions;
+
+        const responseCar = await api.get(`/api/auth/client/car/${carId.value}`);
+
+        car.value = responseCar.data.cars;
+
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getRegion)
+
+const router = useRouter();
+const getOrder = (id) => {
+    const station = {
+        "id": orderId,
+        "station_id": id,
+
+    }
+
+    const response = await api.post('/api/auth/client/order', station);
+
+    router.push({ name: 'order-index' });
+};
+
+onMounted(getOrder)
 </script>

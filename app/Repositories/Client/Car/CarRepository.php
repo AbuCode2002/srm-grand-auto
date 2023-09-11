@@ -24,4 +24,9 @@ class CarRepository extends BaseRepository
     {
         return $this->model::query()->select('id', 'number')->get();
     }
+
+    public function show(int $id)
+    {
+        return $this->model::query()->where('id', $id)->get();
+    }
 }

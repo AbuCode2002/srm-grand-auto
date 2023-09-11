@@ -11,6 +11,7 @@ use App\Repositories\Client\Order\OrderRepository;
 use App\Repositories\Client\Station\StationRepository;
 use App\Transformers\Api\Client\Order\OrderIndexTransformer;
 use App\Transformers\Api\Client\Station\StationShowTransformer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class StationController extends BaseController
@@ -25,15 +26,17 @@ class StationController extends BaseController
         //
     }
 
-    public function show(StationRequest $request)
+    /**
+     * @param int $regionId
+     * @return JsonResponse
+     */
+    public function show(int $regionId, int $orderId): JsonResponse
     {
-        $data = StationData::from($request->validated());
-
-        $station = $this->stationRepository->show($data);
+        $station = $this->stationRepository->show($regionId);
 
         return $this->respondWithSuccess(
             $this->transformCollection($station, new StationShowTransformer()),
             "success",
-        );;
+        );
     }
 }

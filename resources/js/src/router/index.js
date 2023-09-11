@@ -332,7 +332,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "order-order" */ '../views/order/order.vue'),
     },
     {
-        path: '/ordr/index/station',
+        path: '/order/index/station/:regionId/:orderId',
         name: 'order-index-station',
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/station.vue'),
     },

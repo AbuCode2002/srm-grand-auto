@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client\Order;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Client\Order\Data\OrderData;
+use App\Http\Requests\Order\OrderEditRequest;
 use App\Http\Requests\OrderStoreRequest;
 use App\Repositories\Client\Order\OrderRepository;
 use App\Transformers\Api\Client\Order\OrderIndexTransformer;
@@ -46,9 +47,23 @@ class OrderController extends BaseController
             );
     }
 
-    public function show()
+    public function edit(OrderEditRequest $request)
     {
-        $order = $this->orderRepository->show();
+        $data = OrderData::from($request->validated());
+
+        $order = $this->orderRepository->findById($data->id);
+
+        $order = $this->orderRepository->edit($order, $data);
+
+            return $this->respondWithSuccess(
+                $this->transformItem($order, new OrderIndexTransformer),
+                'created',
+            );
+    }
+
+    public function show(int $id)
+    {
+        $order = $this->orderRepository->show($id);
 
         return $this->respondWithSuccess(
         $this->transformCollection($order, new OrderIndexTransformer()),

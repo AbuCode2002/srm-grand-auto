@@ -27,4 +27,14 @@ class RegionController extends BaseController
                 "created",
             );
     }
+
+    public function show(int $id)
+    {
+        $contracts = $this->regionRepository->show($id);
+
+        return $this->respondWithSuccess(
+            $this->transformCollection($contracts, new RegionIndexTransformer()),
+            "created",
+        );
+    }
 }

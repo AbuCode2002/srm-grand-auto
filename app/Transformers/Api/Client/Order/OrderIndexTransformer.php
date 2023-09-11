@@ -44,6 +44,7 @@ class OrderIndexTransformer extends BaseTransformer
             "driver_id" => $order->driver_id,
             "driver_type" => $order->driver_type,
             "mileage" => $order->mileage,
+            "station_id" => $order->station_id,
         ];
     }
 }

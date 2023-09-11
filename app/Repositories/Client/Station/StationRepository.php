@@ -20,11 +20,11 @@ class StationRepository extends BaseRepository
     }
 
     /**
-     * @param StationData $data
+     * @param int $regionId
      * @return Collection|array
      */
-    public function show(StationData $data): Collection|array
+    public function show(int $regionId): Collection|array
     {
-        return $this->model::query()->where('region_id', $data->region_id)->get();
+        return $this->model::query()->where('region_id', $regionId)->get();
     }
 }

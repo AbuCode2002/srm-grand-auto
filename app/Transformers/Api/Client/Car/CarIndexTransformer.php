@@ -36,6 +36,9 @@ class CarIndexTransformer extends BaseTransformer
         return [
             "id" => $driver->id,
             "number" => $driver->number,
+            "brand" => $driver->brand,
+            "model" => $driver->model,
+            "year" => $driver->year,
         ];
     }
 }

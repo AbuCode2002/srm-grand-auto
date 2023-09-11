@@ -74,16 +74,44 @@ class OrderRepository extends BaseRepository
     {
         $order = new Order();
 
-        $order->car_id = $data->car_id;
-        $order->region_id = $data->region_id;
-        $order->is_evacuated = $data->is_evacuated;
-        $order->contract_id = $data->contract_id;
-        $order->problem_description = $data->problem_description;
-        $order->is_broken = $data->is_broken;
-        $order->service_type = $data->service_type;
-        $order->driver_id = $data->driver_id;
-        $order->driver_type = $data->driver_type;
-        $order->mileage = $data->mileage;
+        $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
+        $order->region_id = $data->region_id ? $data->region_id : $order->region_id;
+        $order->is_evacuated = $data->is_evacuated ? $data->is_evacuated : $order->is_evacuated;
+        $order->contract_id = $data->contract_id ? $data->contract_id : $order->contract_id;
+        $order->problem_description = $data->problem_description ? $data->problem_description : $order->problem_description;
+        $order->is_broken = $data->is_broken ? $data->is_broken : $order->is_broken;
+        $order->service_type = $data->service_type ? $data->service_type : $order->service_type;
+        $order->driver_id = $data->driver_id ? $data->driver_id : $order->driver_id;
+        $order->driver_type = $data->driver_type ? $data->driver_type : $order->driver_type;
+        $order->mileage = $data->mileage ? $data->mileage : $order->mileage;
+
+        $order->save();
+
+        $userOrder = new UserOrder();
+
+        $userOrder->user_id = Auth::user()->id;
+        $userOrder->order_id = $order->id;
+
+        $userOrder->save();
+
+        return $order;
+    }
+public function edit(
+    Order $order,
+    OrderData $data
+    )
+    {
+        $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
+        $order->region_id = $data->region_id ? $data->region_id : $order->region_id;
+        $order->is_evacuated = $data->is_evacuated ? $data->is_evacuated : $order->is_evacuated;
+        $order->contract_id = $data->contract_id ? $data->contract_id : $order->contract_id;
+        $order->problem_description = $data->problem_description ? $data->problem_description : $order->problem_description;
+        $order->is_broken = $data->is_broken ? $data->is_broken : $order->is_broken;
+        $order->service_type = $data->service_type ? $data->service_type : $order->service_type;
+        $order->driver_id = $data->driver_id ? $data->driver_id : $order->driver_id;
+        $order->driver_type = $data->driver_type ? $data->driver_type : $order->driver_type;
+        $order->mileage = $data->mileage ? $data->mileage : $order->mileage;
+        $order->station_id = $data->station_id ? $data->station_id : $order->station_id;
 
         $order->save();
 
@@ -97,14 +125,19 @@ class OrderRepository extends BaseRepository
         return $order;
     }
 
-    public function show()
+    public function show(int $id)
     {
-        $userId = Auth::user()->id;
-
-        $regionId = UserToRegion::query()->where('user_id', $userId)->pluck('region_id')->toArray();
-
-        $order = $this->model::query()->whereIn('region_id', $regionId);
-
-        return $order;
+        return $this->model::query()->where('id', $id)->get();
     }
+
+//    public function show()
+//    {
+//        $userId = Auth::user()->id;
+//
+//        $regionId = UserToRegion::query()->where('user_id', $userId)->pluck('region_id')->toArray();
+//
+//        $order = $this->model::query()->whereIn('region_id', $regionId);
+//
+//        return $order;
+//    }
 }

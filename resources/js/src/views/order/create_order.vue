@@ -51,7 +51,8 @@
                                                     <div class="col-md-12 mb-4">
                                                         <vue-multiselect v-model="carModel" :options="cars"
                                                                          :custom-label="nameCar"
-                                                                         placeholder="Гос. Номер"></vue-multiselect>
+                                                                         placeholder="Гос. Номер">
+                                                        </vue-multiselect>
                                                     </div>
 
                                                     <div class="col-md-12 mb-4">
@@ -137,7 +138,6 @@ useMeta({title: "Account Setting"});
 const selectedApplication = ref(null);
 const selectedContracts = ref(null);
 const selectedRegion = ref(null);
-const selectedDriver = ref(null);
 const selectedTypeDriver = ref(null);
 const description = ref(null);
 const mileage = ref(null);
