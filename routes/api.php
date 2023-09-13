@@ -9,6 +9,7 @@ use App\Http\Controllers\Client\Driver\DriverController;
 use App\Http\Controllers\Client\Order\OrderController;
 use App\Http\Controllers\Client\Region\RegionController;
 use App\Http\Controllers\Client\Role\RoleController;
+use App\Http\Controllers\Client\ServiceName\ServiceNameController;
 use App\Http\Controllers\Client\Station\StationController;
 use App\Http\Controllers\Client\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::group(['prefix' => 'role'], static function () {
                 Route::get('/', [RoleController::class, 'index']);
             });
+
+            Route::get('/service-name', [ServiceNameController::class, 'index']);
 
             Route::get('/application', [ApplicationController::class, 'index']);
             Route::get('/contract', [ContractController::class, 'index']);

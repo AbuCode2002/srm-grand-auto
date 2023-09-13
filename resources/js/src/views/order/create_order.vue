@@ -6,7 +6,7 @@
                     <div class="page-header">
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:;">Users</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:">Users</a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><span>Account Settings</span>
                                 </li>
                             </ol>
@@ -67,7 +67,8 @@
                                                     <div class="col-md-12 mb-4">
                                                         <vue-multiselect v-model="driverModel" :options="drivers"
                                                                          :custom-label="nameDriver"
-                                                                         placeholder="Водитель"></vue-multiselect>
+                                                                         placeholder="Водитель">
+                                                        </vue-multiselect>
                                                     </div>
 
                                                     <div class="col-md-12 mb-3">
@@ -112,7 +113,6 @@
                     </div>
                 </div>
             </div>
-
                         <div class="account-settings-container">
                             <div class="as-footer-container">
                                 <button type="button" class="btn btn-success" @click.prevent="postOrder()">Save Changes</button>

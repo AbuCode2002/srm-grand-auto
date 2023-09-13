@@ -6,7 +6,7 @@
                     <div class="page-header">
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:;">DataTables</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:">DataTables</a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><span>Live Dom Ordering</span></li>
                             </ol>
                         </nav>
@@ -54,7 +54,7 @@
         perPageValues: [5, 10, 20, 50],
         skin: "table table-hover",
         columnsClasses: { actions: "actions text-center" },
-        sortable: [],
+        sortable1: [],
         pagination: { nav: "scroll", chunk: 5 },
         texts: {
             count: "Showing {from} to {to} of {count}",
@@ -62,7 +62,7 @@
             filterPlaceholder: "Search...",
             limit: "Results:",
         },
-        sortable: ["name", "age", "position", "office"],
+        sortable2: ["name", "age", "position", "office"],
         sortIcon: {
             base: "sort-icon-none",
             up: "sort-icon-asc",

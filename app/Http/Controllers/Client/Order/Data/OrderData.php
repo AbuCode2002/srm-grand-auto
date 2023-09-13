@@ -19,6 +19,7 @@ final class OrderData extends Data
      * @param string|null $driver_type
      * @param string|null $mileage
      * @param string|null $station_id
+     * @param int|null $status
      */
     public function __construct(
         public ?int $id,
@@ -33,5 +34,6 @@ final class OrderData extends Data
         public ?string $driver_type,
         public ?string $mileage,
         public ?string $station_id,
+        public ?int $status,
     ){}
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\Order\OrderEditRequest;
 use App\Http\Requests\OrderStoreRequest;
 use App\Repositories\Client\Order\OrderRepository;
 use App\Transformers\Api\Client\Order\OrderIndexTransformer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class OrderController extends BaseController
@@ -22,9 +23,9 @@ class OrderController extends BaseController
         //
     }
 
-    public function index(Request $request) {
-
-        $page = $request->query('page', 1);
+    public function index(Request $request)
+    {
+        $page = $request->input('page', 1);
 
         $orders = $this->orderRepository->index($page);
 
@@ -33,7 +34,7 @@ class OrderController extends BaseController
 
     /**
      * @param OrderStoreRequest $request
-     * @return mixed
+     * @return JsonResponse
      */
     public function store(OrderStoreRequest $request)
     {

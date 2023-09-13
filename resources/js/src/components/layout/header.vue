@@ -1160,7 +1160,7 @@
         try {
             const response = await api.post('/api/auth/logout');
             localStorage.removeItem('access_token');
-            router.push({name: 'account-setting'})
+            await router.push({name: 'order-create'})
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
         }

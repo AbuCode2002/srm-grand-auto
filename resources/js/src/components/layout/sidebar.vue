@@ -702,6 +702,9 @@
                         <li>
                             <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>
                         </li>
+                      <li>
+                            <router-link to="/order/defective-act" @click="toggleMobileMenu">Создать дефектный акт</router-link>
+                        </li>
                     </ul>
                 </li>
 

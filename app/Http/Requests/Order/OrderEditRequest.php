@@ -25,6 +25,7 @@ class OrderEditRequest extends BaseRequest
             "driver_type"         =>["string"],
             "station_id"          =>["integer"],
             "mileage"             =>["integer"],
+            "status"             =>["integer"],
         ];
     }
 }

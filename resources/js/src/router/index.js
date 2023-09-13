@@ -336,6 +336,11 @@ const routes = [
         name: 'order-index-station',
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/station.vue'),
     },
+    {
+        path: '/order/defective-act/',
+        name: 'order-defective-act',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/defective_act.vue'),
+    },
 
     //drag&drop
     {
@@ -631,7 +636,7 @@ router.beforeEach((to, from, next) => {
     }
     else if (to.name === 'login-boxed' && accessToken) {
         return next({
-            name: 'account-setting'
+            name: 'order-create'
         });
     }
     next();
