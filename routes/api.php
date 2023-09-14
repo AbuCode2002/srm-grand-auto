@@ -5,6 +5,7 @@ use App\Http\Controllers\Client\Application\ApplicationController;
 use App\Http\Controllers\Client\Car\CarController;
 use App\Http\Controllers\Client\Client\ClientController;
 use App\Http\Controllers\Client\Contract\ContractController;
+use App\Http\Controllers\Client\DefectiveAct\DefectiveActController;
 use App\Http\Controllers\Client\Driver\DriverController;
 use App\Http\Controllers\Client\Order\OrderController;
 use App\Http\Controllers\Client\Region\RegionController;
@@ -64,6 +65,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             });
 
             Route::get('/driver', [DriverController::class, 'index']);
+
+            Route::group(['prefix' => 'defective-act'], static function () {
+                Route::get('/', [DefectiveActController::class, 'store']);
+            });
 
             Route::group(['prefix' => 'car'], static function () {
                 Route::get('/', [CarController::class, 'index']);
