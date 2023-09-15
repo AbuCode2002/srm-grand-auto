@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client\DefectiveAct;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Client\DefectiveAct\Data\DefectiveActData;
 use App\Http\Requests\DefectiveAct\DefectiveActRequest;
 use App\Repositories\Client\Contract\ContractRepository;
 use App\Repositories\Client\DefectiveAct\DefectiveActRepository;
@@ -27,7 +28,9 @@ class DefectiveActController extends BaseController
      */
     public function store(DefectiveActRequest $defectiveActRequest)
     {
-        $defectiveAct = $this->defectiveActRepository->store();
+        $data = DefectiveActData::from($defectiveActRequest->validated());
+
+        $defectiveAct = $this->defectiveActRepository->store($data);
 
             return $this->respondWithSuccess(
                 $this->transformCollection($defectiveAct, new DefectiveActIndexTransformer()),

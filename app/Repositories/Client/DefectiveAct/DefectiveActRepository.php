@@ -2,11 +2,9 @@
 
 namespace App\Repositories\Client\DefectiveAct;
 
-use App\Models\Contract;
+use App\Http\Controllers\Client\DefectiveAct\Data\DefectiveActData;
 use App\Models\DefectiveAct;
 use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class DefectiveActRepository extends BaseRepository
 {
@@ -18,7 +16,7 @@ class DefectiveActRepository extends BaseRepository
         $this->model = DefectiveAct::class;
     }
 
-    public function store()
+    public function store(DefectiveActData $data)
     {
         return 1;
     }
