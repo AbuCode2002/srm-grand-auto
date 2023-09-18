@@ -10,13 +10,13 @@ class DefectiveAct extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
     public function service()
     {
         return $this->hasMany(Service::class, 'service_id', 'id');
-    }
-
-    public function spareParts()
-    {
-        return $this->belongsTo(SparePart::class, 'spare_part_id', 'id');
     }
 }

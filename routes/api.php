@@ -67,7 +67,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/driver', [DriverController::class, 'index']);
 
             Route::group(['prefix' => 'defective-act'], static function () {
-                Route::get('/', [DefectiveActController::class, 'store']);
+                Route::post('/{orderId}', [DefectiveActController::class, 'store'])
+                    ->where('orderId', '[0-9]+');
             });
 
             Route::group(['prefix' => 'car'], static function () {

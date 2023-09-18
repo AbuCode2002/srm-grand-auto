@@ -11,12 +11,10 @@ class DefectiveActRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "id" => ["integer"],
-            "order_id" => ["integer"],
             "total" => ["integer"],
-            "markup" => ["integer"],
-            "total_with_markup" => ["integer"],
-            "sum_sale" => ["string"],
+            "total_procent" => ["integer"],
+            "service" => ["array"],
+            "spare_parts" => ["array"],
         ];
     }
 }

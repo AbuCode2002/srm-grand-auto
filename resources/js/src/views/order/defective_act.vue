@@ -4,41 +4,45 @@
         <div class="statbox panel box box-shadow">
             <div class="panel-body">
                 <table role="table" aria-busy="false" aria-colcount="5"
-                       class="table b-table table-hover table-bordered" id="__BVID__368">
+                       class="table b-table table-bordered" id="__BVID__368">
 
                     <thead role="rowgroup" class="">
-                    <tr role="row" class="">
-                        <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
+                    <tr role="row" class="table table-sm">
+                        <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
                             <div>Название</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
                             <div>Количество</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
                             <div>Единица измерения</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
                             <div>Цена</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
+                            <div>Процент скидки</div>
+                        </th>
+                        <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
                             <div>
                                 <div class="layout-spacing layout-top-spacing feather-icon">
                                     <div class="icon-container" style="display: inline-block;">
                                         <button @click="addNewField">
-                                            <i data-feather="plus"></i>
+                                            <i class="text-success" data-feather="plus"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="6" class="text-success"></th>
 
                     </tr>
                     </thead>
 
                     <tbody role="rowgroup" v-for="(field, fieldIndex) in fields">
+
                     <tr role="row" class="" :key="fieldIndex">
-                        <td aria-colindex="1" role="cell" class="">
+
+                        <td aria-colindex="2" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <vue-multiselect v-model="field.serviceNameModel" :options="service"
@@ -49,17 +53,17 @@
                             </div>
                         </td>
 
-                        <td aria-colindex="2" role="cell" class="">
+                        <td aria-colindex="3" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="field.count" placeholder="Количество"
-                                           class="form-control success"
+                                           class="form-control success custom-input-field"
                                            style="height: 30px">
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="3" role="cell" class="">
+                        <td aria-colindex="4" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <vue-multiselect v-model="field.unitNameModel" :options="unit"
@@ -70,22 +74,37 @@
                             </div>
                         </td>
 
-                        <td aria-colindex="4" role="cell" class="">
+                        <td aria-colindex="5" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="field.price" placeholder="Цена"
-                                           class="form-control success"
+                                           class="form-control success custom-input-field"
                                            style="height: 30px">
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="5" role="cell" class="">
+                        <td aria-colindex="6" role="cell" class="">
+                            <div class="row">
+                                <div class="col-md-auto">
+                                    <input type="number" v-model.number="field.procentSale" placeholder="Процент"
+                                           class="form-control success custom-input-field"
+                                           style="height: 30px">
+                                </div>
+                            </div>
+                        </td>
+
+                        <td aria-colindex="7" role="cell" class="">
                             <div class="row">
                                 <div class="layout-spacing layout-top-spacing feather-icon">
                                     <div class="icon-container " style="display: inline-block;">
                                         <button @click="removeField(fieldIndex)">
-                                            <i data-feather="trash"></i>
+                                            <i class="text-success" data-feather="trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="icon-container" style="display: inline-block;">
+                                        <button @click="addNewPart(fieldIndex)">
+                                            <i style="color: #2c7be5" data-feather="plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -94,32 +113,29 @@
 
                     </tr>
 
-                    <td colspan="6" class="spacer-row"></td>
-
-
                     <tr v-for="(part, partIndex) in field.parts" :key="partIndex">
 
-                        <td aria-colindex="1" role="cell" class="">
+                        <td aria-colindex="2" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
-                                    <vue-multiselect v-model="part.partNameModel" :options="service"
+                                    <vue-multiselect style="border-color: #2c7be5" v-model="part.partNameModel" :options="service"
                                                      :custom-label="serviceNames" placeholder="Запчасть">
                                     </vue-multiselect>
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="2" role="cell" class="">
+                        <td aria-colindex="3" role="cell" class="">
                             <!-- Ваше поле для количества запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="part.partCount" placeholder="Количество"
-                                           class="form-control success"
+                                           class="form-control success custom-input-part"
                                            style="height: 20px">
                                 </div>
                             </div>
                         </td>
-                        <td aria-colindex="3" role="cell" class="">
+                        <td aria-colindex="4" role="cell" class="">
                             <!-- Ваши поля для единицы измерения запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
@@ -130,31 +146,37 @@
                                 </div>
                             </div>
                         </td>
-                        <td aria-colindex="4" role="cell" class="">
+                        <td aria-colindex="5" role="cell" class="">
                             <!-- Ваше поле для цены запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="part.partPrice" placeholder="Цена"
-                                           class="form-control success"
+                                           class="form-control success custom-input-part"
                                            style="height: 20px">
                                 </div>
                             </div>
                         </td>
-                        <td aria-colindex="5" role="cell" class="">
+
+                        <td aria-colindex="6" role="cell" class="">
+                            <!-- Ваше поле для цены запчасти -->
                             <div class="row">
+                                <div class="col-md-auto">
+                                    <input type="number" v-model.number="part.partProcentSale" placeholder="Процент"
+                                           class="form-control success custom-input-part"
+                                           style="height: 20px">
+                                </div>
+                            </div>
+                        </td>
+                        <td aria-colindex="7" role="cell" class="">
+<!--                            <div class="row">-->
                                     <div class="layout-spacing layout-top-spacing feather-icon">
-                                        <div class="icon-container" style="display: inline-block;">
-                                            <button @click="addNewPart(fieldIndex)">
-                                                <i data-feather="plus"></i>
-                                            </button>
-                                        </div>
                                         <div class="icon-container " style="display: inline-block;">
                                             <button @click="removePart(fieldIndex, partIndex)">
-                                                <i data-feather="trash"></i>
+                                                <i style="color: #cc0000" data-feather="trash"></i>
                                             </button>
                                         </div>
                                     </div>
-                            </div>
+<!--                            </div>-->
                         </td>
                     </tr>
                     <td colspan="6" class="spacer-row" style="background: #4dcf8f;"></td>
@@ -194,13 +216,14 @@ const fields = ref([
         count: null,
         unitNameModel: null,
         price: null,
-        add: null,
+        procentSale: null,
         parts: [
             {
                 partNameModel: null,
                 partCount: null,
                 partUnitNameModel: null,
                 partPrice: null,
+                partProcentSale: null,
             }
         ]
     }
@@ -244,16 +267,21 @@ const addNewField = () => {
         count: null,
         unitNameModel: null,
         price: null,
+        procentSale: null,
         parts: [
             {
                 partNameModel: null,
                 partCount: null,
                 partUnitNameModel: null,
                 partPrice: null,
+                partProcentSale: null,
             },
         ],
     };
+
     fields.value.push(newField);
+
+    setTimeout(feather.replace, 0); // Вызовите инициализацию после добавления
 };
 
 const addNewPart = (fieldIndex) => {
@@ -262,40 +290,94 @@ const addNewPart = (fieldIndex) => {
         partCount: null,
         partUnitNameModel: null,
         partPrice: null,
+        partProcentSale: null,
     });
+
+    setTimeout(feather.replace, 0); // Вызовите инициализацию после добавления
 };
 
-// const postDefectiveAct = async () => {
+import {useRouter} from "vue-router";
 
-// const order = {
-//   "serviceNameModel": serviceNameModel.value ? serviceNameModel : 1,
-//   "count": count.value ? count : 1,
-//   "unitNameModel": unitNameModel.value ? unitNameModel : 1,
-//   "price": price.value ? price : 1,
-//   "parts.partCount": fields.parts.partCount.value ? serviceNameModel : 1,
-//   "parts.partNameModel": fields.parts.partNameModel.value ? serviceNameModel : 1,
-//   "parts.partPrice": fields.parts.partPrice.value ? fields.parts.partPrice : 1,
-// };
+const route = useRouter();
+const orderId = route.currentRoute.value.params.orderId;
 
-// console.log(fields.value)
-// try {
-//   const response = await api.post('/api/auth/client/order', order);
-//   regions.value = response.data.regions;
-//
-//   new window.Swal({
-//     title: "Saved succesfully",
-//     padding: "2em",
-//   });
-// } catch (error) {
-//   new window.Swal({
-//     icon: "warning",
-//     title: "Ошибка",
-//     text: "Что то пошло не так!",
-//     padding: "2em"
-//   });
-//   console.error('Ошибка при получении данных:', error);
-// }
-// }
+const postDefectiveAct = async () => {
+
+    const totalPrice = fields.value.reduce((total, field) => {
+        return total + (field.price || 0);
+    }, 0);
+
+    const totalPartPrice = fields.value.reduce((total, field) => {
+        const partPrice = field.parts.reduce((partTotal, part) => {
+            return partTotal + (part.partPrice || 0);
+        }, 0);
+
+        return total + partPrice;
+    }, 0);
+
+    const totalProcent = fields.value.reduce((total, field) => {
+        return total + (field.procentSale || 0);
+    }, 0);
+
+    const totalPartProcent = fields.value.reduce((total, field) => {
+        const partPrice = field.parts.reduce((partTotal, part) => {
+            return partTotal + (part.partProcentSale || 0);
+        }, 0);
+
+        return total + partPrice;
+    }, 0);
+
+
+    const defectiveAct = {
+        "total": totalPrice + totalPartPrice,
+        "total_procent": totalProcent + totalPartProcent,
+        "service": [],
+        "spare_parts": [],
+    }
+
+    fields.value.forEach((field, index) => {
+        defectiveAct.service.push({
+            "name": field.serviceNameModel || null,
+            "count": field.count || null,
+            "unit": field.unitNameModel || null,
+            "price": field.price || null,
+            "sale_percent": field.procentSale || null,
+        });
+
+        const parts = field.parts;
+
+        const partsData = parts.map(part => ({
+            "name": part.partNameModel || null,
+            "count": part.partCount || null,
+            "unit": part.partUnitNameModel || null,
+            "price": part.partPrice || null,
+            "sale_percent": part.partProcentSale || null,
+        }));
+
+        defectiveAct.spare_parts.push(partsData);
+    });
+
+    console.log(defectiveAct)
+    try {
+        const response = await api.post(`/api/auth/client/defective-act/${orderId}`, defectiveAct);
+
+        // console.log(router.push({name: 'Home'}));
+
+        new window.Swal({
+            title: "Saved succesfully",
+            padding: "2em",
+        });
+    } catch (error) {
+        new window.Swal({
+            icon: "warning",
+            title: "Ошибка",
+            text: "Что то пошло не так!",
+            padding: "2em"
+        });
+        console.error('Ошибка при получении данных:', error);
+    }
+}
+
 import feather from 'feather-icons';
 
 const mountFeatherIcons = () => {
@@ -310,6 +392,18 @@ onMounted(mountFeatherIcons);
 .spacer-row {
     height: 2px;
 }
+</style>
+
+<style lang="css" scoped>
+
+.custom-input-field {
+    border-color: #4dcf8f !important;
+}
+
+.custom-input-part {
+    border-color: #2c7be5 !important;
+}
+
 </style>
 
 <style scoped>
@@ -427,4 +521,10 @@ onMounted(mountFeatherIcons);
     font-weight: 600;
     font-size: 14px;
 }
+
+.icon-container button {
+    width: 30px; /* Задайте нужную ширину */
+    height: 30px; /* Задайте нужную высоту */
+}
+
 </style>

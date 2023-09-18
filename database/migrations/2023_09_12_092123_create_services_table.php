@@ -17,9 +17,14 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('count');
             $table->string('unit');
-            $table->unsignedBigInteger('price');
-            $table->unsignedBigInteger('sale_percent');
+            $table->unsignedDouble('price');
+            $table->unsignedDouble('sale_percent');
             $table->timestamps();
+
+            $table->foreign('defective_act_id')
+                ->references('id')
+                ->on('defective_acts')
+            ;
         });
     }
 

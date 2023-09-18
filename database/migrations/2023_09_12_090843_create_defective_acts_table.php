@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::create('defective_acts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('total');
-            $table->unsignedBigInteger('markup');
-            $table->unsignedBigInteger('total_with_markup');
-            $table->unsignedBigInteger('sum_sale');
+            $table->unsignedDouble('total');
+            $table->unsignedDouble('markup');
+            $table->unsignedDouble('total_with_markup');
+            $table->unsignedDouble('sum_sale');
             $table->timestamps();
+
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
+            ;
         });
     }
 

@@ -337,7 +337,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/station.vue'),
     },
     {
-        path: '/order/defective-act/',
+        path: '/order/defective-act/:orderId',
         name: 'order-defective-act',
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/defective_act.vue'),
     },
