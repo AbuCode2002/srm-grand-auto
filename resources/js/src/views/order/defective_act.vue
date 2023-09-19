@@ -1,40 +1,38 @@
 <template>
     <div class="layout-px-spacing">
-
         <div class="statbox panel box box-shadow">
             <div class="panel-body">
-                <table role="table" aria-busy="false" aria-colcount="5"
+                <table role="table" aria-busy="false" aria-colcount="6"
                        class="table b-table table-bordered" id="__BVID__368">
 
                     <thead role="rowgroup" class="">
                     <tr role="row" class="table table-sm">
-                        <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
                             <div>Название</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
                             <div>Количество</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
                             <div>Единица измерения</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
                             <div>Цена</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
                             <div>Процент скидки</div>
                         </th>
-                        <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
+                        <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
                             <div>
-                                <div class="layout-spacing layout-top-spacing feather-icon">
-                                    <div class="icon-container" style="display: inline-block;">
-                                        <button @click="addNewField">
-                                            <i class="text-success" data-feather="plus"></i>
+                                <div class="feather-icon">
+                                    <div style="display: inline-block;">
+                                        <button class="custom-button" @click="addNewField">
+                                            <i class="custom-field" data-feather="plus"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </th>
-
                     </tr>
                     </thead>
 
@@ -42,18 +40,18 @@
 
                     <tr role="row" class="" :key="fieldIndex">
 
-                        <td aria-colindex="2" role="cell" class="">
+                        <td aria-colindex="1" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <vue-multiselect v-model="field.serviceNameModel" :options="service"
-                                                     :custom-label="serviceNames"
+                                                     :custom-label="serviceNames" class="custom-multiselect-field"
                                                      placeholder="Услуга">
                                     </vue-multiselect>
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="3" role="cell" class="">
+                        <td aria-colindex="2" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="field.count" placeholder="Количество"
@@ -63,18 +61,18 @@
                             </div>
                         </td>
 
-                        <td aria-colindex="4" role="cell" class="">
+                        <td aria-colindex="3" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <vue-multiselect v-model="field.unitNameModel" :options="unit"
                                                      :custom-label="unitNames"
-                                                     placeholder="Ед. измер.">
+                                                     placeholder="Ед. измер." class="custom-multiselect-field">
                                     </vue-multiselect>
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="5" role="cell" class="">
+                        <td aria-colindex="4" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="field.price" placeholder="Цена"
@@ -84,27 +82,28 @@
                             </div>
                         </td>
 
-                        <td aria-colindex="6" role="cell" class="">
+                        <td aria-colindex="5" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <input type="number" v-model.number="field.procentSale" placeholder="Процент"
                                            class="form-control success custom-input-field"
-                                           style="height: 30px">
+                                           style="height: 30px"
+                                    >
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="7" role="cell" class="">
+                        <td aria-colindex="6" role="cell" class="">
                             <div class="row">
-                                <div class="layout-spacing layout-top-spacing feather-icon">
-                                    <div class="icon-container " style="display: inline-block;">
-                                        <button @click="removeField(fieldIndex)">
-                                            <i class="text-success" data-feather="trash"></i>
+                                <div class="feather-icon">
+                                    <div style="display: inline-block;">
+                                        <button class="custom-button" @click="removeField(fieldIndex)">
+                                            <i class="custom-field" data-feather="trash"></i>
                                         </button>
                                     </div>
-                                    <div class="icon-container" style="display: inline-block;">
-                                        <button @click="addNewPart(fieldIndex)">
-                                            <i style="color: #2c7be5" data-feather="plus"></i>
+                                    <div style="display: inline-block;">
+                                        <button class="custom-button" @click="addNewPart(fieldIndex)">
+                                            <i class="custom-part" data-feather="plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -115,17 +114,17 @@
 
                     <tr v-for="(part, partIndex) in field.parts" :key="partIndex">
 
-                        <td aria-colindex="2" role="cell" class="">
+                        <td aria-colindex="1" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
-                                    <vue-multiselect style="border-color: #2c7be5" v-model="part.partNameModel" :options="service"
-                                                     :custom-label="serviceNames" placeholder="Запчасть">
+                                    <vue-multiselect v-model="part.partNameModel" :options="service"
+                                                     :custom-label="serviceNames" placeholder="Запчасть" class="custom-multiselect-part">
                                     </vue-multiselect>
                                 </div>
                             </div>
                         </td>
 
-                        <td aria-colindex="3" role="cell" class="">
+                        <td aria-colindex="2" role="cell" class="">
                             <!-- Ваше поле для количества запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
@@ -135,18 +134,18 @@
                                 </div>
                             </div>
                         </td>
-                        <td aria-colindex="4" role="cell" class="">
+                        <td aria-colindex="3" role="cell" class="">
                             <!-- Ваши поля для единицы измерения запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
                                     <vue-multiselect v-model="part.partUnitNameModel" :options="unit"
                                                      :custom-label="unitNames"
-                                                     placeholder="Ед. измер.">
+                                                     placeholder="Ед. измер." class="custom-multiselect-part">
                                     </vue-multiselect>
                                 </div>
                             </div>
                         </td>
-                        <td aria-colindex="5" role="cell" class="">
+                        <td aria-colindex="4" role="cell" class="">
                             <!-- Ваше поле для цены запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
@@ -157,7 +156,7 @@
                             </div>
                         </td>
 
-                        <td aria-colindex="6" role="cell" class="">
+                        <td aria-colindex="5" role="cell" class="">
                             <!-- Ваше поле для цены запчасти -->
                             <div class="row">
                                 <div class="col-md-auto">
@@ -167,16 +166,14 @@
                                 </div>
                             </div>
                         </td>
-                        <td aria-colindex="7" role="cell" class="">
-<!--                            <div class="row">-->
-                                    <div class="layout-spacing layout-top-spacing feather-icon">
-                                        <div class="icon-container " style="display: inline-block;">
-                                            <button @click="removePart(fieldIndex, partIndex)">
-                                                <i style="color: #cc0000" data-feather="trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-<!--                            </div>-->
+                        <td aria-colindex="6" role="cell" class="">
+                            <div class="feather-icon">
+                                <div style="display: inline-block;">
+                                    <button class="custom-button" @click="removePart(fieldIndex, partIndex)">
+                                        <i class="custom-part" data-feather="trash"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <td colspan="6" class="spacer-row" style="background: #4dcf8f;"></td>
@@ -185,8 +182,7 @@
                 </table>
                 <div class="account-settings-container">
                     <div class="as-footer-container">
-                        <button type="button" class="btn btn-success" @click.prevent="postDefectiveAct()">Save Changes
-                        </button>
+                        <button type="button" class="btn btn-success" @click.prevent="postDefectiveAct()">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -201,7 +197,6 @@ import "../../assets/sass/users/account-setting.scss";
 import {useMeta} from "../../composables/use-meta";
 import api from "../../api";
 import VueMultiselect from "vue-multiselect";
-import router from "../../router";
 
 useMeta({title: "Дефектный акт"});
 
@@ -299,6 +294,7 @@ const addNewPart = (fieldIndex) => {
 import {useRouter} from "vue-router";
 
 const route = useRouter();
+
 const orderId = route.currentRoute.value.params.orderId;
 
 const postDefectiveAct = async () => {
@@ -396,6 +392,23 @@ onMounted(mountFeatherIcons);
 
 <style lang="css" scoped>
 
+.custom-button {
+    background: rgba(0,0,0,0.0);
+}
+
+.custom-field {
+    color: #4dcf8f !important;
+}
+.custom-field:hover {
+    color: #f09819 !important;
+}
+.custom-part {
+    color: #2c7be5 !important;
+}
+.custom-part:hover {
+    color: #f09819 !important;
+}
+
 .custom-input-field {
     border-color: #4dcf8f !important;
 }
@@ -404,9 +417,28 @@ onMounted(mountFeatherIcons);
     border-color: #2c7be5 !important;
 }
 
+.custom-multiselect-field >>> .multiselect__tags {
+    border-color: #4dcf8f;
+}
+
+.custom-multiselect-part >>> .multiselect__tags {
+    border-color: #2c7be5;
+}
+
+.table th[aria-colindex] {
+    border-top: 2px solid #4dcf8f !important;
+}
+
 </style>
 
 <style scoped>
+
+.icon-container button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
 .feather-icon .icon-section {
     padding: 30px;
 }
@@ -523,8 +555,8 @@ onMounted(mountFeatherIcons);
 }
 
 .icon-container button {
-    width: 30px; /* Задайте нужную ширину */
-    height: 30px; /* Задайте нужную высоту */
+    width: 30px;
+    height: 30px;
 }
 
 </style>
