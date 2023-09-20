@@ -319,7 +319,7 @@ const routes = [
     {
         path: '/order/profile',
         name: 'profile',
-        component: () => import(/* webpackChunkName: "order-profile" */ '../views/order/profile.vue'),
+        component: () => import(/* webpackChunkName: "order-profile" */ '../views/profile.vue'),
     },
     {
         path: '/order/create-order',

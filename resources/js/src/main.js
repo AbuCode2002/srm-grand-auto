@@ -71,5 +71,3 @@ import "easymde/dist/easymde.min.css";
     app.use(head)
     app.use(VueEasymde)
     app.mount("#app");
-
-

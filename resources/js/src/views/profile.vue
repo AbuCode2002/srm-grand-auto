@@ -392,9 +392,9 @@
 </template>
 
 <script setup>
-    import "../../assets/sass/scrollspyNav.scss";
-    import "../../assets/sass/users/user-profile.scss";
+    import "../assets/sass/scrollspyNav.scss";
+    import "../assets/sass/users/user-profile.scss";
 
-    import { useMeta } from "../../composables/use-meta";
+    import { useMeta } from "../composables/use-meta";
     useMeta({ title: "User Profile" });
 </script>

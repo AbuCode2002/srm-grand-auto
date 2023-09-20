@@ -26,11 +26,11 @@ class OrderRepository extends BaseRepository
 
     public function index(int $page)
     {
-        $user = Auth::user();
+//        $user = Auth::user();
 
-        $roleName = Role::query()->where('id', $user->role_id)->value('name');
+//        $roleName = Role::query()->where('id', $user->role_id)->value('name');
 
-        if ($roleName === 'superAdmin') {
+//        if ($roleName === 'client') {
 
             return $this->model::query()
                 ->with('users',
@@ -46,22 +46,23 @@ class OrderRepository extends BaseRepository
                 }])
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
-        } else if ($roleName === 'manager') {
-
-            return $this->model::query()
-                ->with('car')
-                ->with('status')
-                ->with('region')
-                ->paginate($this->perPage, ['*'], 'page', $page);
-
-        } else if ($roleName === 'client') {
-
-            return $this->model::query()
-                ->with('car')
-                ->with('status')
-                ->with('region')
-                ->paginate($this->perPage, ['*'], 'page', $page);
-        }
+//        }
+//        else if ($roleName === 'manager') {
+//
+//            return $this->model::query()
+//                ->with('car')
+//                ->with('status')
+//                ->with('region')
+//                ->paginate($this->perPage, ['*'], 'page', $page);
+//
+//        } else if ($roleName === 'client') {
+//
+//            return $this->model::query()
+//                ->with('car')
+//                ->with('status')
+//                ->with('region')
+//                ->paginate($this->perPage, ['*'], 'page', $page);
+//        }
     }
 
     /**
