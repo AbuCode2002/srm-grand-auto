@@ -176,7 +176,7 @@ const selectStation = async (id) => {
     const station = {
         "id": orderId,
         "station_id": id,
-        "status": 13,//Статус: Назначена диагностика
+        "status": 12,//Статус: Ожидает назначение диагностики от СТО
 
     }
 

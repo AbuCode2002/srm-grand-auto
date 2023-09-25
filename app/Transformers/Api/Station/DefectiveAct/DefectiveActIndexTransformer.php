@@ -3,12 +3,46 @@
 namespace App\Transformers\Api\Station\DefectiveAct;
 
 use App\Models\DefectiveAct;
+use App\Models\DefectWork;
+use App\Models\Service;
+use App\Transformers\Api\Station\DefectActWorks\DefectiveActWorksIndexTransformer;
+use App\Transformers\Api\Station\Service\ServiceIndexTransformer;
 use App\Transformers\BaseTransformer;
 
 class DefectiveActIndexTransformer extends BaseTransformer
 {
 
-//    protected array $defaultIncludes = [];
+    protected array $defaultIncludes = ['service', 'defectWorks', 'defectParts'];
+
+    public function includeService(DefectiveAct $defectiveAct)
+    {
+        $model = null;
+        if ($defectiveAct->relationLoaded('service')) {
+            $model = $defectiveAct->service;
+        }
+
+        return $model ? $this->collection($model, new ServiceIndexTransformer()) : null;
+    }
+
+    public function includeDefectWorks(DefectiveAct $defectiveAct)
+    {
+        $model = null;
+        if ($defectiveAct->relationLoaded('defectWorks')) {
+            $model = $defectiveAct->defectWorks;
+        }
+
+        return $model ? $this->collection($model, new DefectiveActWorksIndexTransformer()) : null;
+    }
+
+    public function includeDefectParts(DefectiveAct $defectiveAct)
+    {
+        $model = null;
+        if ($defectiveAct->relationLoaded('defectParts')) {
+            $model = $defectiveAct->defectParts;
+        }
+
+        return $model ? $this->collection($model, new Defective()) : null;
+    }
 
     /**
      * @return string

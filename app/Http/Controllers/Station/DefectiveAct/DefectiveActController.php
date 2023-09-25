@@ -30,7 +30,6 @@ class DefectiveActController extends BaseController
      */
     public function store(int $orderId, DefectiveActRequest $defectiveActRequest)
     {
-//        dd($defectiveActRequest);
         $data = DefectiveActData::from($defectiveActRequest->validated());
 
         $order = $this->orderRepository->findById($orderId);
@@ -41,5 +40,32 @@ class DefectiveActController extends BaseController
                 $this->transformItem($defectiveAct, new DefectiveActIndexTransformer()),
                 "created",
             );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        $defectiveAct = $this->defectiveActRepository->index();
+
+        return $this->respondWithSuccess(
+            $this->transformCollection($defectiveAct, new DefectiveActIndexTransformer()),
+            "created",
+        );
+    }
+
+    /**
+     * @param int $orderId
+     * @return JsonResponse
+     */
+    public function show(int $orderId): JsonResponse
+    {
+        $defectiveAct = $this->defectiveActRepository->show($orderId);
+
+        return $this->respondWithSuccess(
+            $this->transformCollection($defectiveAct, new DefectiveActIndexTransformer()),
+            "created",
+        );
     }
 }

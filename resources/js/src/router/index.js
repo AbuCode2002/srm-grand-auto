@@ -329,7 +329,7 @@ const routes = [
     {
         path: '/order/index',
         name: 'order-index',
-        component: () => import(/* webpackChunkName: "order-order" */ '../views/order/order.vue'),
+        component: () => import(/* webpackChunkName: "order-order" */ '../views/order/index_order.vue'),
     },
     {
         path: '/order/index/station/:regionId/:orderId',
@@ -339,7 +339,12 @@ const routes = [
     {
         path: '/order/defective-act/:orderId',
         name: 'order-defective-act',
-        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/defective_act.vue'),
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/create_defective_act.vue'),
+    },
+    {
+        path: '/order/defective-act/show/:orderId',
+        name: 'order-defective-act-show',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/show_defective_act.vue'),
     },
 
     //drag&drop

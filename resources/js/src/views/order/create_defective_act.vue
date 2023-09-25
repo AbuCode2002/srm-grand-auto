@@ -417,11 +417,11 @@ onMounted(mountFeatherIcons);
     border-color: #2c7be5 !important;
 }
 
-.custom-multiselect-field >>> .multiselect__tags {
+.custom-multiselect-field :deep(.multiselect__tags) {
     border-color: #4dcf8f;
 }
 
-.custom-multiselect-part >>> .multiselect__tags {
+.custom-multiselect-part :deep(.multiselect__tags) {
     border-color: #2c7be5;
 }
 

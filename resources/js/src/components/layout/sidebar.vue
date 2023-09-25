@@ -694,9 +694,6 @@
 
                     <ul id="users" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
                         <li>
-                            <router-link to="/order/profile" @click="toggleMobileMenu">Profile</router-link>
-                        </li>
-                        <li>
                             <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
                         </li>
                         <li>
@@ -747,6 +744,9 @@
                     </a>
 
                     <ul id="pages" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
+                        <li>
+                            <router-link to="/order/profile" @click="toggleMobileMenu">Profile из Order</router-link>
+                        </li>
                         <li>
                             <router-link to="/pages/helpdesk" @click="toggleMobileMenu">Helpdesk</router-link>
                         </li>

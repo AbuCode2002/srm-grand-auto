@@ -5,6 +5,7 @@ use App\Http\Controllers\Station\Car\CarController;
 use App\Http\Controllers\Station\Client\ClientController;
 use App\Http\Controllers\Station\Contract\ContractController;
 use App\Http\Controllers\Station\DefectiveAct\DefectiveActController;
+use App\Http\Controllers\Station\Diagnostics\DiagnosticsController;
 use App\Http\Controllers\Station\Driver\DriverController;
 use App\Http\Controllers\Station\Order\OrderController;
 use App\Http\Controllers\Station\Region\RegionController;
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::get('/service-name', [ServiceNameController::class, 'index']);
 
         Route::get('/application', [ApplicationController::class, 'index']);
+
         Route::get('/contract', [ContractController::class, 'index']);
 
         Route::group(['prefix' => 'region'], static function () {
@@ -49,6 +51,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::group(['prefix' => 'defective-act'], static function () {
             Route::post('/{orderId}', [DefectiveActController::class, 'store'])
                 ->where('orderId', '[0-9]+');
+            Route::get('/', [DefectiveActController::class, 'index']);
+            Route::get('/show/{orderId}', [DefectiveActController::class, 'show']);
         });
 
         Route::group(['prefix' => 'car'], static function () {
@@ -58,9 +62,13 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         });
 
         Route::get('/user', [UserController::class, 'show']);
+
         Route::get('/client', [ClientController::class, 'index']);
+
         Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
             ->where('regionId', '[0-9]+')
             ->where('orderId', '[0-9]+');
+
+        Route::post('/diagnostics/{orderId}', [DiagnosticsController::class, 'store']);
     });
 });

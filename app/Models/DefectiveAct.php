@@ -4,19 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DefectiveAct extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function order()
+    public function order(): HasOne
     {
-        return $this->belongsTo(Order::class, 'order_id', 'id');
+        return $this->hasOne(Order::class, 'id', 'order_id');
     }
 
-    public function service()
+    public function service(): HasMany
     {
-        return $this->hasMany(Service::class, 'service_id', 'id');
+        return $this->hasMany(Service::class, 'defective_act_id', 'id');
     }
 }

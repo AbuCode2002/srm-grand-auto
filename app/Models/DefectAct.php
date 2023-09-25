@@ -57,7 +57,7 @@ class DefectAct extends Model
      */
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order1::class, 'order_id', 'id');
     }
 
     /**
