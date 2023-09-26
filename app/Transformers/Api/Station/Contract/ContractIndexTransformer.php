@@ -36,6 +36,8 @@ class ContractIndexTransformer extends BaseTransformer
         return [
             "id" => $contract->id,
             "number_of_contract" => $contract->number_of_contract,
+            "signed_at" => $contract->signed_at,
+            "expire_at" => $contract->expire_at,
         ];
     }
 }

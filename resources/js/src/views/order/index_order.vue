@@ -443,53 +443,6 @@
             </div>
           </div>
 
-          <div id="modalBasic" class="col-lg-12 layout-spacing">
-            <div class="statbox panel box box-shadow">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                    <h4>Basic</h4>
-                  </div>
-                </div>
-              </div>
-              <div class="panel-body">
-                <!-- Button trigger modal -->
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary mb-2 me-2" data-bs-toggle="modal"
-                          data-bs-target="#exampleModal">Launch modal
-                  </button>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
-                                class="btn-close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p class="modal-text">
-                          Mauris mi tellus, pharetra vel mattis sed, tempus ultrices eros. Phasellus egestas sit amet
-                          velit sed luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
-                          ridiculus
-                          mus. Suspendisse potenti. Vivamus ultrices sed urna ac pulvinar. Ut sit amet ullamcorper mi.
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn" data-dismiss="modal" data-bs-dismiss="modal"><i
-                            class="flaticon-cancel-12"></i> Discard
-                        </button>
-                        <button type="button" class="btn btn-primary">Save</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
           <div class="panel-body text-center">
             <div class="paginating-container pagination-solid flex-column align-items-center">
               <paginate

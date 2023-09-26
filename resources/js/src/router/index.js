@@ -324,12 +324,17 @@ const routes = [
     {
         path: '/order/create-order',
         name: 'order-create',
-        component: () => import(/* webpackChunkName: "order-account-setting" */ '../views/order/create_order.vue'),
+        component: () => import(/* webpackChunkName: "create_order" */ '../views/order/create_order.vue'),
     },
     {
         path: '/order/index',
         name: 'order-index',
-        component: () => import(/* webpackChunkName: "order-order" */ '../views/order/index_order.vue'),
+        component: () => import(/* webpackChunkName: "index_order" */ '../views/order/index_order.vue'),
+    },
+    {
+        path: '/order/new',
+        name: 'new-order',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/new_order.vue'),
     },
     {
         path: '/order/index/station/:regionId/:orderId',

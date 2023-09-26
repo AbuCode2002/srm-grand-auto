@@ -23,11 +23,18 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::group(['middleware' => 'jwt.auth'], function () {
 
         Route::group(['prefix' => 'order'], static function () {
+
             Route::post('/', [OrderController::class, 'store']);
+
             Route::post('/edit', [OrderController::class, 'edit']);
+
             Route::get('/', [OrderController::class, 'index']);
+
             Route::get('/show/{id}', [OrderController::class, 'show'])
                 ->where('id', '[0-9]+');
+
+            Route::get('/index-by-status', [OrderController::class, 'indexByStatus']);
+
         });
 
         Route::group(['prefix' => 'role'], static function () {

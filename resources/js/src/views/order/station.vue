@@ -121,7 +121,9 @@ import api from "../../api";
 const station = ref([]);
 
 const route = useRouter();
+
 const orderId = route.currentRoute.value.params.orderId;
+
 const getStation = async () => {
     const regionId = route.currentRoute.value.params.regionId;
 

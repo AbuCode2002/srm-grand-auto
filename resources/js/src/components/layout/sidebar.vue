@@ -699,8 +699,38 @@
                         <li>
                             <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>
                         </li>
-                      <li>
-                            <router-link to="/order/defective-act" @click="toggleMobileMenu">Создать дефектный акт</router-link>
+                        <li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status1)">Новая заявка</router-link>
+                        </li>
+                        <li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status2)">Ожидает назначение диагностики от СТО</router-link>
+                        </li>
+                        <li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status3)">Назначена диагностика</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status4)">ДА ожидает согласования в отделе по работе с партнерами</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status5)">ДА на согласовании в отделе по работе с клиентами</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status6)">Согласован</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status7)">Проводятся ремонтные работы</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status8)">Ремонт выполнен</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(status9)">Заявка закрыта</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/order/defective-act" @click="toggleMobileMenu()">Создать дефектный акт</router-link>
                         </li>
                     </ul>
                 </li>
@@ -931,9 +961,26 @@
 <script setup>
     import { onMounted, ref } from 'vue';
     import { useStore } from 'vuex';
+    import {useRouter} from "vue-router";
     const store = useStore();
 
     const menu_collapse = ref('dashboard');
+
+    const status1 = ref('Новая заявка');
+    const status2 = ref('Ожидает назначение диагностики от СТО');
+    const status3 = ref('Назначена диагностика');
+    const status4 = ref('ДА ожидает согласования в отделе по работе с партнерами');
+    const status5 = ref('ДА на согласовании в отделе по работе с клиентами');
+    const status6 = ref('Согласован');
+    const status7 = ref('Проводятся ремонтные работы');
+    const status8 = ref('Ремонт выполнен ');
+    const status9 = ref('Заявка закрыта');
+
+    const router = useRouter();
+
+    const filter = (status = 1) => {
+        router.push({name: 'new-order', query: {status}});
+    }
 
     onMounted(() => {
         const selector = document.querySelector('#sidebar a[href="' + window.location.pathname + '"]');

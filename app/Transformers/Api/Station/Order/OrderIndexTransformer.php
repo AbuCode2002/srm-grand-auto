@@ -3,12 +3,85 @@
 namespace App\Transformers\Api\Station\Order;
 
 use App\Models\Order;
+use App\Transformers\Api\Station\Car\CarIndexTransformer;
+use App\Transformers\Api\Station\Contract\ContractIndexTransformer;
+use App\Transformers\Api\Station\Region\RegionIndexTransformer;
+use App\Transformers\Api\Station\Station\StationShowTransformer;
+use App\Transformers\Api\Station\Status\StatusIndexTransformer;
+use App\Transformers\Api\Station\User\UserIndexTransformer;
 use App\Transformers\BaseTransformer;
 
 class OrderIndexTransformer extends BaseTransformer
 {
 
-//    protected array $defaultIncludes = [];
+    protected array $defaultIncludes = [
+        'users',
+        'contract',
+        'car',
+        'status',
+        'region',
+        'station'
+    ];
+
+    public function includeUsers(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('users')) {
+            $model = $order->users;
+        }
+
+        return $model ? $this->collection($model, new UserIndexTransformer()) : null;
+    }
+
+    public function includeContract(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('contract')) {
+            $model = $order->contract;
+        }
+
+        return $model ? $this->item($model, new ContractIndexTransformer()) : null;
+    }
+
+    public function includeCar(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('car')) {
+            $model = $order->car;
+        }
+
+        return $model ? $this->item($model, new CarIndexTransformer()) : null;
+    }
+
+    public function includeStatus(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('status')) {
+            $model = $order->getRelation('status');
+        }
+
+        return $model ? $this->item($model, new StatusIndexTransformer()) : null;
+    }
+
+    public function includeRegion(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('region')) {
+            $model = $order->region;
+        }
+
+        return $model ? $this->item($model, new RegionIndexTransformer()) : null;
+    }
+
+    public function includeStation(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('station')) {
+            $model = $order->station;
+        }
+
+        return $model ? $this->item($model, new StationShowTransformer()) : null;
+    }
 
     /**
      * @return string
@@ -33,6 +106,7 @@ class OrderIndexTransformer extends BaseTransformer
     public function transform(Order $order): array
     {
         return [
+            "id" => $order->id,
             "car_id" => $order->car_id,
             "region_id" => $order->region_id,
             "is_evacuated" => $order->is_evacuated,
@@ -45,6 +119,7 @@ class OrderIndexTransformer extends BaseTransformer
             "driver_type" => $order->driver_type,
             "mileage" => $order->mileage,
             "station_id" => $order->station_id,
+            "created_at" => $order->created_at,
         ];
     }
 }

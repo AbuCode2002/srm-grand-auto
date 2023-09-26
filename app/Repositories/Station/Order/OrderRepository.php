@@ -2,15 +2,18 @@
 
 namespace App\Repositories\Station\Order;
 
+use App\Http\Controllers\Station\Order\Data\OrderByStatusData;
 use App\Http\Controllers\Station\Order\Data\OrderData;
 use App\Models\Order;
 use App\Models\Role;
+use App\Models\Status;
 use App\Models\UserOrder;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use function Symfony\Component\String\s;
 
 class OrderRepository extends BaseRepository
 {
@@ -94,9 +97,10 @@ class OrderRepository extends BaseRepository
 
         return $order;
     }
-public function edit(
-    Order $order,
-    OrderData $data
+
+    public function edit(
+        Order     $order,
+        OrderData $data
     )
     {
         $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
@@ -129,14 +133,19 @@ public function edit(
         return $this->model::query()->where('id', $id)->get();
     }
 
-//    public function show()
-//    {
-//        $userId = Auth::user()->id;
-//
-//        $regionId = UserToRegion::query()->where('user_id', $userId)->pluck('region_id')->toArray();
-//
-//        $order = $this->model::query()->whereIn('region_id', $regionId);
-//
-//        return $order;
-//    }
+    public function indexByStatus($page, $status)
+    {
+        $statusId = Status::query()->where('name', $status)->value('id');
+
+        return $this->model::query()
+            ->with('users',
+                'contract',
+                'car',
+                'status',
+                'region',
+                'station')
+            ->where('status', $statusId)
+            ->paginate($this->perPage, ['*'], 'page', $page);
+    }
+
 }
