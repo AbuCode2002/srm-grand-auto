@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Order
  *
+ * @property integer id,
  * @property integer car_id,
  * @property integer region_id,
  * @property $is_evacuated,

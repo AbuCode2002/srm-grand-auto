@@ -1,195 +1,100 @@
 <template>
-    <div class="layout-px-spacing">
-        <div class="statbox panel box box-shadow">
-            <div class="panel-body">
-                <table role="table" aria-busy="false" aria-colcount="6"
-                       class="table b-table table-bordered" id="__BVID__368">
+  <div class="layout-px-spacing">
+    <div class="statbox panel box box-shadow">
+      <div class="panel-body">
+        <table role="table" aria-busy="false" aria-colcount="6"
+               class="table b-table table-bordered" id="__BVID__368">
 
-                    <thead role="rowgroup" class="">
-                    <tr role="row" class="table table-sm">
-                        <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
-                            <div>Название</div>
-                        </th>
-                        <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                            <div>Количество</div>
-                        </th>
-                        <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                            <div>Единица измерения</div>
-                        </th>
-                        <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                            <div>Цена</div>
-                        </th>
-                        <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
-                            <div>Процент скидки</div>
-                        </th>
-                        <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                            <div>
-                                <div class="feather-icon">
-                                    <div style="display: inline-block;">
-                                        <button class="custom-button" @click="addNewField">
-                                            <i class="custom-field" data-feather="plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
+          <thead role="rowgroup" class="">
+          <tr role="row" class="table table-sm">
+            <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
+              <div>Название</div>
+            </th>
+            <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
+              <div>Количество</div>
+            </th>
+            <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
+              <div>Единица измерения</div>
+            </th>
+            <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
+              <div>Цена</div>
+            </th>
+            <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
+              <div>Процент скидки</div>
+            </th>
+          </tr>
+          </thead>
 
-                    <tbody role="rowgroup" v-for="(field, fieldIndex) in fields">
+          <tbody role="rowgroup" v-for="(field, fieldIndex) in fields">
 
-                    <tr role="row" class="" :key="fieldIndex">
+          <tr role="row" class="" :key="fieldIndex">
 
-                        <td aria-colindex="1" role="cell" class="">
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <vue-multiselect v-model="field.serviceNameModel" :options="service"
-                                                     :custom-label="serviceNames"
-                                                     placeholder="Услуга" class="custom-multiselect-field">
-                                    </vue-multiselect>
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="1" role="cell" class="">
+              <div class="text-success">{{ field.serviceNameModel ? field.serviceNameModel.name : '' }}</div>
+            </td>
 
-                        <td aria-colindex="2" role="cell" class="">
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <input type="number" v-model.number="field.count" placeholder="Количество"
-                                           class="form-control success custom-input-field"
-                                           style="height: 30px">
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="2" role="cell" class="">
+              <div class="text-success">{{ field.count }}</div>
+            </td>
 
-                        <td aria-colindex="3" role="cell" class="">
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <vue-multiselect v-model="field.unitNameModel" :options="unit"
-                                                     :custom-label="unitNames"
-                                                     placeholder="Ед. измер." class="custom-multiselect-field">
-                                    </vue-multiselect>
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="3" role="cell" class="">
+              <div class="text-success">{{ field.unitNameModel ? field.unitNameModel.unitName : '' }}</div>
+            </td>
 
-                        <td aria-colindex="4" role="cell" class="">
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <input type="number" v-model.number="field.price" placeholder="Цена"
-                                           class="form-control success custom-input-field"
-                                           style="height: 30px">
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="4" role="cell" class="">
+              <div class="text-success">{{ field.price }}</div>
+            </td>
 
-                        <td aria-colindex="5" role="cell" class="">
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <input type="number" v-model.number="field.procentSale" placeholder="Процент"
-                                           class="form-control success custom-input-field"
-                                           style="height: 30px"
-                                    >
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="5" role="cell" class="">
+              <div class="text-success">{{ field.procentSale }}</div>
+            </td>
 
-                        <td aria-colindex="6" role="cell" class="">
-                            <div class="row">
-                                <div class="feather-icon">
-                                    <div style="display: inline-block;">
-                                        <button class="custom-button" @click="removeField(fieldIndex)">
-                                            <i class="custom-field" data-feather="trash"></i>
-                                        </button>
-                                    </div>
-                                    <div style="display: inline-block;">
-                                        <button class="custom-button" @click="addNewPart(fieldIndex)">
-                                            <i class="custom-part" data-feather="plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+          </tr>
 
-                    </tr>
+          <tr v-for="(part, partIndex) in field.parts" :key="partIndex">
 
-                    <tr v-for="(part, partIndex) in field.parts" :key="partIndex">
+            <td aria-colindex="1" role="cell" class="">
+              <div style="color: #2c7be5">{{ part.partNameModel ? part.partNameModel.name : '' }}</div>
+            </td>
 
-                        <td aria-colindex="1" role="cell" class="">
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <vue-multiselect v-model="part.partNameModel" :options="service"
-                                                     :custom-label="serviceNames" placeholder="Запчасть"
-                                                     class="custom-multiselect-part">
-                                    </vue-multiselect>
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="2" role="cell" class="">
+              <div style="color: #2c7be5">{{ part.partCount }}</div>
+            </td>
+            <td aria-colindex="3" role="cell" class="">
+              <div style="color: #2c7be5">{{ part.partUnitNameModel ? part.partUnitNameModel.unitName : '' }}</div>
+            </td>
+            <td aria-colindex="4" role="cell" class="">
+              <div style="color: #2c7be5">{{ part.partPrice }}</div>
+            </td>
 
-                        <td aria-colindex="2" role="cell" class="">
-                            <!-- Ваше поле для количества запчасти -->
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <input type="number" v-model.number="part.partCount" placeholder="Количество"
-                                           class="form-control success custom-input-part"
-                                           style="height: 20px">
-                                </div>
-                            </div>
-                        </td>
-                        <td aria-colindex="3" role="cell" class="">
-                            <!-- Ваши поля для единицы измерения запчасти -->
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <vue-multiselect v-model="part.partUnitNameModel" :options="unit"
-                                                     :custom-label="unitNames"
-                                                     placeholder="Ед. измер." class="custom-multiselect-part">
-                                    </vue-multiselect>
-                                </div>
-                            </div>
-                        </td>
-                        <td aria-colindex="4" role="cell" class="">
-                            <!-- Ваше поле для цены запчасти -->
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <input type="number" v-model.number="part.partPrice" placeholder="Цена"
-                                           class="form-control success custom-input-part"
-                                           style="height: 20px">
-                                </div>
-                            </div>
-                        </td>
+            <td aria-colindex="5" role="cell" class="">
+              <div style="color: #2c7be5">{{ part.partProcentSale }}</div>
+            </td>
+          </tr>
+          <td colspan="6" class="spacer-row" style="background: #4dcf8f;"></td>
 
-                        <td aria-colindex="5" role="cell" class="">
-                            <!-- Ваше поле для цены запчасти -->
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <input type="number" v-model.number="part.partProcentSale" placeholder="Процент"
-                                           class="form-control success custom-input-part"
-                                           style="height: 20px">
-                                </div>
-                            </div>
-                        </td>
-                        <td aria-colindex="6" role="cell" class="">
-                            <div class="feather-icon">
-                                <div style="display: inline-block;">
-                                    <button class="custom-button" @click="removePart(fieldIndex, partIndex)">
-                                        <i class="custom-part" data-feather="trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <td colspan="6" class="spacer-row" style="background: #4dcf8f;"></td>
+          </tbody>
+        </table>
+        <div class="account-settings-container">
 
-                    </tbody>
-                </table>
-                <div class="account-settings-container">
-                    <div class="as-footer-container">
-                        <button type="button" class="btn btn-success" @click.prevent="postDefectiveAct()">Сохранить
-                        </button>
-                    </div>
-                </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="as-footer-container">
+                <button type="button" class="btn btn-success" @click.prevent="acceptOrRejectDefectact(accepted)">Принять</button>
+              </div>
             </div>
+
+            <div class="col-6 text-end">
+              <div class="as-footer-container">
+                <button type="button" class="btn btn-danger" @click.prevent="acceptOrRejectDefectact(rejected)">Отклонить</button>
+              </div>
+            </div>
+
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -208,91 +113,91 @@ const price = ref(null);
 const unit = ref('Ед. измерения');
 
 const fields = ref([
-    {
-        id: null,
-        serviceNameModel: null,
-        count: null,
-        unitNameModel: null,
-        price: null,
-        procentSale: null,
-        parts: [
-            {
-                partId: null,
-                partNameModel: null,
-                partCount: null,
-                partUnitNameModel: null,
-                partPrice: null,
-                partProcentSale: null,
-            }
-        ]
-    }
-]);
-
-const getServiceName = async () => {
-    try {
-        const response = await api.get(`/api/auth/client/service-name`);
-        service.value = response.data.serviceNames;
-        unit.value = [
-            {unitName: "Штук"},
-            {unitName: "Литр"},
-            {unitName: "Комплект"},
-            {unitName: "Грамм"},
-        ];
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-
-onMounted(getServiceName);
-
-const serviceNames = ({name}) => {
-    return `${name}`;
-};
-const unitNames = ({unitName}) => {
-    return `${unitName}`;
-};
-
-const removePart = (fieldIndex, partIndex) => {
-    fields.value[fieldIndex].parts.splice(partIndex, 1);
-};
-
-const removeField = (fieldIndex) => {
-    fields.value.splice(fieldIndex, 1);
-};
-
-const addNewField = () => {
-    const newField = {
-        serviceNameModel: null,
-        count: null,
-        unitNameModel: null,
-        price: null,
-        procentSale: null,
-        parts: [
-            {
-                partNameModel: null,
-                partCount: null,
-                partUnitNameModel: null,
-                partPrice: null,
-                partProcentSale: null,
-            },
-        ],
-    };
-
-    fields.value.push(newField);
-
-    setTimeout(feather.replace, 0);
-};
-
-const addNewPart = (fieldIndex) => {
-    fields.value[fieldIndex].parts.push({
+  {
+    id: null,
+    serviceNameModel: null,
+    count: null,
+    unitNameModel: null,
+    price: null,
+    procentSale: null,
+    parts: [
+      {
+        partId: null,
         partNameModel: null,
         partCount: null,
         partUnitNameModel: null,
         partPrice: null,
         partProcentSale: null,
-    });
+      }
+    ]
+  }
+]);
 
-    setTimeout(feather.replace, 0);
+const getServiceName = async () => {
+  try {
+    const response = await api.get(`/api/auth/client/service-name`);
+    service.value = response.data.serviceNames;
+    unit.value = [
+      {unitName: "Штук"},
+      {unitName: "Литр"},
+      {unitName: "Комплект"},
+      {unitName: "Грамм"},
+    ];
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+  }
+};
+
+onMounted(getServiceName);
+
+const serviceNames = ({name}) => {
+  return `${name}`;
+};
+const unitNames = ({unitName}) => {
+  return `${unitName}`;
+};
+
+const removePart = (fieldIndex, partIndex) => {
+  fields.value[fieldIndex].parts.splice(partIndex, 1);
+};
+
+const removeField = (fieldIndex) => {
+  fields.value.splice(fieldIndex, 1);
+};
+
+const addNewField = () => {
+  const newField = {
+    serviceNameModel: null,
+    count: null,
+    unitNameModel: null,
+    price: null,
+    procentSale: null,
+    parts: [
+      {
+        partNameModel: null,
+        partCount: null,
+        partUnitNameModel: null,
+        partPrice: null,
+        partProcentSale: null,
+      },
+    ],
+  };
+
+  fields.value.push(newField);
+
+  setTimeout(feather.replace, 0);
+};
+
+const addNewPart = (fieldIndex) => {
+  fields.value[fieldIndex].parts.push({
+    partNameModel: null,
+    partCount: null,
+    partUnitNameModel: null,
+    partPrice: null,
+    partProcentSale: null,
+  });
+
+  setTimeout(feather.replace, 0);
 };
 
 import {useRouter} from "vue-router";
@@ -301,128 +206,85 @@ const route = useRouter();
 
 const orderId = route.currentRoute.value.params.orderId;
 
-const postDefectiveAct = async () => {
+const accepted = ref('ДА на согласовании в отделе по работе с клиентами')
+const rejected = ref('ДА акт не принят')
+const acceptOrRejectDefectact = async (status) => {
 
-    const totalPrice = fields.value.reduce((total, field) => {
-        return total + (field.price || 0);
-    }, 0);
+  const order = {
+    "id": orderId,
+    "statusName": status,
+  }
 
-    const totalPartPrice = fields.value.reduce((total, field) => {
-        const partPrice = field.parts.reduce((partTotal, part) => {
-            return partTotal + (part.partPrice || 0);
-        }, 0);
+  try {
+     await api.post(`/api/manager/auth/order/edit`, order);
 
-        return total + partPrice;
-    }, 0);
+    router.push({name: 'order-index'});
 
-    const totalProcent = fields.value.reduce((total, field) => {
-        return total + (field.procentSale || 0);
-    }, 0);
-
-    const totalPartProcent = fields.value.reduce((total, field) => {
-        const partPrice = field.parts.reduce((partTotal, part) => {
-            return partTotal + (part.partProcentSale || 0);
-        }, 0);
-
-        return total + partPrice;
-    }, 0);
-
-
-    const defectiveAct = {
-        "total": totalPrice + totalPartPrice,
-        "total_procent": totalProcent + totalPartProcent,
-        "service": [],
-        "spare_parts": [],
+    if (status === accepted) {
+      new window.Swal({
+        title: "Принято",
+        padding: "2em",
+      });
+    }else {
+      new window.Swal({
+        title: "Отклонено",
+        padding: "2em",
+      });
     }
-
-    fields.value.forEach((field, index) => {
-        defectiveAct.service.push({
-            "id": field.id || null,
-            "name": field.serviceNameModel || null,
-            "count": field.count || null,
-            "unit": field.unitNameModel || null,
-            "price": field.price || null,
-            "sale_percent": field.procentSale || null,
-        });
-
-        const parts = field.parts;
-
-        const partsData = parts.map(part => ({
-            "id": part.partId || null,
-            "name": part.partNameModel || null,
-            "count": part.partCount || null,
-            "unit": part.partUnitNameModel || null,
-            "price": part.partPrice || null,
-            "sale_percent": part.partProcentSale || null,
-        }));
-
-        defectiveAct.spare_parts.push(partsData);
+  } catch (error) {
+    new window.Swal({
+      icon: "warning",
+      title: "Ошибка",
+      text: "Что то пошло не так!",
+      padding: "2em"
     });
-
-    console.log(defectiveAct)
-    try {
-        const response = await api.post(`/api/station/auth/defective-act/${orderId}`, defectiveAct);
-
-        // console.log(router.push({name: 'Home'}));
-
-        new window.Swal({
-            title: "Saved succesfully",
-            padding: "2em",
-        });
-    } catch (error) {
-        new window.Swal({
-            icon: "warning",
-            title: "Ошибка",
-            text: "Что то пошло не так!",
-            padding: "2em"
-        });
-        console.error('Ошибка при получении данных:', error);
-    }
+    console.error('Ошибка при получении данных:', error);
+  }
 }
 
 import feather from 'feather-icons';
 
 const mountFeatherIcons = () => {
-    feather.replace();
+  feather.replace();
 };
 
 onMounted(mountFeatherIcons);
 
 const defectiveAct = ref([]);
 const getDefectiveAct = async () => {
-    try {
-        const response = await api.get(`/api/station/auth/defective-act/show/${orderId}`);
-        defectiveAct.value = response.data.defectiveActs;
+  try {
+    const response = await api.get(`/api/station/auth/defective-act/show/${orderId}`);
+    defectiveAct.value = response.data.defectiveActs;
 
-        if (defectiveAct.value) {
-            defectiveAct.value.map(item => {
-                fields.value = item.service.map(item => {
-                    return {
-                        id: item.id,
-                        serviceNameModel: {name: item.name},
-                        count: item.count,
-                        unitNameModel: {unitName: item.unit},
-                        price: item.price,
-                        procentSale: item.sale_percent,
-                        parts: item.sparePart.map(part => {
-                            return {
-                                partId: part.id,
-                                partNameModel: {name: part.name},
-                                partCount: part.count,
-                                partUnitNameModel: {unitName: part.unit},
-                                partPrice: part.price,
-                                partProcentSale: part.sale_percent,
-                            };
-                        }),
-                    }
-                });
-            })
-            setTimeout(feather.replace, 0);
-        }
-
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
+    if (defectiveAct.value) {
+      defectiveAct.value.map(item => {
+        fields.value = item.service.map(item => {
+          return {
+            id: item.id,
+            serviceNameModel: {name: item.name},
+            count: item.count,
+            unitNameModel: {unitName: item.unit},
+            price: item.price,
+            procentSale: item.sale_percent,
+            parts: item.sparePart.map(part => {
+              return {
+                partId: part.id,
+                partNameModel: {name: part.name},
+                partCount: part.count,
+                partUnitNameModel: {unitName: part.unit},
+                partPrice: part.price,
+                partProcentSale: part.sale_percent,
+              };
+            }),
+          }
+        });
+      })
+      setTimeout(feather.replace, 0);
     }
+
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+  }
 };
 
 onMounted(getDefectiveAct);
@@ -431,50 +293,50 @@ onMounted(getDefectiveAct);
 
 <style src="vue-multiselect/dist/vue-multiselect.css">
 .spacer-row {
-    height: 2px;
+  height: 2px;
 }
 </style>
 
 <style lang="css" scoped>
 
 .custom-button {
-    background: rgba(0, 0, 0, 0.0);
+  background: rgba(0, 0, 0, 0.0);
 }
 
 .custom-field {
-    color: #4dcf8f !important;
+  color: #4dcf8f !important;
 }
 
 .custom-field:hover {
-    color: #f09819 !important;
+  color: #f09819 !important;
 }
 
 .custom-part {
-    color: #2c7be5 !important;
+  color: #2c7be5 !important;
 }
 
 .custom-part:hover {
-    color: #f09819 !important;
+  color: #f09819 !important;
 }
 
 .custom-input-field {
-    border-color: #4dcf8f !important;
+  border-color: #4dcf8f !important;
 }
 
 .custom-input-part {
-    border-color: #2c7be5 !important;
+  border-color: #2c7be5 !important;
 }
 
 .custom-multiselect-field :deep(.multiselect__tags) {
-    border-color: #4dcf8f;
+  border-color: #4dcf8f;
 }
 
 .custom-multiselect-part :deep(.multiselect__tags) {
-    border-color: #2c7be5;
+  border-color: #2c7be5;
 }
 
 .table th[aria-colindex] {
-    border-top: 2px solid #4dcf8f !important;
+  border-top: 2px solid #4dcf8f !important;
 }
 
 </style>
@@ -482,129 +344,129 @@ onMounted(getDefectiveAct);
 <style scoped>
 
 .icon-container button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
+  background-color: transparent;
+  border: none;
+  padding: 0;
 }
 
 .feather-icon .icon-section {
-    padding: 30px;
+  padding: 30px;
 }
 
 .feather-icon .icon-section h4 {
-    color: #3b3f5c;
-    font-size: 17px;
-    font-weight: 600;
-    margin: 0;
-    margin-bottom: 16px;
+  color: #3b3f5c;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 16px;
 }
 
 .feather-icon .icon-content-container {
-    padding: 0 16px;
-    width: 96%;
-    margin: 0 auto;
-    border: 1px solid #bfc9d4;
-    border-radius: 6px;
+  padding: 0 16px;
+  width: 96%;
+  margin: 0 auto;
+  border: 1px solid #bfc9d4;
+  border-radius: 6px;
 }
 
 .feather-icon .icon-section p.fs-text {
-    padding-bottom: 30px;
-    margin-bottom: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .feather-icon .icon-container {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .feather-icon .icon-container svg {
-    color: #3b3f5c;
-    margin-right: 6px;
-    vertical-align: middle;
-    width: 19px;
-    height: 19px;
-    fill: rgba(0, 23, 55, 0.08);
+  color: #3b3f5c;
+  margin-right: 6px;
+  vertical-align: middle;
+  width: 19px;
+  height: 19px;
+  fill: rgba(0, 23, 55, 0.08);
 }
 
 .feather-icon .icon-container:hover svg {
-    color: #4361ee;
-    fill: rgba(27, 85, 226, 0.23921568627450981);
+  color: #4361ee;
+  fill: rgba(27, 85, 226, 0.23921568627450981);
 }
 
 .feather-icon .icon-container span {
-    display: none;
+  display: none;
 }
 
 .feather-icon .icon-container:hover span {
-    color: #4361ee;
+  color: #4361ee;
 }
 
 .feather-icon .icon-link {
-    color: #4361ee;
-    font-weight: 600;
-    font-size: 14px;
+  color: #4361ee;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 /*FAB*/
 .fontawesome .icon-section {
-    padding: 30px;
+  padding: 30px;
 }
 
 .fontawesome .icon-section h4 {
-    color: #3b3f5c;
-    font-size: 17px;
-    font-weight: 600;
-    margin: 0;
-    margin-bottom: 16px;
+  color: #3b3f5c;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 16px;
 }
 
 .fontawesome .icon-content-container {
-    padding: 0 16px;
-    width: 96%;
-    margin: 0 auto;
-    border: 1px solid #bfc9d4;
-    border-radius: 6px;
+  padding: 0 16px;
+  width: 96%;
+  margin: 0 auto;
+  border: 1px solid #bfc9d4;
+  border-radius: 6px;
 }
 
 .fontawesome .icon-section p.fs-text {
-    padding-bottom: 30px;
-    margin-bottom: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .fontawesome .icon-container {
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
 }
 
 .fontawesome .icon-container i {
-    font-size: 20px;
-    color: #3b3f5c;
-    vertical-align: middle;
-    margin-right: 10px;
+  font-size: 20px;
+  color: #3b3f5c;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .fontawesome .icon-container:hover i {
-    color: #4361ee;
+  color: #4361ee;
 }
 
 .fontawesome .icon-container span {
-    color: #888ea8;
-    display: none;
+  color: #888ea8;
+  display: none;
 }
 
 .fontawesome .icon-container:hover span {
-    color: #4361ee;
+  color: #4361ee;
 }
 
 .fontawesome .icon-link {
-    color: #4361ee;
-    font-weight: 600;
-    font-size: 14px;
+  color: #4361ee;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .icon-container button {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 </style>

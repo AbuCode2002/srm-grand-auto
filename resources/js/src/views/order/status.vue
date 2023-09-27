@@ -441,6 +441,11 @@
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+                                        <button v-if="item.status.name === 'ДА акт не принят'"
+                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
 
                                     </td>
                                     <td aria-colindex="2" role="cell" class="">{{ item.car.number }}</td>
@@ -556,11 +561,7 @@ const currentPage = ref(1);
 
 const getOrders = async (page = 1) => {
     try {
-        // const status = orderId.value;
-
         const status = router.currentRoute.value.query.status
-
-        // const status = ref("Новая заявка")
 
         const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status}`);
 
@@ -586,7 +587,7 @@ const pushToCreateDefectiveAct = (orderId) => {
 }
 
 const pushToUpdateDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act-show', params: {orderId}});
+    router.push({name: 'order-defective-act-edit', params: {orderId}});
 }
 
 const roleUser = ref(null)

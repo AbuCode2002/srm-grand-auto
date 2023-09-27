@@ -33,6 +33,7 @@ class OrderIndexTransformer extends BaseTransformer
     public function transform(Order $order): array
     {
         return [
+            "id" => $order->id,
             "car_id" => $order->car_id,
             "region_id" => $order->region_id,
             "is_evacuated" => $order->is_evacuated,

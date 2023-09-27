@@ -30,7 +30,6 @@ class DefectiveActController extends BaseController
      */
     public function store(int $orderId, DefectiveActRequest $defectiveActRequest)
     {
-//        dd($defectiveActRequest);
         $data = DefectiveActData::from($defectiveActRequest->validated());
 
         $order = $this->orderRepository->findById($orderId);

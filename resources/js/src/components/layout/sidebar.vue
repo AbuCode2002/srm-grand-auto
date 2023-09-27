@@ -693,44 +693,44 @@
                     </a>
 
                     <ul id="users" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
-                        <li>
+                        <li v-if="roleUser === 2">
                             <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
                         </li>
                         <li>
                             <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>
                         </li>
                         <li>
-                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status1)">Новая заявка</router-link>
+                            <router-link to="order/status1" @click.prevent="toggleMobileMenu;
+                            filter(statusName1, status1)">Новая заявка</router-link>
                         </li>
                         <li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status2)">Ожидает назначение диагностики от СТО</router-link>
+                            filter(statusName2, status2)">Ожидает назначение диагностики от СТО</router-link>
                         </li>
                         <li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status3)">Назначена диагностика</router-link>
+                            filter(statusName3, status3)">Назначена диагностика</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status4)">ДА ожидает согласования в отделе по работе с партнерами</router-link>
+                            filter(statusName4, status4)">ДА ожидает согласования в отделе по работе с партнерами</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status5)">ДА на согласовании в отделе по работе с клиентами</router-link>
+                            filter(statusName5, status5)">ДА на согласовании в отделе по работе с клиентами</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status6)">Согласован</router-link>
+                            filter(statusName6, status6)">Согласован</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status7)">Проводятся ремонтные работы</router-link>
+                            filter(statusName7, status7)">Проводятся ремонтные работы</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status8)">Ремонт выполнен</router-link>
+                            filter(statusName8, status8)">Ремонт выполнен</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(status9)">Заявка закрыта</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/order/defective-act" @click="toggleMobileMenu()">Создать дефектный акт</router-link>
+                            filter(statusName9, status9)">Заявка закрыта</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(statusName10, status10)">ДА акт не принят</router-link>
                         </li>
                     </ul>
                 </li>
@@ -962,9 +962,8 @@
     import { onMounted, ref } from 'vue';
     import { useStore } from 'vuex';
     import {useRouter} from "vue-router";
+    import api from "../../api";
     const store = useStore();
-
-    const menu_collapse = ref('dashboard');
 
     const status1 = ref('Новая заявка');
     const status2 = ref('Ожидает назначение диагностики от СТО');
@@ -975,11 +974,25 @@
     const status7 = ref('Проводятся ремонтные работы');
     const status8 = ref('Ремонт выполнен ');
     const status9 = ref('Заявка закрыта');
+    const status10 = ref('ДА акт не принят');
+
+    const statusName1 = ref('status1');
+    const statusName2 = ref('status2');
+    const statusName3 = ref('status3');
+    const statusName4 = ref('status4');
+    const statusName5 = ref('status5');
+    const statusName6 = ref('status6');
+    const statusName7 = ref('status7');
+    const statusName8 = ref('status8');
+    const statusName9 = ref('status9');
+    const statusName10 = ref('status10');
+
+    const menu_collapse = ref('dashboard');
 
     const router = useRouter();
 
-    const filter = (status = 1) => {
-        router.push({name: 'new-order', query: {status}});
+    const filter = (statusName, status) => {
+        router.push({name: statusName, query: {status}});
     }
 
     onMounted(() => {
@@ -1005,4 +1018,17 @@
             store.commit('toggleSideBar', !store.state.is_show_sidebar);
         }
     };
+
+    const roleUser = ref(null)
+
+    const getRole = async () => {
+        try {
+            const response = await api.get(`/api/admin/auth/user`);
+            roleUser.value = response.data.users[0].role_id
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+        }
+    }
+
+    onMounted(getRole)
 </script>

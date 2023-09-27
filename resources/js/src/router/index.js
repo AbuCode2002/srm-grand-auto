@@ -332,9 +332,42 @@ const routes = [
         component: () => import(/* webpackChunkName: "index_order" */ '../views/order/index_order.vue'),
     },
     {
+        path: '/order/status1',
+        name: 'status1',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status.vue'),
+    }, {
         path: '/order/new',
-        name: 'new-order',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/new_order.vue'),
+        name: 'status2',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status1.vue'),
+    },
+    {
+        path: '/order/new',
+        name: 'status3',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status3.vue'),
+    },{
+        path: '/order/new',
+        name: 'status4',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status4.vue'),
+    },{
+        path: '/order/new',
+        name: 'status5',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status5.vue'),
+    },{
+        path: '/order/new',
+        name: 'status6',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status6.vue'),
+    },{
+        path: '/order/new',
+        name: 'status7',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status7.vue'),
+    },{
+        path: '/order/new',
+        name: 'status8',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status8.vue'),
+    },{
+        path: '/order/new',
+        name: 'status9',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status9.vue'),
     },
     {
         path: '/order/index/station/:regionId/:orderId',
@@ -345,6 +378,11 @@ const routes = [
         path: '/order/defective-act/:orderId',
         name: 'order-defective-act',
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/create_defective_act.vue'),
+    },
+    {
+        path: '/order/defective-act/edit/:orderId',
+        name: 'order-defective-act-edit',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/edit_defective_act.vue'),
     },
     {
         path: '/order/defective-act/show/:orderId',
