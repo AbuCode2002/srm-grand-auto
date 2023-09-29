@@ -48,7 +48,7 @@ class OrderController extends BaseController
             );
     }
 
-    public function edit(OrderEditRequest $request)
+    public function edit(OrderEditRequest $request): JsonResponse
     {
         $data = OrderData::from($request->validated());
 

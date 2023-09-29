@@ -87,4 +87,11 @@ class OrderController extends BaseController
         "created",
     );
     }
+
+    public function  changeStatus(int $orderId): void
+    {
+        $order = $this->orderRepository->findById($orderId);
+
+        $this->orderRepository->changeStatus($order);
+    }
 }

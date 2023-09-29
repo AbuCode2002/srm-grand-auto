@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Manager\Order;
 
-use App\Http\Controllers\Client\Order\Data\OrderData;
+use App\Http\Controllers\Manager\Order\Data\OrderData;
 use App\Models\Order;
 use App\Models\Role;
 use App\Models\Status;
@@ -98,8 +98,8 @@ class OrderRepository extends BaseRepository
 public function edit(
     Order $order,
     OrderData $data
-    )
-    {
+    ): Order
+{
         if($data->statusName){
             $data->status = Status::query()->where('name', $data->statusName)->value('id');
         }

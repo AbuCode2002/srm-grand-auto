@@ -148,4 +148,13 @@ class OrderRepository extends BaseRepository
             ->paginate($this->perPage, ['*'], 'page', $page);
     }
 
+    public function changeStatus(Order $order): void
+    {
+        $statusId = Status::query()->where('name', 'Проводятся ремонтные работы ')->value('id');
+
+        $order->status = $statusId;
+
+        $order->save();
+    }
+
 }

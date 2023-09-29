@@ -85,7 +85,7 @@
                                     </td>
                                     <td v-else-if="item.status.name === 'ДА ожидает согласования в отделе по работе с партнерами'"
                                         aria-colindex="1" role="cell" class="mb-4">
-                                        <button @click.prevent="pushShowDefectiveAct(item.id)"
+                                        <button @click.prevent="pushShowDefectiveActForManager(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
@@ -186,9 +186,22 @@
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="mb-4">
+                                    <td v-if="item.status.name === 'Новая заявка'" aria-colindex="1" role="cell"
+                                        class="mb-4">
                                         <button @click.prevent="getRegionId(item.region.id, item.id)"
                                                 class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else-if="item.status.name === 'ДА на согласовании в отделе по работе с клиентами'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushShowDefectiveActForClient(item.id)"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else aria-colindex="1" role="cell" class="mb-4">
+                                        <button class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                     </td>
@@ -283,7 +296,8 @@
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="mb-4">
+                                    <td v-if="item.status.name === 'Назначена диагностика'" aria-colindex="1"
+                                        role="cell" class="mb-4">
                                         <button @click.prevent="pushToCreateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
@@ -425,23 +439,53 @@
                                         </button>
                                         <button
                                             v-if="item.status.name === 'ДА ожидает согласования в отделе по работе с партнерами'"
-                                            @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                             class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                         <button
                                             v-if="item.status.name === 'ДА на согласовании в отделе по работе с клиентами'"
-                                            @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                             class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Согласован'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal1"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+
+                                        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            Нажмите "Да" если начинаете ремонтные работы
+                                                        </h5>
+                                                        <button type="button" data-dismiss="modal"
+                                                                data-bs-dismiss="modal" aria-label="Close"
+                                                                class="btn-close">
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn" data-dismiss="modal"
+                                                                data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Выйти
+                                                        </button>
+                                                        <button @click.prevent="goToWork(item.id)" type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal" data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Да
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <button v-if="item.status.name === 'Проводятся ремонтные работы'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
@@ -451,7 +495,6 @@
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Заявка закрыта'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
@@ -598,8 +641,12 @@ const pushToUpdateDefectiveAct = (orderId) => {
     router.push({name: 'order-defective-act-edit', params: {orderId}});
 }
 
-const pushShowDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act-show', params: {orderId}});
+const pushShowDefectiveActForManager = (orderId) => {
+    router.push({name: 'order-defective-act-show-manager', params: {orderId}});
+}
+
+const pushShowDefectiveActForClient = (orderId) => {
+    router.push({name: 'order-defective-act-show-client', params: {orderId}});
 }
 
 const roleUser = ref(null)
@@ -641,6 +688,25 @@ const postDate = async (orderId) => {
 }
 
 onMounted(getRole)
+
+const goToWork = async (orderId) => {
+    try {
+        await api.post(`/api/station/auth/order/change-status/${orderId}`,);
+
+        new window.Swal({
+            title: "Можете приступать к рабооте",
+            padding: "2em",
+        });
+    } catch (error) {
+        new window.Swal({
+            icon: "warning",
+            title: "Ошибка",
+            text: "Что то пошло не так!",
+            padding: "2em"
+        });
+        console.error('Ошибка при получении данных:', error);
+    }
+}
 </script>
 
 <style>

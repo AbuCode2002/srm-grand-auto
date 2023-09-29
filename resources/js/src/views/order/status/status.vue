@@ -75,6 +75,7 @@
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
+
                                     <td v-if="item.status.name === 'Новая заявка'" aria-colindex="1" role="cell"
                                         class="mb-4">
                                         <button @click.prevent="getRegionId(item.region.id, item.id)"
@@ -82,6 +83,19 @@
                                             {{ item.id }}
                                         </button>
                                     </td>
+                                    <td v-else-if="item.status.name === 'ДА ожидает согласования в отделе по работе с партнерами'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushShowDefectiveActForManager(item.id)"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else aria-colindex="1" role="cell" class="mb-4">
+                                        <button class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+
                                     <td aria-colindex="2" role="cell" class="">{{ item.users[0].email }}</td>
                                     <td aria-colindex="3" role="cell" class="">{{ item.car.number }}</td>
                                     <td aria-colindex="4" role="cell" class="">{{ item.car.brand }}</td>
@@ -172,9 +186,22 @@
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="mb-4">
+                                    <td v-if="item.status.name === 'Новая заявка'" aria-colindex="1" role="cell"
+                                        class="mb-4">
                                         <button @click.prevent="getRegionId(item.region.id, item.id)"
                                                 class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else-if="item.status.name === 'ДА на согласовании в отделе по работе с клиентами'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushShowDefectiveActForClient(item.id)"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else aria-colindex="1" role="cell" class="mb-4">
+                                        <button class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                     </td>
@@ -499,11 +526,11 @@
 <script setup>
 import {ref, onMounted} from "vue";
 
-import "../../assets/sass/scrollspyNav.scss";
-import "../../assets/sass/tables/table-basic.scss";
+import "../../../assets/sass/scrollspyNav.scss";
+import "../../../assets/sass/tables/table-basic.scss";
 
-import {useMeta} from "../../composables/use-meta";
-import api from "../../api";
+import {useMeta} from "../../../composables/use-meta";
+import api from "../../../api";
 import Paginate from "vuejs-paginate-next";
 
 import {useStore} from 'vuex';
@@ -552,6 +579,13 @@ const getRegionId = (regionId, orderId) => {
     router.push({name: 'order-index-station', params: {regionId, orderId}});
 };
 
+const pushShowDefectiveActForManager = (orderId) => {
+    router.push({name: 'order-defective-act-show-manager', params: {orderId}});
+}
+
+const pushShowDefectiveActForClient = (orderId) => {
+    router.push({name: 'order-defective-act-show-client', params: {orderId}});
+}
 
 const pagination = ref({
     "last_page": 1
@@ -581,14 +615,6 @@ const pageChanged = (pageNum) => {
     console.log(pageNum)
     getOrders(pageNum);
 };
-
-const pushToCreateDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act', params: {orderId}});
-}
-
-const pushToUpdateDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act-edit', params: {orderId}});
-}
 
 const roleUser = ref(null)
 

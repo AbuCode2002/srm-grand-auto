@@ -4,15 +4,13 @@ namespace App\Repositories\Client\Order;
 
 use App\Http\Controllers\Client\Order\Data\OrderData;
 use App\Models\Order;
-use App\Models\Role;
+use App\Models\Status;
 use App\Models\UserOrder;
-use App\Models\UserToRegion;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use function Laravel\Prompts\select;
 
 class OrderRepository extends BaseRepository
 {
@@ -102,6 +100,10 @@ public function edit(
     OrderData $data
     )
     {
+        if($data->statusName){
+            $data->status = Status::query()->where('name', $data->statusName)->value('id');
+        }
+
         $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
         $order->region_id = $data->region_id ? $data->region_id : $order->region_id;
         $order->is_evacuated = $data->is_evacuated ? $data->is_evacuated : $order->is_evacuated;

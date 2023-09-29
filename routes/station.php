@@ -35,6 +35,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 
             Route::get('/index-by-status', [OrderController::class, 'indexByStatus']);
 
+            Route::post('/change-status/{id}', [OrderController::class, 'changeStatus'])
+                ->where('id', '[0-9]+');
+
         });
 
         Route::group(['prefix' => 'role'], static function () {
@@ -77,5 +80,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             ->where('orderId', '[0-9]+');
 
         Route::post('/diagnostics/{orderId}', [DiagnosticsController::class, 'store']);
+
+
+        Route::post('/upload-video', [\App\Http\Controllers\Station\FileUpload\FileUploadController::class, 'upload']);
     });
 });

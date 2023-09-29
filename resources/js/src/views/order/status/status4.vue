@@ -7,11 +7,11 @@
 <script setup>
 import {ref, onMounted} from "vue";
 
-import "../../assets/sass/scrollspyNav.scss";
-import "../../assets/sass/tables/table-basic.scss";
+import "../../../assets/sass/scrollspyNav.scss";
+import "../../../assets/sass/tables/table-basic.scss";
 
-import {useMeta} from "../../composables/use-meta";
-import api from "../../api";
+import {useMeta} from "../../../composables/use-meta";
+import api from "../../../api";
 import Paginate from "vuejs-paginate-next";
 
 import {useStore} from 'vuex';
@@ -91,14 +91,6 @@ const pageChanged = (pageNum) => {
     console.log(pageNum)
     getOrders(pageNum);
 };
-
-const pushToCreateDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act', params: {orderId}});
-}
-
-const pushToUpdateDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act-edit', params: {orderId}});
-}
 
 const roleUser = ref(null)
 

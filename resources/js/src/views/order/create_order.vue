@@ -261,7 +261,7 @@ const postOrder = async () => {
         console.log(router.push({name: 'Home'}));
 
         new window.Swal({
-            title: "Saved succesfully",
+            title: "  Saved succesfully",
             padding: "2em",
         });
     } catch (error) {

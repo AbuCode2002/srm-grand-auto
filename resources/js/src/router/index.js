@@ -334,50 +334,45 @@ const routes = [
     {
         path: '/order/status1',
         name: 'status1',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status.vue'),
     }, {
         path: '/order/new',
         name: 'status2',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status1.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status1.vue'),
     },
     {
         path: '/order/new',
         name: 'status3',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status3.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status3.vue'),
     },{
         path: '/order/new',
         name: 'status4',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status4.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status4.vue'),
     },{
         path: '/order/new',
         name: 'status5',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status5.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status5.vue'),
     },{
         path: '/order/new',
         name: 'status6',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status6.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status6.vue'),
     },{
         path: '/order/new',
         name: 'status7',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status7.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status7.vue'),
     },{
         path: '/order/new',
         name: 'status8',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status8.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status8.vue'),
     },{
         path: '/order/new',
         name: 'status9',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status9.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status9.vue'),
     },
     {
         path: '/order/index/station/:regionId/:orderId',
         name: 'order-index-station',
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/station.vue'),
-    },
-    {
-        path: '/order/defective-act/:orderId',
-        name: 'order-defective-act',
-        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/create_defective_act.vue'),
     },
     {
         path: '/order/defective-act/edit/:orderId',
@@ -386,8 +381,17 @@ const routes = [
     },
     {
         path: '/order/defective-act/show/:orderId',
-        name: 'order-defective-act-show',
-        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/show_defective_act.vue'),
+        name: 'order-defective-act-show-manager',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/Manager/show_defective_act.vue'),
+    },{
+        path: '/order/defective-act/show/:orderId',
+        name: 'order-defective-act-show-client',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/Client/show_defective_act.vue'),
+    },
+    {
+        path: '/order/upload/:orderId',
+        name: 'order-upload',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/FileUpload/fileUpload.vue'),
     },
 
     //drag&drop
