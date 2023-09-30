@@ -82,6 +82,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::post('/diagnostics/{orderId}', [DiagnosticsController::class, 'store']);
 
 
-        Route::post('/upload-video', [\App\Http\Controllers\Station\FileUpload\FileUploadController::class, 'upload']);
+        Route::post('/upload-video/{orderId}', [\App\Http\Controllers\Station\FileUpload\FileUploadController::class, 'upload'])
+            ->where('orderId', '[0-9]+');
+
     });
 });

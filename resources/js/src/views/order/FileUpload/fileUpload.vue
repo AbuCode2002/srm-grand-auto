@@ -76,6 +76,7 @@ const initTooltip = () => {
 };
 
 import axios from 'axios';
+import api from "../../../api";
 
 const video = ref(null);
 
@@ -84,7 +85,7 @@ const uploadVideo = async () => {
     formData.append('video', video.value.files[0]);
 
     try {
-        const response = await axios.post('/api/station/auth/upload-video', formData, {
+        const response = await api.post(`/api/station/auth/upload-video/${1}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
