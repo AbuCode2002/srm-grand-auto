@@ -11,6 +11,7 @@ use App\Transformers\Api\Station\Status\StatusIndexTransformer;
 use App\Transformers\Api\Station\User\UserIndexTransformer;
 use App\Transformers\BaseTransformer;
 
+
 class OrderIndexTransformer extends BaseTransformer
 {
 
@@ -105,6 +106,7 @@ class OrderIndexTransformer extends BaseTransformer
      */
     public function transform(Order $order): array
     {
+
         return [
             "id" => $order->id,
             "car_id" => $order->car_id,
@@ -118,8 +120,9 @@ class OrderIndexTransformer extends BaseTransformer
             "driver_id" => $order->driver_id,
             "driver_type" => $order->driver_type,
             "mileage" => $order->mileage,
-            "station_id" => $order->station_id,
-            "created_at" => $order->created_at,
+            "station_id" => $order->station_id ?? null,
+            "created_at" => $order->created_at ?? null,
+//            "current_page" => $order->current_page ?? null,
         ];
     }
 }

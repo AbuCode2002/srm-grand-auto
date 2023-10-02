@@ -697,10 +697,12 @@
                             <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
                         </li>
                         <li>
-                            <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>
+<!--                            <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>-->
+                            <router-link to="/order/new" @click="toggleMobileMenu;
+                            filter(statusName, status)">Все заявки</router-link>
                         </li>
                         <li>
-                            <router-link to="order/status1" @click.prevent="toggleMobileMenu;
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
                             filter(statusName1, status1)">Новая заявка</router-link>
                         </li>
                         <li>
@@ -965,6 +967,7 @@
     import api from "../../api";
     const store = useStore();
 
+    const status = ref('all');
     const status1 = ref('Новая заявка');
     const status2 = ref('Ожидает назначение диагностики от СТО');
     const status3 = ref('Назначена диагностика');
@@ -976,6 +979,7 @@
     const status9 = ref('Заявка закрыта');
     const status10 = ref('ДА акт не принят');
 
+    const statusName = ref('status');
     const statusName1 = ref('status1');
     const statusName2 = ref('status2');
     const statusName3 = ref('status3');
@@ -986,8 +990,6 @@
     const statusName8 = ref('status8');
     const statusName9 = ref('status9');
     const statusName10 = ref('status10');
-
-    const menu_collapse = ref('dashboard');
 
     const router = useRouter();
 

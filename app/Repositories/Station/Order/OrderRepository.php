@@ -5,9 +5,11 @@ namespace App\Repositories\Station\Order;
 use App\Http\Controllers\Station\Order\Data\OrderByStatusData;
 use App\Http\Controllers\Station\Order\Data\OrderData;
 use App\Models\Order;
+use App\Models\Region;
 use App\Models\Role;
 use App\Models\Status;
 use App\Models\UserOrder;
+use App\Models\UserToRegion;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -31,6 +33,10 @@ class OrderRepository extends BaseRepository
 
         $roleName = Role::query()->where('id', $user->role_id)->value('name');
 
+        $regionId = UserToRegion::query()
+            ->where('user_id', $user->id)
+            ->pluck('region_id');
+
         if ($roleName === 'superAdmin') {
 
             return $this->model::query()
@@ -45,22 +51,43 @@ class OrderRepository extends BaseRepository
                         $q->select('defect_act_id', DB::raw('SUM(price_with_markup) as sum'))->groupBy('defect_act_id');
                     }]);
                 }])
+                ->whereIn('region_id', $regionId)
+                ->orderBy('id')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
         } else if ($roleName === 'manager') {
 
             return $this->model::query()
                 ->with('car')
+                ->with('users')
+                ->with('contract')
                 ->with('status')
                 ->with('region')
+                ->whereIn('region_id', $regionId)
+                ->orderBy('id')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
         } else if ($roleName === 'client') {
 
             return $this->model::query()
                 ->with('car')
+                ->with('users')
+                ->with('contract')
                 ->with('status')
                 ->with('region')
+                ->whereIn('region_id', $regionId)
+                ->orderBy('id')
+                ->paginate($this->perPage, ['*'], 'page', $page);
+        } else if ($roleName === 'station') {
+
+            return $this->model::query()
+                ->with('car')
+                ->with('users')
+                ->with('contract')
+                ->with('status')
+                ->with('region')
+                ->whereIn('region_id', $regionId)
+                ->orderBy('id')
                 ->paginate($this->perPage, ['*'], 'page', $page);
         }
     }

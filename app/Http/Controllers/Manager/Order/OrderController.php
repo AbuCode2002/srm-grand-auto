@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Manager\Order;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Manager\Order\Data\OrderData;
 use App\Http\Requests\Order\OrderEditRequest;
-use App\Http\Requests\OrderStoreRequest;
+use App\Http\Requests\Order\OrderStoreRequest;
 use App\Repositories\Manager\Order\OrderRepository;
 use App\Transformers\Api\Manager\Order\OrderIndexTransformer;
 use Illuminate\Http\JsonResponse;

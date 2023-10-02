@@ -327,18 +327,18 @@ const routes = [
         component: () => import(/* webpackChunkName: "create_order" */ '../views/order/create_order.vue'),
     },
     {
-        path: '/order/index',
-        name: 'order-index',
-        component: () => import(/* webpackChunkName: "index_order" */ '../views/order/index_order.vue'),
+        path: '/order/new',
+        name: 'status',
+        component: () => import(/* webpackChunkName: "index_order" */ '../views/order/status/status.vue'),
     },
     {
-        path: '/order/status1',
+        path: '/order/new',
         name: 'status1',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status1.vue'),
     }, {
         path: '/order/new',
         name: 'status2',
-        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status1.vue'),
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status2.vue'),
     },
     {
         path: '/order/new',
@@ -368,6 +368,10 @@ const routes = [
         path: '/order/new',
         name: 'status9',
         component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status9.vue'),
+    },{
+        path: '/order/new',
+        name: 'status10',
+        component: () => import(/* webpackChunkName: "new_order" */ '../views/order/status/status10.vue'),
     },
     {
         path: '/order/index/station/:regionId/:orderId',

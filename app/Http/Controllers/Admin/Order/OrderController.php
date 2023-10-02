@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Order;
 
-use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Admin\Order\Data\OrderData;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\Order\OrderEditRequest;
-use App\Http\Requests\OrderStoreRequest;
+use App\Http\Requests\Order\OrderStoreRequest;
 use App\Repositories\Admin\Order\OrderRepository;
 use App\Transformers\Api\Admin\Order\OrderIndexTransformer;
 use Illuminate\Http\JsonResponse;

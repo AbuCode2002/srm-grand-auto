@@ -438,33 +438,62 @@
                                         </button>
                                         <button
                                             v-if="item.status.name === 'ДА ожидает согласования в отделе по работе с партнерами'"
-                                            @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                             class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                         <button
                                             v-if="item.status.name === 'ДА на согласовании в отделе по работе с клиентами'"
-                                            @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                             class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Согласован'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal1"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+
+                                        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            Нажмите "Да" если начинаете ремонтные работы
+                                                        </h5>
+                                                        <button type="button" data-dismiss="modal"
+                                                                data-bs-dismiss="modal" aria-label="Close"
+                                                                class="btn-close">
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn" data-dismiss="modal"
+                                                                data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Выйти
+                                                        </button>
+                                                        <button @click.prevent="goToWork(item.id)" type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal" data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Да
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <button v-if="item.status.name === 'Проводятся ремонтные работы'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Ремонт выполнен'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
+                                                @click.prevent="pushToUploadVideo(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Заявка закрыта'"
-                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
@@ -569,9 +598,7 @@ const initTooltip = () => {
     });
 };
 
-import {useRoute, useRouter} from 'vue-router';
-
-import {page} from "v-tables-3/compiled/methods/set-page";
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 
@@ -587,6 +614,18 @@ const pushShowDefectiveActForClient = (orderId) => {
     router.push({name: 'order-defective-act-show-client', params: {orderId}});
 }
 
+const pushToCreateDefectiveAct = (orderId) => {
+    router.push({name: 'order-defective-act', params: {orderId}});
+}
+
+const pushToUpdateDefectiveAct = (orderId) => {
+    router.push({name: 'order-defective-act-edit', params: {orderId}});
+}
+
+const pushToUploadVideo = (orderId) => {
+    router.push({name: 'order-upload', params: {orderId}});
+}
+
 const pagination = ref({
     "last_page": 1
 });
@@ -595,15 +634,19 @@ const currentPage = ref(1);
 
 const getOrders = async (page = 1) => {
     try {
-        const status = router.currentRoute.value.query.status
+        const status = ref('all')
 
-        const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status}`);
+        status.value = router.currentRoute.value.query.status
+
+        const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status.value}`);
 
         order.value = response.data.orders;
-        pagination.value = response.data;
+        pagination.value = response.data.pagination;
         currentPage.value = page;
 
-        console.log(response.data.orders)
+        console.log(order.value)
+        console.log(pagination.value)
+        console.log(currentPage.value)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -612,7 +655,6 @@ const getOrders = async (page = 1) => {
 onMounted(getOrders)
 
 const pageChanged = (pageNum) => {
-    console.log(pageNum)
     getOrders(pageNum);
 };
 

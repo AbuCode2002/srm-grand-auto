@@ -1,27 +1,43 @@
 <template>
-    <div id="fuMultipleFile" class="col-lg-12 layout-spacing">
-        <div class="statbox panel box box-shadow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <h4>Multiple File Upload</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="custom-file-container" data-upload-id="mySecondImage">
-                    <label>Upload (Allow Multiple) <a href="javascript:void(0)"
-                                                      class="custom-file-container__image-clear"
-                                                      title="Clear Image">x</a></label>
-                    <label class="custom-file-container__custom-file">
-                        <input type="file" class="custom-file-container__custom-file__custom-file-input" multiple/>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
-                        <span class="custom-file-container__custom-file__custom-file-control"></span>
-                    </label>
-                    <div class="custom-file-container__image-preview"></div>
-                </div>
-            </div>
+<!--    <div id="fuMultipleFile" class="col-lg-12 layout-spacing">-->
+<!--        <div class="statbox panel box box-shadow">-->
+<!--            <div class="panel-heading">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">-->
+<!--                        <h4>Загрузите видео</h4>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="panel-body">-->
+<!--                <div class="custom-file-container" data-upload-id="mySecondImage">-->
+<!--                    <label>Upload (Allow Multiple) <a href="javascript:void(0)"-->
+<!--                                                      class="custom-file-container__image-clear"-->
+<!--                                                      title="Clear Image">x</a></label>-->
+<!--                    <label class="custom-file-container__custom-file">-->
+<!--                        <input type="file" ref="video" accept="video/*" class="custom-file-container__custom-file__custom-file-input" multiple @change="uploadVideo"/>-->
+<!--                        <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>-->
+<!--                        <span class="custom-file-container__custom-file__custom-file-control"></span>-->
+<!--                    </label>-->
+<!--                    <div class="custom-file-container__image-preview"></div>-->
+<!--                </div>-->
+<!--                <button @click="uploadVideo">Отправить видео</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="panel-body">
+        <div class="custom-file-container" data-upload-id="mySecondImage">
+            <label>Upload (Allow Multiple) <a href="javascript:void(0)"
+                                              class="custom-file-container__image-clear"
+                                              title="Clear Image">x</a></label>
+            <label class="custom-file-container__custom-file">
+                <input type="file" ref="video" accept="video/*" class="custom-file-container__custom-file__custom-file-input" multiple @change="uploadVideo"/>
+                <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+                <span class="custom-file-container__custom-file__custom-file-control"></span>
+            </label>
+            <div class="custom-file-container__image-preview"></div>
         </div>
+        <button @click="uploadVideo">Отправить видео</button>
     </div>
 
         <div>
@@ -75,7 +91,6 @@ const initTooltip = () => {
     });
 };
 
-import axios from 'axios';
 import api from "../../../api";
 
 const video = ref(null);
@@ -84,6 +99,7 @@ const uploadVideo = async () => {
     const formData = new FormData();
     formData.append('video', video.value.files[0]);
 
+    console.log(formData)
     try {
         const response = await api.post(`/api/station/auth/upload-video/${1}`, formData, {
             headers: {

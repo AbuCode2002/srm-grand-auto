@@ -29,10 +29,12 @@ trait ApiResponseTrait
     protected function setPagination(LengthAwarePaginator $paginator): self
     {
         $this->pagination = [
-            'page'  => $paginator->currentPage(),
+            'current_page'  => $paginator->currentPage(),
             'by'    => $paginator->perPage(),
-            'total' => $paginator->total(), //$paginator->lastPage() * $paginator->perPage()
-            'links' => $paginator->options(),
+            'total' => $paginator->total(),
+            'last_page' => $paginator->lastPage()
+            //$paginator->lastPage() * $paginator->perPage()
+//            'links' => $paginator->options(),
         ];
 
         return $this;
