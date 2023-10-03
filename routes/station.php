@@ -7,6 +7,7 @@ use App\Http\Controllers\Station\Contract\ContractController;
 use App\Http\Controllers\Station\DefectiveAct\DefectiveActController;
 use App\Http\Controllers\Station\Diagnostics\DiagnosticsController;
 use App\Http\Controllers\Station\Driver\DriverController;
+use App\Http\Controllers\Station\FileUpload\FileUploadController;
 use App\Http\Controllers\Station\Order\OrderController;
 use App\Http\Controllers\Station\Region\RegionController;
 use App\Http\Controllers\Station\Role\RoleController;
@@ -82,7 +83,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::post('/diagnostics/{orderId}', [DiagnosticsController::class, 'store']);
 
 
-        Route::post('/upload-video/{orderId}', [\App\Http\Controllers\Station\FileUpload\FileUploadController::class, 'upload'])
+        Route::post('/upload-video/{orderId}', [FileUploadController::class, 'upload'])
             ->where('orderId', '[0-9]+');
 
     });
