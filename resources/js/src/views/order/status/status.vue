@@ -90,6 +90,13 @@
                                             {{ item.id }}
                                         </button>
                                     </td>
+                                    <td v-else-if="item.status.name === 'Ремонт выполнен'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushInstalFile(item.id)"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
                                     <td v-else aria-colindex="1" role="cell" class="mb-4">
                                         <button class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
@@ -624,6 +631,10 @@ const pushToUpdateDefectiveAct = (orderId) => {
 
 const pushToUploadVideo = (orderId) => {
     router.push({name: 'order-upload', params: {orderId}});
+}
+
+const pushInstalFile = (orderId) => {
+    router.push({name: 'file-show', params: {orderId}});
 }
 
 const pagination = ref({

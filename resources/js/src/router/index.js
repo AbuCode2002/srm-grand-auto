@@ -397,6 +397,11 @@ const routes = [
         name: 'order-upload',
         component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/FileUpload/fileUpload.vue'),
     },
+    {
+        path: '/order/show/:orderId',
+        name: 'file-show',
+        component: () => import(/* webpackChunkName: "apps-invoice-list" */ '../views/order/FileShow/fileShow.vue'),
+    },
 
     //drag&drop
     {

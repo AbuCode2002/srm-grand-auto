@@ -15,15 +15,7 @@
 
                         <div class="custom-file mb-3">
 
-<!--                            <input id="video" type="file" ref="video" accept="video/*" class="custom-file-input" @change="onFileChange"/>-->
-<!--                            <label for="video" data-browse="Обзор" class="custom-file-label">-->
-<!--                                <span class="d-block form-file-text">{{-->
-<!--                                        selectedFile ? selectedFile.name : 'Файл не выбран'-->
-<!--                                    }}</span>-->
-<!--                            </label>-->
-
                             <input id="files" type="file" ref="files" accept="image/*, video/*" class="custom-file-input" multiple @change="onFileChange"/>
-<!--                            <input id="files" type="file" ref="files" accept="video/*" class="custom-file-input" @change="onFileChange"/>-->
                             <label for="files" data-browse="Обзор" class="custom-file-label">
                                 <span class="d-block form-file-text">{{
                                         selectedFile ? selectedFile.name : 'Файл не выбран'

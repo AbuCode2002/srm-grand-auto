@@ -12,7 +12,7 @@ class FileUploadController extends BaseController
     {
         foreach ($request->file('file') as $value) {
 
-            $videoPath = $value->store('videos', 'public');
+            $videoPath = $value->store("videos/{$orderId}", 'public');
 
             $orderFile = new OrderFile();
 

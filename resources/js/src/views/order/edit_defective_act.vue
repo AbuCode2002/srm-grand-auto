@@ -360,6 +360,7 @@ const postDefectiveAct = async () => {
     });
 
     console.log(defectiveAct)
+
     try {
         const response = await api.post(`/api/station/auth/defective-act/${orderId}`, defectiveAct);
 

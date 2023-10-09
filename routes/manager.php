@@ -6,6 +6,7 @@ use App\Http\Controllers\Manager\Client\ClientController;
 use App\Http\Controllers\Manager\Contract\ContractController;
 use App\Http\Controllers\Manager\DefectiveAct\DefectiveActController;
 use App\Http\Controllers\Manager\Driver\DriverController;
+use App\Http\Controllers\Manager\File\FileController;
 use App\Http\Controllers\Manager\Order\OrderController;
 use App\Http\Controllers\Manager\Region\RegionController;
 use App\Http\Controllers\Manager\Role\RoleController;
@@ -61,6 +62,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::get('/client', [ClientController::class, 'index']);
         Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
             ->where('regionId', '[0-9]+')
+            ->where('orderId', '[0-9]+');
+
+        Route::post('/show-file/{orderId}', [FileController::class, 'showFile'])
+            ->where('orderId', '[0-9]+');
+        Route::get('/show-file-path/{orderId}', [FileController::class, 'showPath'])
             ->where('orderId', '[0-9]+');
     });
 });

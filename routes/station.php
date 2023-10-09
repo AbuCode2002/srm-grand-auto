@@ -85,6 +85,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 
         Route::post('/upload-video/{orderId}', [FileUploadController::class, 'upload'])
             ->where('orderId', '[0-9]+');
-
     });
 });
