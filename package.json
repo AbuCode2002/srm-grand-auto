@@ -36,6 +36,7 @@
         "v-tables-3": "^0.4.7",
         "vue": "^3.2.13",
         "vue-clipboard3": "^2.0.0",
+        "vue-core-video-player": "^0.2.0",
         "vue-countup-v3": "^1.0.14",
         "vue-draggable-next": "^2.1.1",
         "vue-easy-lightbox": "^1.4.1",
@@ -44,6 +45,7 @@
         "vue-feather-icons": "^5.1.0",
         "vue-flatpickr-component": "^9.0.5",
         "vue-i18n": "^9.1.10",
+        "vue-lazyload-video": "^0.1.15",
         "vue-multiselect": "^3.0.0-beta.2",
         "vue-router": "^4.2.4",
         "vue3-apexcharts": "^1.4.1",
@@ -59,6 +61,7 @@
         "vue3-perfect-scrollbar": "^1.5.5",
         "vue3-quill": "^0.2.6",
         "vue3-scroll-spy": "^1.0.8",
+        "vuejs-confirm-dialog": "^0.5.1",
         "vuejs-paginate-next": "^1.0.2",
         "vuex": "^4.0.0"
     },

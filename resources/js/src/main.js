@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-
+import * as ConfirmDialog from 'vuejs-confirm-dialog'
 
 const app = createApp(App);
 
@@ -70,4 +70,5 @@ import "easymde/dist/easymde.min.css";
     app.use(VueFormWizard)
     app.use(head)
     app.use(VueEasymde)
+    app.use(ConfirmDialog)
     app.mount("#app");
