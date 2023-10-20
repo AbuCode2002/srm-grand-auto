@@ -13,17 +13,19 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody v-for="item in file" role="rowgroup">
+                <tbody v-for="item in file.name" role="rowgroup">
 
                 <tr role="row" class="">
 
-                    <td aria-colindex="1" role="cell" class="">{{ item.file_name.match(/\/([^/]+)$/)[1] }}</td>
+                    <!--                    <td aria-colindex="1" role="cell" class="">{{ item.file_name.match(/\/([^/]+)$/)[1] }}</td>-->
+                    <!--                    <td aria-colindex="1" role="cell" class="">{{ item.name.match(/([^\/]+)$/)[1] }}</td>-->
+                    <td aria-colindex="1" role="cell" class="">{{ item.match(/([^\/]+)$/)[1] }}</td>
 
                     <td aria-colindex="2" role="cell" class="">
                         <div class="row">
                             <div class="feather-icon">
                                 <div style="display: inline-block;" class="text-success">
-                                    <button class="custom-button" @click="getFile(item.file_name)">
+                                    <button class="custom-button" @click="getFile(file.url)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                             <path
@@ -40,18 +42,22 @@
                 </tbody>
             </table>
         </div>
-                <div v-if="isImage">
-                    <div v-if="fileName" class="text-center mt-4">
-                        <img :src="fileName" alt="profile"/>
-                    </div>
-                </div>
-                <div v-if="isVideo">
-                    <div v-if="fileName" class="text-center mt-4">
-                        <video :src="fileName" controls class="border" width="720" height="360"></video>
-        <!--                <video :src="fileName" controls width="640" height="360"></video>-->
-                    </div>
-                </div>
-
+<!--        <div v-if="isImage">-->
+<!--            <div v-if="fileName" class="text-center mt-4">-->
+<!--                <img :src="fileName" alt="profile"/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div v-if="isVideo">-->
+<!--            <div v-if="fileName" class="text-center mt-4">-->
+<!--                <video :src="fileName" controls class="border" width="720" height="360"></video>-->
+<!--            </div>-->
+<!--        </div>-->
+            <div v-if="fileName" class="text-center mt-4">
+                <img :src="fileName" alt="profile"/>
+            </div>
+            <div v-if="fileName" class="text-center mt-4">
+                <video :src="fileName" controls class="border" width="720" height="360"></video>
+            </div>
     </div>
     <DialogsWrapper/>
 </template>
@@ -70,7 +76,8 @@ const orderId = router.currentRoute.value.params.orderId
 const getPath = async () => {
     try {
         const response = await api.get(`/api/manager/auth/show-file-path/${orderId}`);
-        file.value = response.data.files
+        file.value = response.data
+        console.log(response.data)
 
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
@@ -80,10 +87,10 @@ const getPath = async () => {
 onMounted(getPath)
 
 const fileName = ref('')
-const isModalVisible = ref(true)
 
 const getFile = async (path) => {
     fileName.value = path
+    console.log(path)
 }
 
 // Изменяем вычисляемое свойство isVideo

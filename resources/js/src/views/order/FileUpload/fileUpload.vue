@@ -75,23 +75,51 @@ function onFileChange(event) {
 
 const files = ref([]);
 
-const route = useRouter();
-
-const orderId = route.currentRoute.value.params.orderId;
+// const uploadVideo = async () => {
+//     const fileList = Array.from(files.value.files);
+//
+//     for (const file of fileList) {
+//         const video = document.createElement('video');
+//         video.preload = 'metadata';
+//         video.src = URL.createObjectURL(file);
+//
+//         video.onloadedmetadata = async () => {
+//             const canvas = document.createElement('canvas');
+//             const videoWidth = video.videoWidth;
+//             const videoHeight = video.videoHeight;
+//
+//             canvas.width = 640; // Новая ширина
+//             canvas.height = (640 / videoWidth) * videoHeight; // Сохранение пропорций
+//
+//             const ctx = canvas.getContext('2d');
+//             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+//
+//             // Преобразование сжатого изображения в Blob и добавление к formData
+//             canvas.toBlob(async (blob) => {
+//                 const formData = new FormData();
+//                 formData.append('file', blob, file.name);
+//
+//                 try {
+//                     const response = await api.post(`/api/station/auth/upload-video/${orderId}`, formData);
+//
+//                     console.log('Видео успешно загружено:', response.data);
+//                 } catch (error) {
+//                     console.error('Ошибка при загрузке видео:', error);
+//                 }
+//             }, 'video/mp4', 0.7); // 0.7 - качество сжатия (0.0 - 1.0)
+//         };
+//     }
+// };
 
 const uploadVideo = async () => {
 
     const formData = new FormData();
-
-    // formData.append('file', files.value.files[0]);
 
     const fileList = Array.from(files.value.files);
 
     fileList.forEach((file, index) => {
         formData.append(`file[${index}]`, file);
     });
-
-    // formData.append('file', fileList)
 
     try {
         const response = await api.post(`/api/station/auth/upload-video/${orderId}`, formData, {
@@ -105,5 +133,9 @@ const uploadVideo = async () => {
         console.error('Ошибка при загрузке видео:', error);
     }
 };
+
+const route = useRouter();
+
+const orderId = route.currentRoute.value.params.orderId;
 
 </script>

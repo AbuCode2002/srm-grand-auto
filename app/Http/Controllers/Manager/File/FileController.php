@@ -13,25 +13,26 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends BaseController
 {
-//    public function showFile(FileShowRequest $request, int $orderId)
-//    {
-//        $data = FileData::from($request->validated());
-//
-//        return response()
-//            ->file(
-//                storage_path(
-//                    "app/public/{$data->path}"
-//                )
-//            );
-//    }
-
     public function showPath(int $orderId)
     {
-        $files = OrderFile::query()->where('order_id', $orderId)->get();
+        $files = OrderFile::query()->where('order_id', $orderId)->pluck('file_name');
 
-        return $this->respondWithSuccess(
-            $this->transformCollection($files, new FileIndexTransformer()),
-            'success',
-        );
+        $url = Storage::disk('s3')->url("files/2/1697708537");
+//        preg_match('/\/([^\/]+)$/', $files, $value);
+        preg_match('/([^\/]+)$/', $files, $value);
+        return [
+            "url" => $url,
+            "name" => $files
+//            "name" => preg_match('/\/([^\/]+)$/', $files)
+        ];
     }
+//    public function showPath(int $orderId)
+//    {
+//        $files = OrderFile::query()->where('order_id', $orderId)->get();
+//
+//        return $this->respondWithSuccess(
+//            $this->transformCollection($files, new FileIndexTransformer()),
+//            'success',
+//        );
+//    }
 }

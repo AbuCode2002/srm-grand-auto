@@ -10,11 +10,8 @@ class FileUploadRequest extends BaseRequest
      */
     public function rules(): array
     {
-//        dd($this->request);
         return [
-//            'file' => ["required","mimetypes:video/*"],
-//            'file' => ["required", "array", "mimetypes:video/*,image/*"],
-            'file' => ["required", "array"],
+            'file' => ["required"],
         ];
     }
 }
