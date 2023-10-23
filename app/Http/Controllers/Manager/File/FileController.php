@@ -15,15 +15,18 @@ class FileController extends BaseController
 {
     public function showPath(int $orderId)
     {
-        $files = OrderFile::query()->where('order_id', $orderId)->pluck('file_name');
+        $paths = OrderFile::query()->where('order_id', $orderId)->pluck('file_name');
 
-        $url = Storage::disk('s3')->url("files/2/1697708537");
-//        preg_match('/\/([^\/]+)$/', $files, $value);
-        preg_match('/([^\/]+)$/', $files, $value);
+        $url = [];
+//        $url = Storage::disk('s3')->url("files/2/1697708537");
+        foreach ($paths as $index => $path) {
+            $url[$index] = Storage::disk('s3')->url($path);
+        }
+
+        preg_match('/([^\/]+)$/', $paths);
         return [
             "url" => $url,
-            "name" => $files
-//            "name" => preg_match('/\/([^\/]+)$/', $files)
+            "name" => $paths
         ];
     }
 //    public function showPath(int $orderId)

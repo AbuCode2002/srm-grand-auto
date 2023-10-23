@@ -13,19 +13,17 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody v-for="item in file.name" role="rowgroup">
+                <tbody v-for="item in file.url" role="rowgroup">
 
                 <tr role="row" class="">
 
-                    <!--                    <td aria-colindex="1" role="cell" class="">{{ item.file_name.match(/\/([^/]+)$/)[1] }}</td>-->
-                    <!--                    <td aria-colindex="1" role="cell" class="">{{ item.name.match(/([^\/]+)$/)[1] }}</td>-->
                     <td aria-colindex="1" role="cell" class="">{{ item.match(/([^\/]+)$/)[1] }}</td>
 
                     <td aria-colindex="2" role="cell" class="">
                         <div class="row">
                             <div class="feather-icon">
                                 <div style="display: inline-block;" class="text-success">
-                                    <button class="custom-button" @click="getFile(file.url)">
+                                    <button class="custom-button" @click="getFile(item)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                             <path
@@ -42,22 +40,19 @@
                 </tbody>
             </table>
         </div>
-<!--        <div v-if="isImage">-->
-<!--            <div v-if="fileName" class="text-center mt-4">-->
-<!--                <img :src="fileName" alt="profile"/>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div v-if="isVideo">-->
-<!--            <div v-if="fileName" class="text-center mt-4">-->
-<!--                <video :src="fileName" controls class="border" width="720" height="360"></video>-->
-<!--            </div>-->
-<!--        </div>-->
-            <div v-if="fileName" class="text-center mt-4">
-                <img :src="fileName" alt="profile"/>
+
+        <div v-if="loading === 0" class="panel-body text-center">
+            <div class="d-flex justify-content-center align-items-center mx-5 mt-3 mb-5">
+                <div class="spinner-border text-success loader-lg">Loading...</div>
             </div>
-            <div v-if="fileName" class="text-center mt-4">
-                <video :src="fileName" controls class="border" width="720" height="360"></video>
-            </div>
+        </div>
+
+        <div v-if="image" class="text-center mt-4">
+            <img :src="image" alt="profile"/>
+        </div>
+        <div v-if="video" class="text-center mt-4">
+            <video :src="video" controls class="border" width="720" height="360"></video>
+        </div>
     </div>
     <DialogsWrapper/>
 </template>
@@ -77,8 +72,6 @@ const getPath = async () => {
     try {
         const response = await api.get(`/api/manager/auth/show-file-path/${orderId}`);
         file.value = response.data
-        console.log(response.data)
-
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -86,24 +79,33 @@ const getPath = async () => {
 
 onMounted(getPath)
 
-const fileName = ref('')
+const video = ref('')
+const image = ref('')
+const loading = ref('')
 
 const getFile = async (path) => {
-    fileName.value = path
-    console.log(path)
+    loading.value = 0
+    fetch(path)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.headers.get('Content-Type');
+        })
+        .then(contentType => {
+            if (contentType.startsWith('image/')) {
+                image.value = path
+                video.value = ''
+            } else if (contentType.startsWith('video/')) {
+                video.value = path
+                image.value = ''
+            }
+            loading.value = 1;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
-
-// Изменяем вычисляемое свойство isVideo
-const isVideo = computed(() => {
-    const extension = fileName.value ? fileName.value.split('.').pop().toLowerCase() : '';
-    return ['mp4', 'avi', 'mov', 'mkv'].includes(extension);
-});
-
-// Изменяем вычисляемое свойство isImage
-const isImage = computed(() => {
-    const extension = fileName.value ? fileName.value.split('.').pop().toLowerCase() : '';
-    return ['jpg', 'jpeg', 'png', 'gif'].includes(extension);
-});
 
 </script>
 
