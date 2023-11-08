@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use function Symfony\Component\String\s;
 
 class OrderRepository extends BaseRepository
 {
@@ -129,14 +131,32 @@ public function edit(
         return $this->model::query()->where('id', $id)->get();
     }
 
-//    public function show()
-//    {
-//        $userId = Auth::user()->id;
-//
-//        $regionId = UserToRegion::query()->where('user_id', $userId)->pluck('region_id')->toArray();
-//
-//        $order = $this->model::query()->whereIn('region_id', $regionId);
-//
-//        return $order;
-//    }
+    public function sumDefectAct(Collection $carIds)
+    {
+        $order = $this->model::query()->whereIn('car_id', $carIds)->with(['defectiveActs' => function(HasOne $q) {
+            $q->with(['defectWorks' => function (HasMany $q) {
+                $q->pluck('price_with_markup');
+            }]);
+        }])->get();
+
+        $defectActWorks = $order->pluck('defectiveActs')->pluck('defectWorks');
+
+        $statistic = [''];
+
+        foreach ($defectActWorks as $defectActWork) {
+            if ($defectActWork) {
+                foreach ($defectActWork as $index=>$value) {
+                    if ($value && $value->work_name && $value->price_with_markup && $value->amount) {
+                        $statistic[$index] = [
+                            'work' => $value->work_name,
+                            'price' => $value->price_with_markup * $value->amount
+                        ];
+                    }
+                }
+            }
+        }
+
+        dd($statistic);
+        return $this->model::query()->whereIn('id', $carIds)->get();
+    }
 }

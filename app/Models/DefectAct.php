@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -68,12 +69,12 @@ class DefectAct extends Model
         return $this->belongsToMany(Part::class);
     }
 
-    public function defectParts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function defectParts(): HasMany
     {
         return $this->hasMany(DefectPart::class, 'defect_act_id', 'id');
     }
 
-    public function defectWorks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function defectWorks(): HasMany
     {
         return $this->hasMany(DefectWork::class);
     }

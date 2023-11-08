@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Application\ApplicationController;
 use App\Http\Controllers\Admin\Car\CarController;
+use App\Http\Controllers\Admin\CarStatistic\CarStatisticController;
 use App\Http\Controllers\Admin\Client\ClientController;
 use App\Http\Controllers\Admin\Contract\ContractController;
 use App\Http\Controllers\Admin\DefectiveAct\DefectiveActController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Admin\Region\RegionController;
 use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\ServiceName\ServiceNameController;
 use App\Http\Controllers\Admin\Station\StationController;
+use App\Http\Controllers\Admin\Statistic\StatisticController;
 use App\Http\Controllers\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +64,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
             ->where('regionId', '[0-9]+')
             ->where('orderId', '[0-9]+');
+
+        Route::get('/statistic', [StatisticController::class, 'index']);
+
+        Route::get('/car-statistic', [CarStatisticController::class, 'sumDefectiveActWorkForCar']);
     });
 
 });

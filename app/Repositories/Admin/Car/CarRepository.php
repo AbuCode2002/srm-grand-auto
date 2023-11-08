@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin\Car;
 
+use App\Http\Controllers\Admin\CarStatistic\Data\CarStatisticData;
 use App\Models\Car;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,11 +23,36 @@ class CarRepository extends BaseRepository
      */
     public function index()
     {
+        return $this->model::query()->get();
+    }
+
+    public function idNumber()
+    {
         return $this->model::query()->select('id', 'number')->get();
     }
 
     public function show(int $id)
     {
         return $this->model::query()->where('id', $id)->get();
+    }
+
+    public function carName()
+    {
+        return $this->model::query()->pluck('model')->unique();
+    }
+
+    public function carIds(CarStatisticData $data)
+    {
+        foreach ($data->carName as $index => $value) {
+            $words[$index] = explode(' ', $value, 2);
+
+            $carId[] = $this->model::query()
+                ->where('brand', $words[$index][0])
+                ->where('model', $words[$index][1])
+                ->pluck('id');
+
+        }
+        return $carId;
+
     }
 }

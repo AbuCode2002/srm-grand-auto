@@ -22,4 +22,14 @@ class DefectiveAct extends Model
     {
         return $this->hasMany(Service::class, 'defective_act_id', 'id');
     }
+
+    public function defectParts(): HasMany
+    {
+        return $this->hasMany(DefectPart::class, 'defect_act_id', 'id');
+    }
+
+    public function defectWorks(): HasMany
+    {
+        return $this->hasMany(DefectWork::class, 'defect_act_id', 'id');
+    }
 }

@@ -454,6 +454,7 @@
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Согласован'"
+                                                @click.prevent="valueWork(item.id)"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal1"
                                                 class="btn btn-success mb-2 me-1">
@@ -480,7 +481,7 @@
                                                             <i class="flaticon-cancel-12"></i>
                                                             Выйти
                                                         </button>
-                                                        <button @click.prevent="goToWork(item.id)" type="button"
+                                                        <button @click.prevent="goToWork()" type="button"
                                                                 class="btn btn-primary"
                                                                 data-dismiss="modal" data-bs-dismiss="modal">
                                                             <i class="flaticon-cancel-12"></i>
@@ -646,8 +647,9 @@ const currentPage = ref(1);
 const getOrders = async (page = 1) => {
     try {
         const status = ref('all')
-
-        status.value = router.currentRoute.value.query.status
+        if(router.currentRoute.value.query.status) {
+            status.value = router.currentRoute.value.query.status
+        }
 
         const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status.value}`);
 
@@ -680,6 +682,8 @@ const getRole = async () => {
     }
 }
 
+onMounted(getRole)
+
 const date = ref(null)
 
 const postDate = async (orderId) => {
@@ -706,7 +710,30 @@ const postDate = async (orderId) => {
     }
 }
 
-onMounted(getRole)
+const valueOrderId = ref('')
+const valueWork = async (orderId) => {
+    valueOrderId.value = orderId
+}
+const goToWork = async () => {
+    console.log(valueOrderId.value)
+    try {
+        await api.post(`/api/station/auth/order/change-status/${valueOrderId.value}`,);
+
+        new window.Swal({
+            title: "Можете приступать к работе",
+            padding: "2em",
+        });
+    } catch (error) {
+        new window.Swal({
+            icon: "warning",
+            title: "Ошибка",
+            text: "Что то пошло не так!",
+            padding: "2em"
+        });
+        console.error('Ошибка при получении данных:', error);
+    }
+}
+
 </script>
 
 <style>

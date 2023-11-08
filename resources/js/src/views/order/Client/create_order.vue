@@ -103,6 +103,13 @@
                                                                   class="form-control"
                                                                   style="height: 243px"></textarea>
                                                     </div>
+
+<!--                                                    <div class="col-md-12 mb-4">-->
+<!--                                                        <vue-multiselect v-model="workModel" :options="works"-->
+<!--                                                                         :custom-label="nameWork"-->
+<!--                                                                         placeholder="Описание">-->
+<!--                                                        </vue-multiselect>-->
+<!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -124,13 +131,13 @@
 
 <script setup>
 import {onMounted, ref, watch} from "vue";
-import "../../assets/sass/scrollspyNav.scss";
-import "../../assets/sass/users/account-setting.scss";
+import "../../../assets/sass/scrollspyNav.scss";
+import "../../../assets/sass/users/account-setting.scss";
 
-import {useMeta} from "../../composables/use-meta";
-import api from "../../api";
+import {useMeta} from "../../../composables/use-meta";
+import api from "../../../api";
 import VueMultiselect from 'vue-multiselect'
-import router from "../../router";
+import router from "../../../router";
 
 useMeta({title: "Account Setting"});
 
@@ -199,8 +206,26 @@ const getRegions = async () => {
 
 onMounted(getRegions);
 
+const workModel = ref({name: 'Описание'});
+const works = ref('Описание');
+
+const getWorks = async () => {
+    try {
+        const response = await api.get('/api/auth/client/work');
+        works.value = response.data.works;
+        console.log(response.data.works)
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getWorks)
+
 const driverModel = ref({name: 'Водитель'});
 const drivers = ref('Водитель');
+const nameWork = ({name}) => {
+    return `${name}`;
+};
 
 const getDrivers = async () => {
     try {
@@ -282,4 +307,4 @@ const toggleCheckbox = () => {
 };
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<style src="../../../../../../node_modules/vue-multiselect/dist/vue-multiselect.css"></style>

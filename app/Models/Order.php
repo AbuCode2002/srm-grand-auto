@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\StatusChanged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -134,9 +135,13 @@ class Order extends Model
     /**
      * Get the DefectActs for the Order.
      */
-    public function defectActs(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function defectActs(): HasOne
     {
         return $this->hasOne(DefectAct::class);
+    }
+    public function defectiveActs(): HasOne
+    {
+        return $this->hasOne(DefectiveAct::class);
     }
 
     public function shop()

@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\Role\RoleController;
 use App\Http\Controllers\Client\ServiceName\ServiceNameController;
 use App\Http\Controllers\Client\Station\StationController;
 use App\Http\Controllers\Client\User\UserController;
+use App\Http\Controllers\Client\Work\WorkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,6 +83,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
                 ->where('regionId', '[0-9]+')
                 ->where('orderId', '[0-9]+');
+            Route::get('/work', [WorkController::class, 'index']);
         });
     });
 

@@ -17,7 +17,7 @@ class CarController extends BaseController
 
     public function index()
     {
-        $contracts = $this->carRepository->index();
+        $contracts = $this->carRepository->idNumber();
 
             return $this->respondWithSuccess(
                 $this->transformCollection($contracts, new CarIndexTransformer()),

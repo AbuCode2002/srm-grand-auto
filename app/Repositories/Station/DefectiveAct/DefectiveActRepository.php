@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use function Clue\StreamFilter\fun;
+use function PHPUnit\Framework\isEmpty;
 
 class DefectiveActRepository extends BaseRepository
 {
@@ -33,6 +34,7 @@ class DefectiveActRepository extends BaseRepository
      */
     public function store(DefectiveActData $data, Order $order): DefectiveAct
     {
+//        dd($data);
         $markup = Order::query()
             ->where('id', $order->id)
             ->with(['contract' => function (BelongsTo $q) {
@@ -48,7 +50,7 @@ class DefectiveActRepository extends BaseRepository
 
         $defectiveAct = new DefectiveAct();
 
-        if (!$defectiveActForOrder) {
+        if ($defectiveActForOrder->isEmpty()) {
 
             $defectiveAct->order_id = $order->id;
 
@@ -84,7 +86,9 @@ class DefectiveActRepository extends BaseRepository
 
                     $sparePart = new SparePart();
 
+                    dd($data);
                     $sparePart->service_id = $service->id;
+
 
                     $sparePart->name = $data->spare_parts[$item][$value]["name"]["name"];
 
@@ -102,7 +106,6 @@ class DefectiveActRepository extends BaseRepository
         } else {
             foreach (array_keys($data->service) as $item) {
 
-//                $service = Service::query()->findOrFail($data->service[$item]["id"]);
                 $service = Service::query()->findOrNew($data->service[$item]["id"], [
 
                 ]);

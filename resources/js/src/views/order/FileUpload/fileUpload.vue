@@ -25,6 +25,12 @@
 
                         <div id="imagePreview" class="custom-file-container__image-preview"></div>
 
+                        <div v-if="loading === 0" class="panel-body text-center">
+                            <div class="d-flex justify-content-center align-items-center mx-5 mt-3 mb-5">
+                                <div class="spinner-border text-success loader-lg">Loading...</div>
+                            </div>
+                        </div>
+
                         <button class="btn btn-success mt-4" @click.prevent="uploadVideo">Отправить видео</button>
                     </form>
                 </div>
@@ -66,52 +72,21 @@ const initTooltip = () => {
 import api from "../../../api";
 import {useRouter} from "vue-router";
 import {forEach} from "vue3-number-spinner";
+import router from "../../../router";
 
 const selectedFile = ref(null);
 
 function onFileChange(event) {
     selectedFile.value = event.target.files[0];
 }
+const route = useRouter();
 
 const files = ref([]);
 
-// const uploadVideo = async () => {
-//     const fileList = Array.from(files.value.files);
-//
-//     for (const file of fileList) {
-//         const video = document.createElement('video');
-//         video.preload = 'metadata';
-//         video.src = URL.createObjectURL(file);
-//
-//         video.onloadedmetadata = async () => {
-//             const canvas = document.createElement('canvas');
-//             const videoWidth = video.videoWidth;
-//             const videoHeight = video.videoHeight;
-//
-//             canvas.width = 640; // Новая ширина
-//             canvas.height = (640 / videoWidth) * videoHeight; // Сохранение пропорций
-//
-//             const ctx = canvas.getContext('2d');
-//             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-//
-//             // Преобразование сжатого изображения в Blob и добавление к formData
-//             canvas.toBlob(async (blob) => {
-//                 const formData = new FormData();
-//                 formData.append('file', blob, file.name);
-//
-//                 try {
-//                     const response = await api.post(`/api/station/auth/upload-video/${orderId}`, formData);
-//
-//                     console.log('Видео успешно загружено:', response.data);
-//                 } catch (error) {
-//                     console.error('Ошибка при загрузке видео:', error);
-//                 }
-//             }, 'video/mp4', 0.7); // 0.7 - качество сжатия (0.0 - 1.0)
-//         };
-//     }
-// };
+const loading = ref('');
 
 const uploadVideo = async () => {
+    loading.value = 0;
 
     const formData = new FormData();
 
@@ -122,19 +97,17 @@ const uploadVideo = async () => {
     });
 
     try {
-        const response = await api.post(`/api/station/auth/upload-video/${orderId}`, formData, {
+        await api.post(`/api/station/auth/upload-video/${orderId}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
-        console.log('Видео успешно загружено:', response.data);
+        router.push({name: 'status'})
     } catch (error) {
         console.error('Ошибка при загрузке видео:', error);
     }
+    loading.value = null;
 };
-
-const route = useRouter();
 
 const orderId = route.currentRoute.value.params.orderId;
 

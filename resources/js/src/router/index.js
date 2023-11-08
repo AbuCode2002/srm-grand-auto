@@ -324,7 +324,7 @@ const routes = [
     {
         path: '/order/create-order',
         name: 'order-create',
-        component: () => import(/* webpackChunkName: "create_order" */ '../views/order/create_order.vue'),
+        component: () => import(/* webpackChunkName: "create_order" */ '../views/order/Client/create_order.vue'),
     },
     {
         path: '/order/new',
@@ -402,6 +402,12 @@ const routes = [
         name: 'file-show',
         component: () => import('../views/order/FileShow/fileShow.vue'),
     },
+    {
+        path: '/statistics',
+        name: 'statistics',
+        component: () => import('../views/order/Statistics/statistics.vue'),
+    },
+
 
     //drag&drop
     {

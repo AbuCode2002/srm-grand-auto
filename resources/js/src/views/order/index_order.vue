@@ -707,6 +707,7 @@ const goToWork = async (orderId) => {
         console.error('Ошибка при получении данных:', error);
     }
 }
+
 </script>
 
 <style>
