@@ -50,9 +50,7 @@ class CarRepository extends BaseRepository
                 ->where('brand', $words[$index][0])
                 ->where('model', $words[$index][1])
                 ->pluck('id');
-
         }
         return $carId;
-
     }
 }

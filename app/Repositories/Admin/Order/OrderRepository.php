@@ -7,12 +7,11 @@ use App\Models\Order;
 use App\Models\Role;
 use App\Models\UserOrder;
 use App\Repositories\BaseRepository;
+use Aws\ivschat\ivschatClient;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
-use function Symfony\Component\String\s;
 
 class OrderRepository extends BaseRepository
 {
@@ -96,9 +95,10 @@ class OrderRepository extends BaseRepository
 
         return $order;
     }
-public function edit(
-    Order $order,
-    OrderData $data
+
+    public function edit(
+        Order     $order,
+        OrderData $data
     )
     {
         $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
@@ -131,32 +131,41 @@ public function edit(
         return $this->model::query()->where('id', $id)->get();
     }
 
-    public function sumDefectAct(Collection $carIds)
+    public function sumDefectAct(array $carIds, $serviceNames)
     {
-        $order = $this->model::query()->whereIn('car_id', $carIds)->with(['defectiveActs' => function(HasOne $q) {
-            $q->with(['defectWorks' => function (HasMany $q) {
-                $q->pluck('price_with_markup');
-            }]);
-        }])->get();
+        foreach ($carIds as $carId) {
+            $orders[] = $this->model::query()->whereIn('car_id', $carId)->with(['defectiveActs' => function (HasOne $q) {
+                $q->with(['defectWorks' => function (HasMany $q) {
+                    $q->pluck('price_with_markup');
+                }]);
+            }])->get();
+        }
 
-        $defectActWorks = $order->pluck('defectiveActs')->pluck('defectWorks');
+        foreach ($orders as $order) {
+            $defectActWorks[] = $order->pluck('defectiveActs')->pluck('defectWorks');
+        }
+        foreach ($defectActWorks as $index1 => $defectActWork) {
+            foreach ($defectActWork as $item) {
+                foreach ($serviceNames as $serviceName) {
+                    if ($item) {
+                        if (in_array($serviceName, $item->pluck('work_name')->toArray())) {
+                            $statistic[$index1][] = [
+                                'work' => $serviceName,
+                                'price' => $item->where('work_name', $serviceName)->first()->price * $item->where('work_name', $serviceName)->first()->amount
+                            ];
+                        }else {
+                            $statistic[$index1][] = [
+                                'work' => $serviceName,
+                                'price' => '-'
 
-        $statistic = [''];
-
-        foreach ($defectActWorks as $defectActWork) {
-            if ($defectActWork) {
-                foreach ($defectActWork as $index=>$value) {
-                    if ($value && $value->work_name && $value->price_with_markup && $value->amount) {
-                        $statistic[$index] = [
-                            'work' => $value->work_name,
-                            'price' => $value->price_with_markup * $value->amount
-                        ];
+                            ];
+                        }
                     }
                 }
             }
         }
 
         dd($statistic);
-        return $this->model::query()->whereIn('id', $carIds)->get();
+        return $statistic;
     }
 }

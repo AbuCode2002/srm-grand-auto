@@ -7,6 +7,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\CarStatistic\CarStatisticRequest;
 use App\Repositories\Admin\Car\CarRepository;
 use App\Repositories\Admin\Order\OrderRepository;
+use App\Repositories\Admin\ServiceName\ServiceNameRepository;
 use App\Transformers\Api\Admin\Car\CarIndexTransformer;
 
 class CarStatisticController extends BaseController
@@ -14,6 +15,7 @@ class CarStatisticController extends BaseController
     public function __construct(
         private CarRepository $carRepository = new CarRepository(),
         private OrderRepository $orderRepository = new OrderRepository(),
+        private ServiceNameRepository $serviceNameRepository = new ServiceNameRepository(),
     )
     {
         //
@@ -23,13 +25,14 @@ class CarStatisticController extends BaseController
     {
         $data = CarStatisticData::from($request->validated());
 
-        $car = $this->carRepository->carIds($data);
+        $serviceName = $this->serviceNameRepository->getAll()->pluck('name');
 
-        dd($car);
-        $order = $this->orderRepository->sumDefectAct($car);
+        $carIds = $this->carRepository->carIds($data);
+
+        $statistic = $this->orderRepository->sumDefectAct($carIds, $serviceName);
 
             return $this->respondWithSuccess(
-                $this->transformCollection($car, new CarIndexTransformer()),
+                $this->transformCollection($statistic, new CarIndexTransformer()),
                 "created",
             );
     }
