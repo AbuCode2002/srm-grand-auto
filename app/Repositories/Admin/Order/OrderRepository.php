@@ -165,7 +165,6 @@ class OrderRepository extends BaseRepository
             }
         }
 
-        dd($statistic);
         return $statistic;
     }
 }

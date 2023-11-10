@@ -38,7 +38,15 @@ class CarRepository extends BaseRepository
 
     public function carName()
     {
-        return $this->model::query()->pluck('model')->unique();
+        $brands = $this->model::query()->pluck('brand');
+
+        $models = $this->model::query()->pluck('model');
+
+        foreach ($brands as $index => $brand) {
+            $name[$index] = $brand . " " . $models[$index];
+         }
+
+        return array_values(array_unique($name));
     }
 
     public function carIds(CarStatisticData $data)

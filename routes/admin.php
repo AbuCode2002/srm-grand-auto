@@ -57,6 +57,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/', [CarController::class, 'index']);
             Route::get('/{id}', [CarController::class, 'show'])
                 ->where('id', '[0-9]+');
+            Route::get('/name', [CarController::class, 'carName']);
         });
 
         Route::get('/user', [UserController::class, 'show']);

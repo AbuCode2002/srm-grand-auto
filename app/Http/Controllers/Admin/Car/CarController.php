@@ -34,4 +34,9 @@ class CarController extends BaseController
                 "created",
             );
     }
+
+    public function carName()
+    {
+        return $this->carRepository->carName();
+    }
 }

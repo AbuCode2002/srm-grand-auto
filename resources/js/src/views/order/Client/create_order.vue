@@ -104,12 +104,6 @@
                                                                   style="height: 243px"></textarea>
                                                     </div>
 
-<!--                                                    <div class="col-md-12 mb-4">-->
-<!--                                                        <vue-multiselect v-model="workModel" :options="works"-->
-<!--                                                                         :custom-label="nameWork"-->
-<!--                                                                         placeholder="Описание">-->
-<!--                                                        </vue-multiselect>-->
-<!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -248,6 +242,7 @@ const getCars = async () => {
     try {
         const response = await api.get('/api/auth/client/car');
         cars.value = response.data.cars;
+        console.log(response.data.cars)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
