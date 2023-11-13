@@ -11,19 +11,14 @@
                             <div class="col-xl-6 col-md-6 col-sm-6 col-6">
                                 <h4>Статистика</h4>
                             </div>
-                            <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
-                                <select v-model="selectedApplication" class="form-select w-25 ">
-                                    <option :value="null">Машина</option>
-                                    <option v-for="item in cars" :value="item">
-                                        {{ item }}
-                                    </option>
-                                </select>
-                            </div>
 
                             <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
-                                <vue-multiselect v-model="selectedApplication1" :options="cars1"
+                                <vue-multiselect v-model="carMultiselect" :options="cars" :multiple="true"
                                                  placeholder="Машина">
                                 </vue-multiselect>
+                            </div>
+                            <div>
+                                <button @click.prevent="postCarStatistic">test</button>
                             </div>
                         </div>
                     </div>
@@ -34,30 +29,28 @@
                                 <thead role="rowgroup" class="">
                                 <tr role="row" class="">
                                     <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
-                                        <div>ID</div>
-                                    </th>
-                                    <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
                                         <div>Услуга</div>
                                     </th>
-                                    <th v-for="item1 in order" :value="item1" role="columnheader" scope="col"
-                                        aria-colindex="3"
+                                    <th v-for="item1 in carMultiselect" :value="item1" role="columnheader" scope="col"
+                                        aria-colindex="2"
                                         class="text-success">
-                                        <div>{{ item1.car.brand + " " + item1.car.model }}</div>
+                                        <div>{{ item1 }}</div>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item2 in service" :value="item2" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="mb-4">
-                                        <button @click.prevent="pushToCreateDefectiveAct(item2.id)"
-                                                class="btn btn-success mb-2 me-1">
-                                            {{ item2.id }}
-                                        </button>
-                                    </td>
-                                    <td aria-colindex="2" role="cell" class="">{{ item2.name }}</td>
-                                    <td v-for="many in 10" :key="many" aria-colindex="3" role="cell" class="">
-                                        {{ many }}
-                                    </td>
+                                    <td aria-colindex="1" role="cell" class="">{{ item2.name }}</td>
+                                    <td aria-colindex="2" role="cell" class="">{{ item2 }}</td>
+
+<!--                                    <td v-for="many in 10" :key="many" aria-colindex="2" role="cell" class="">-->
+<!--                                        {{ many }}-->
+<!--                                    </td>-->
+<!--                                    <th v-for="item1 in order" :value="item1" role="columnheader" scope="col"-->
+<!--                                        aria-colindex="3"-->
+<!--                                        class="text-success">-->
+<!--                                        <div>{{ item1.car.brand + " " + item1.car.model }}</div>-->
+<!--                                    </th>-->
                                 </tr>
                                 </tbody>
                             </table>
@@ -113,18 +106,12 @@ onMounted(() => {
 
 useMeta({title: "Tables"});
 
-const selectedApplication = ref(null);
 const cars = ref(null);
-
-const selectedApplication1 = ref('Машина');
-const cars1 = ref('Машина');
 
 const getCars = async () => {
     try {
         const response = await api.get('/api/admin/auth/car/name');
         cars.value = response.data;
-        cars1.value = response.data;
-        console.log(response.data)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -164,10 +151,6 @@ const getRegionId = (regionId, orderId) => {
     router.push({name: 'order-index-station', params: {regionId, orderId}});
 };
 
-const pushToCreateDefectiveAct = (orderId) => {
-    router.push({name: 'order-defective-act', params: {orderId}});
-}
-
 const pagination = ref({
     "last_page": 1
 });
@@ -184,12 +167,11 @@ const getOrders = async (page = 1) => {
         const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status.value}`);
 
         order.value = response.data.orders;
+
+        console.log(response.data.orders)
         pagination.value = response.data.pagination;
         currentPage.value = page;
 
-        console.log(order.value)
-        console.log(pagination.value)
-        console.log(currentPage.value)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -214,45 +196,35 @@ const getRole = async () => {
 
 onMounted(getRole)
 
-const date = ref(null)
-
-const postDate = async (orderId) => {
-
-    const diagnosticsDate = {
-        "date": date.value,
-    };
-
-    try {
-        await api.post(`/api/station/auth/diagnostics/${orderId}`, diagnosticsDate);
-
-        new window.Swal({
-            title: "Дата успешно выбрана",
-            padding: "2em",
-        });
-    } catch (error) {
-        new window.Swal({
-            icon: "warning",
-            title: "Ошибка",
-            text: "Что то пошло не так!",
-            padding: "2em"
-        });
-        console.error('Ошибка при получении данных:', error);
-    }
-}
-
 const service = ref('Услуга');
 const getServiceName = async () => {
     try {
         const response = await api.get(`/api/auth/client/service-name`);
         service.value = response.data.serviceNames;
-
         console.log(response.data.serviceNames)
+
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
 };
-
 onMounted(getServiceName)
+
+const carMultiselect = ref([]);
+const statistic = ref('');
+
+const postCarStatistic = async () => {
+    const carName = {
+        "carName": carMultiselect.value,
+    };
+
+    try {
+        const response = await api.post(`/api/admin/auth/car-statistic`, carName);
+        service.value = response.data;
+        console.log(response.data)
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
 
 </script>
 
@@ -402,3 +374,4 @@ onMounted(getServiceName)
 
 </style>
 
+<style src="../../../../../../node_modules/vue-multiselect/dist/vue-multiselect.css"></style>

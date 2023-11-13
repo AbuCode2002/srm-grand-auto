@@ -68,7 +68,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 
         Route::get('/statistic', [StatisticController::class, 'index']);
 
-        Route::get('/car-statistic', [CarStatisticController::class, 'sumDefectiveActWorkForCar']);
+        Route::post('/car-statistic', [CarStatisticController::class, 'sumDefectiveActWorkForCar']);
     });
 
 });

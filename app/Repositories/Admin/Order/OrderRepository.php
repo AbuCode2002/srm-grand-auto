@@ -144,27 +144,44 @@ class OrderRepository extends BaseRepository
         foreach ($orders as $order) {
             $defectActWorks[] = $order->pluck('defectiveActs')->pluck('defectWorks');
         }
-        foreach ($defectActWorks as $index1 => $defectActWork) {
-            foreach ($defectActWork as $item) {
-                foreach ($serviceNames as $serviceName) {
-                    if ($item) {
-                        if (in_array($serviceName, $item->pluck('work_name')->toArray())) {
-                            $statistic[$index1][] = [
-                                'work' => $serviceName,
-                                'price' => $item->where('work_name', $serviceName)->first()->price * $item->where('work_name', $serviceName)->first()->amount
-                            ];
-                        }else {
-                            $statistic[$index1][] = [
-                                'work' => $serviceName,
-                                'price' => '-'
 
-                            ];
-                        }
+        foreach ($serviceNames as $value => $serviceName) {
+            $tempArray = ['name' => $serviceNames[$value]];
+
+            foreach ($defectActWorks as $index1 => $defectActWork) {
+                foreach ($defectActWork as $value1) {
+
+                    if ($value1 && in_array($serviceName, $value1->pluck('work_name')->toArray())) {
+                        [
+                            'car'=> $tempArray[$index1] = '-'
+                        ];
+                    } else {
+                        [
+                            'car'=> $tempArray[$index1] = '-'
+                        ];
                     }
+//                    if ($value1 && in_array($serviceName, $value1->pluck('work_name')->toArray())) {
+//                        $tempArray[$index1] = '-';
+//
+//                    } else {
+//                        $tempArray[$index1] = '-';
+//                    }
                 }
             }
+
+            $statistics[] = $tempArray;
         }
 
-        return $statistic;
+//        foreach ($statistics as $index => $statistic) {
+//            foreach ($defectActWorks as $index1 => $defectActWork) {
+//                foreach ($defectActWork as $value1) {
+//                    if ($value1 && in_array($statistic['name'], $value1->pluck('work_name')->toArray())) {
+//                        $statistics[$index][$index1] = $value1->where('work_name', $statistic['name'])->first()->price * $value1->where('work_name', $statistic['name'])->first()->amount;
+//                    }
+//                }
+//            }
+//        }
+
+        return $statistics;
     }
 }

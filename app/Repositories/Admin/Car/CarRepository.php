@@ -44,7 +44,7 @@ class CarRepository extends BaseRepository
 
         foreach ($brands as $index => $brand) {
             $name[$index] = $brand . " " . $models[$index];
-         }
+        }
 
         return array_values(array_unique($name));
     }

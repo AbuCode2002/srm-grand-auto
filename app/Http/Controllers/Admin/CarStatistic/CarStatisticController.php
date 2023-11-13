@@ -8,7 +8,6 @@ use App\Http\Requests\CarStatistic\CarStatisticRequest;
 use App\Repositories\Admin\Car\CarRepository;
 use App\Repositories\Admin\Order\OrderRepository;
 use App\Repositories\Admin\ServiceName\ServiceNameRepository;
-use App\Transformers\Api\Admin\Car\CarIndexTransformer;
 
 class CarStatisticController extends BaseController
 {
@@ -31,9 +30,6 @@ class CarStatisticController extends BaseController
 
         $statistic = $this->orderRepository->sumDefectAct($carIds, $serviceName);
 
-            return $this->respondWithSuccess(
-                $this->transformCollection($statistic, new CarIndexTransformer()),
-                "created",
-            );
+        return $statistic;
     }
 }
