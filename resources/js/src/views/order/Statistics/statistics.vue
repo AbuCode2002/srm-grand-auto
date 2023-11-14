@@ -17,9 +17,6 @@
                                                  placeholder="Машина">
                                 </vue-multiselect>
                             </div>
-                            <div>
-                                <button @click.prevent="postCarStatistic">test</button>
-                            </div>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -41,42 +38,14 @@
                                 <tbody role="rowgroup">
                                 <tr v-for="item2 in service" :value="item2" role="row" class="">
                                     <td aria-colindex="1" role="cell" class="">{{ item2.name }}</td>
-                                    <td aria-colindex="2" role="cell" class="">{{ item2 }}</td>
-
-<!--                                    <td v-for="many in 10" :key="many" aria-colindex="2" role="cell" class="">-->
-<!--                                        {{ many }}-->
-<!--                                    </td>-->
-<!--                                    <th v-for="item1 in order" :value="item1" role="columnheader" scope="col"-->
-<!--                                        aria-colindex="3"-->
-<!--                                        class="text-success">-->
-<!--                                        <div>{{ item1.car.brand + " " + item1.car.model }}</div>-->
-<!--                                    </th>-->
+                                    <td v-for="item3 in item2.car" aria-colindex="2" role="cell" class="">
+                                        <td v-for="item4 in item3" aria-colindex="2" role="cell" class="">{{ item4 }}</td>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
-                    <div class="panel-body text-center">
-                        <div class="paginating-container pagination-solid flex-column align-items-center">
-                            <paginate
-                                :page-count="pagination.last_page"
-                                :page-range="3"
-                                :margin-pages="2"
-                                :click-handler="pageChanged"
-                                :prev-text="'Prev'"
-                                :next-text="'Next'"
-                                :container-class="'pagination mb-4 b-pagination'"
-                                :page-class="'page-item'"
-                                :prev-class="'page-item prev'"
-                                :next-class="'page-item next'"
-                                :current-page="currentPage"
-                                :prev-icon="prevIcon"
-                                :next-icon="nextIcon"
-                            ></paginate>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -85,14 +54,13 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, onMounted, watch} from "vue";
 
 import "../../../assets/sass/scrollspyNav.scss";
 import "../../../assets/sass/tables/table-basic.scss";
 
 import {useMeta} from "../../../composables/use-meta";
 import api from "../../../api";
-import Paginate from "vuejs-paginate-next";
 
 import {useStore} from 'vuex';
 
@@ -168,7 +136,6 @@ const getOrders = async (page = 1) => {
 
         order.value = response.data.orders;
 
-        console.log(response.data.orders)
         pagination.value = response.data.pagination;
         currentPage.value = page;
 
@@ -201,7 +168,6 @@ const getServiceName = async () => {
     try {
         const response = await api.get(`/api/auth/client/service-name`);
         service.value = response.data.serviceNames;
-        console.log(response.data.serviceNames)
 
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
@@ -213,6 +179,7 @@ const carMultiselect = ref([]);
 const statistic = ref('');
 
 const postCarStatistic = async () => {
+    console.log(carMultiselect.value)
     const carName = {
         "carName": carMultiselect.value,
     };
@@ -220,11 +187,15 @@ const postCarStatistic = async () => {
     try {
         const response = await api.post(`/api/admin/auth/car-statistic`, carName);
         service.value = response.data;
-        console.log(response.data)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
 };
+watch(carMultiselect, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+        postCarStatistic();
+    }
+})
 
 </script>
 
@@ -240,10 +211,8 @@ const postCarStatistic = async () => {
 
 <style lang="css" scoped>
 
-.data-feather {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
+.custom-border {
+    border: 1px solid #ff0000; /* Красный цвет рамки, замените на нужный цвет */
 }
 
 .icon-container button {

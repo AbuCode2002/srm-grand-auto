@@ -22,14 +22,33 @@ class CarStatisticController extends BaseController
 
     public function sumDefectiveActWorkForCar(CarStatisticRequest $request)
     {
+        $serviceName = $this->serviceNameRepository->getAll()->pluck('name');
+        if ($request) {
+            $data = CarStatisticData::from($request->validated());
+
+
+            $carIds = $this->carRepository->carIds($data);
+
+            $statistics = $this->orderRepository->sumDefectAct($carIds, $serviceName);
+
+            return response()->json($statistics, 200, [], JSON_FORCE_OBJECT);
+        }else {
+            foreach ($serviceName as $value)
+                $service[] = ['name' => $value];
+            return  $service;
+        }
+    }
+
+    public function sumDefectiveActPartsForCar(CarStatisticRequest $request)
+    {
         $data = CarStatisticData::from($request->validated());
 
         $serviceName = $this->serviceNameRepository->getAll()->pluck('name');
 
         $carIds = $this->carRepository->carIds($data);
 
-        $statistic = $this->orderRepository->sumDefectAct($carIds, $serviceName);
+        $statistics = $this->orderRepository->sumDefectAct($carIds, $serviceName);
 
-        return $statistic;
+        return response()->json($statistics, 200, [], JSON_FORCE_OBJECT);
     }
 }

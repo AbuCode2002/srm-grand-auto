@@ -152,35 +152,35 @@ class OrderRepository extends BaseRepository
                 foreach ($defectActWork as $value1) {
 
                     if ($value1 && in_array($serviceName, $value1->pluck('work_name')->toArray())) {
-                        [
-                            'car'=> $tempArray[$index1] = '-'
-                        ];
+                        $tempArray1[$index1] = '-';
                     } else {
-                        [
-                            'car'=> $tempArray[$index1] = '-'
-                        ];
+                        $tempArray1[$index1] = '-';
                     }
-//                    if ($value1 && in_array($serviceName, $value1->pluck('work_name')->toArray())) {
-//                        $tempArray[$index1] = '-';
-//
-//                    } else {
-//                        $tempArray[$index1] = '-';
-//                    }
                 }
             }
 
+            $tempArray['car'] = $tempArray1;
             $statistics[] = $tempArray;
         }
 
-//        foreach ($statistics as $index => $statistic) {
-//            foreach ($defectActWorks as $index1 => $defectActWork) {
-//                foreach ($defectActWork as $value1) {
-//                    if ($value1 && in_array($statistic['name'], $value1->pluck('work_name')->toArray())) {
-//                        $statistics[$index][$index1] = $value1->where('work_name', $statistic['name'])->first()->price * $value1->where('work_name', $statistic['name'])->first()->amount;
-//                    }
-//                }
-//            }
-//        }
+        foreach ($statistics as $index => $statistic) {
+            foreach ($defectActWorks as $index1 => $defectActWork) {
+                foreach ($defectActWork as $value1) {
+                    if ($value1 && in_array($statistic['name'], $value1->pluck('work_name')->toArray())) {
+
+                        $price = $value1->where('work_name', $statistic['name'])->pluck('price')->toArray();
+
+                        sort($price);
+
+                        if (reset($price) != end($price)) {
+                            $statistics[$index]['car'][$index1] = [reset($price) . 'тг ', '  ' . end($price) . 'тг ', '  ' . count($value1->where('work_name', $statistic['name'])) . 'шт'];
+                        }else {
+                            $statistics[$index]['car'][$index1] = [$price[0] . 'тг ', '  ' . count($value1->where('work_name', $statistic['name'])) . 'шт'];
+                        }
+                    }
+                }
+            }
+        }
 
         return $statistics;
     }
