@@ -27,6 +27,4 @@ class StatisticController extends BaseController
                 "parts" => $works->name
             ];
     }
-
-
 }

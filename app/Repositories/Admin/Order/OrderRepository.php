@@ -133,6 +133,7 @@ class OrderRepository extends BaseRepository
 
     public function sumDefectAct(array $carIds, $serviceNames)
     {
+        $orders = [];
         foreach ($carIds as $carId) {
             $orders[] = $this->model::query()->whereIn('car_id', $carId)->with(['defectiveActs' => function (HasOne $q) {
                 $q->with(['defectWorks' => function (HasMany $q) {
@@ -141,12 +142,15 @@ class OrderRepository extends BaseRepository
             }])->get();
         }
 
+        $defectActWorks = [];
         foreach ($orders as $order) {
             $defectActWorks[] = $order->pluck('defectiveActs')->pluck('defectWorks');
         }
 
+
         foreach ($serviceNames as $value => $serviceName) {
             $tempArray = ['name' => $serviceNames[$value]];
+            $tempArray1 = [];
 
             foreach ($defectActWorks as $index1 => $defectActWork) {
                 foreach ($defectActWork as $value1) {

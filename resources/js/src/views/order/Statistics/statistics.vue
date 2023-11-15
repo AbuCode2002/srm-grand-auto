@@ -179,7 +179,6 @@ const carMultiselect = ref([]);
 const statistic = ref('');
 
 const postCarStatistic = async () => {
-    console.log(carMultiselect.value)
     const carName = {
         "carName": carMultiselect.value,
     };

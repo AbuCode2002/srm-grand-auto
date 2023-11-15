@@ -19,4 +19,10 @@ class UserRepository extends BaseRepository
     {
         return $this->model::query()->where('id' , $userId)->get();
     }
+
+    public function allManager()
+    {
+        return $this->model::query()->where('role_id' , '1')->get();
+        // where('role_id' , '1')  1 это manager в таблице roles
+    }
 }

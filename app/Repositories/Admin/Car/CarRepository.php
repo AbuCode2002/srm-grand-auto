@@ -51,6 +51,8 @@ class CarRepository extends BaseRepository
 
     public function carIds(CarStatisticData $data)
     {
+        $carId = [];
+
         foreach ($data->carName as $index => $value) {
             $words[$index] = explode(' ', $value, 2);
 

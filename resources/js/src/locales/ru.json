@@ -20,5 +20,9 @@
     "documentation": "Документация",
     "ui_kit": "UI Kit",
     "more": "Более",
-    "applications": "Заявки"
+    "applications": "Заявки",
+    "statistics": "Cтатистика",
+    "service_statistics": "Cтатистика сервиса",
+    "KPI": "КПЭ",
+    "KPI_manager": "КПЭ менеджеров"
 }

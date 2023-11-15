@@ -933,7 +933,7 @@
                 </li>
 
                 <li class="menu">
-                    <router-link to="/statistics" class="dropdown-toggle" @click="toggleMobileMenu">
+                    <a class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#statistics" aria-controls="statistics" aria-expanded="false">
                         <div class="">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -945,14 +945,35 @@
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="feather feather-pie-chart"
+                                class="feather feather-lock"
                             >
-                                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                                <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                             </svg>
-                            <span>{{ $t('Statistics') }}</span>
+                            <span>{{ $t('statistics') }}</span>
                         </div>
-                    </router-link>
+                        <div>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-chevron-right"
+                            >
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <ul id="statistics" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
+                        <li @click="toggleMobileMenu"><a target="_blank" href="/statistics">{{ $t('service_statistics') }}</a></li>
+                        <li @click="toggleMobileMenu"><a target="_blank" href="/KPI">{{ $t('KPI') }}</a></li>
+                    </ul>
                 </li>
 
                 <li class="menu" @click="toggleMobileMenu">

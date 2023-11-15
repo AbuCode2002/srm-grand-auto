@@ -407,6 +407,11 @@ const routes = [
         name: 'statistics',
         component: () => import('../views/order/Statistics/statistics.vue'),
     },
+    {
+        path: '/KPI',
+        name: 'KPI',
+        component: () => import('../views/order/Statistics/KPI.vue'),
+    },
 
 
     //drag&drop

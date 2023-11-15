@@ -20,5 +20,9 @@
     "documentation": "Documentation",
     "ui_kit": "UI Kit",
     "more": "More",
-    "applications": "Applications"
+    "applications": "Applications",
+    "statistics": "Statistics",
+    "service_statistics": "Service statistics",
+    "KPI": "KPI",
+    "KPI_manager": "Managers' KPIs"
 }

@@ -55,6 +55,9 @@ import appSetting from "./app-setting";
 window.$appSetting = appSetting;
 window.$appSetting.init();
 
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
+
 //markdown editor
 import VueEasymde from 'vue3-easymde';
 import "easymde/dist/easymde.min.css";
@@ -71,4 +74,5 @@ import "easymde/dist/easymde.min.css";
     app.use(head)
     app.use(VueEasymde)
     app.use(ConfirmDialog)
+    app.use(VCalendar, {})
     app.mount("#app");

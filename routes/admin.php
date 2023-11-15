@@ -61,6 +61,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         });
 
         Route::get('/user', [UserController::class, 'show']);
+        Route::get('/all-manager', [UserController::class, 'allManager']);
         Route::get('/client', [ClientController::class, 'index']);
         Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
             ->where('regionId', '[0-9]+')
