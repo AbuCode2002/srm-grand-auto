@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Requests\CarStatistic;
+namespace App\Http\Requests\Statistic;
 
 use App\Http\Requests\BaseRequest;
 

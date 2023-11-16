@@ -67,9 +67,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             ->where('regionId', '[0-9]+')
             ->where('orderId', '[0-9]+');
 
-        Route::get('/statistic', [StatisticController::class, 'index']);
-
-        Route::post('/car-statistic', [CarStatisticController::class, 'sumDefectiveActWorkForCar']);
+//        Route::get('/statistic', [StatisticController::class, 'index']);
+        Route::group(['prefix' => 'statistic'], static function () {
+            Route::post('/car-statistic', [CarStatisticController::class, 'sumDefectiveActWorkForCar']);
+            Route::post('/kpi', [CarStatisticController::class, 'KPI']);
+        });
     });
 
 });

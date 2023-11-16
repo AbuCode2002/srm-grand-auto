@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin\CarStatistic;
 
 use App\Http\Controllers\Admin\CarStatistic\Data\CarStatisticData;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\CarStatistic\CarStatisticRequest;
+use App\Http\Requests\Statistic\CarStatisticRequest;
+use App\Http\Requests\Statistic\KPIRequest;
+use App\Models\User;
 use App\Repositories\Admin\Car\CarRepository;
 use App\Repositories\Admin\Order\OrderRepository;
 use App\Repositories\Admin\ServiceName\ServiceNameRepository;
+use App\Repositories\Admin\User\UserRepository;
+use Carbon\Carbon;
 
 class CarStatisticController extends BaseController
 {
@@ -15,6 +19,7 @@ class CarStatisticController extends BaseController
         private CarRepository $carRepository = new CarRepository(),
         private OrderRepository $orderRepository = new OrderRepository(),
         private ServiceNameRepository $serviceNameRepository = new ServiceNameRepository(),
+        private UserRepository $userRepository = new UserRepository(),
     )
     {
         //
@@ -37,5 +42,21 @@ class CarStatisticController extends BaseController
                 $service[] = ['name' => $value];
             return  $service;
         }
+    }
+
+    public function KPI(KPIRequest $request)
+    {
+//        $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d');
+//        $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d');
+        $startDate = '2023-01-01';
+        $endDate = '2023-02-01';
+
+        $managers = $this->userRepository->allManager();
+
+        foreach ($managers as $manager) {
+            $order = $this->orderRepository->orderWithManeger($manager, $startDate, $endDate);
+            $kpi[] = $order;
+        }
+        return $kpi;
     }
 }

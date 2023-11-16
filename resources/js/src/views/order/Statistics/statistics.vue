@@ -184,7 +184,7 @@ const postCarStatistic = async () => {
     };
 
     try {
-        const response = await api.post(`/api/admin/auth/car-statistic`, carName);
+        const response = await api.post(`/api/admin/auth/statistic/car-statistic`, carName);
         service.value = response.data;
     } catch (error) {
         console.error('Ошибка при получении данных:', error);

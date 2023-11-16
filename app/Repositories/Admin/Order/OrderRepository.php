@@ -5,9 +5,12 @@ namespace App\Repositories\Admin\Order;
 use App\Http\Controllers\Client\Order\Data\OrderData;
 use App\Models\Order;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\UserOrder;
 use App\Repositories\BaseRepository;
 use Aws\ivschat\ivschatClient;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
@@ -187,5 +190,23 @@ class OrderRepository extends BaseRepository
         }
 
         return $statistics;
+    }
+
+    public function orderWithManeger(User $manager, $startDate, $endDate)
+    {
+        dd(
+            $this->model::query()
+                ->where(function ($query) use ($startDate, $endDate) {
+                    $query->where('updated_at', '>=', $startDate)
+                        ->orWhere('updated_at', '<=', $endDate);
+                })
+                ->get()
+        );
+        return $this->model::query()
+            ->where('updated_at', '>=', $startDate)
+            ->orWhere('updated_at', '<=', $endDate)
+            ->whereHas('users', function($q) use ($manager) {
+                $q->where('user_id',$manager->id);
+            })->get();
     }
 }
