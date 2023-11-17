@@ -173,7 +173,9 @@ const getRegion = async () => {
 onMounted(getRegion)
 
 const router = useRouter();
+
 const selectStation = async (id) => {
+    const status = ref('all');
 
     const station = {
         "id": orderId,
@@ -184,7 +186,7 @@ const selectStation = async (id) => {
 
     await api.post('/api/auth/client/order/edit', station);
 
-    router.push({ name: 'order-index' });
-};
+    router.push({name: 'status'});
+}
 
 </script>

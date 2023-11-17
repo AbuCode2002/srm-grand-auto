@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Status;
 use App\Models\UserOrder;
 use App\Repositories\BaseRepository;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,7 @@ class OrderRepository extends BaseRepository
         $order->driver_id = $data->driver_id;
         $order->driver_type = $data->driver_type;
         $order->mileage = $data->mileage;
+        $order->status = 1;
 
         $order->save();
 
@@ -104,6 +106,8 @@ public function edit(
             $data->status = Status::query()->where('name', $data->statusName)->value('id');
         }
 
+        $dateNow = new DateTime();
+
         $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
         $order->region_id = $data->region_id ? $data->region_id : $order->region_id;
         $order->is_evacuated = $data->is_evacuated ? $data->is_evacuated : $order->is_evacuated;
@@ -116,6 +120,10 @@ public function edit(
         $order->mileage = $data->mileage ? $data->mileage : $order->mileage;
         $order->station_id = $data->station_id ? $data->station_id : $order->station_id;
         $order->status = $data->status ? $data->status : $order->status;
+
+        if (date_diff($dateNow, $order->created_at)->h < 24) {
+            $order->kpi1 =  1;
+        }
 
         $order->save();
 

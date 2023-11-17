@@ -181,7 +181,7 @@ class OrderRepository extends BaseRepository
 
                         if (reset($price) != end($price)) {
                             $statistics[$index]['car'][$index1] = [reset($price) . 'тг ', '  ' . end($price) . 'тг ', '  ' . count($value1->where('work_name', $statistic['name'])) . 'шт'];
-                        }else {
+                        } else {
                             $statistics[$index]['car'][$index1] = [$price[0] . 'тг ', '  ' . count($value1->where('work_name', $statistic['name'])) . 'шт'];
                         }
                     }
@@ -194,19 +194,10 @@ class OrderRepository extends BaseRepository
 
     public function orderWithManeger(User $manager, $startDate, $endDate)
     {
-        dd(
-            $this->model::query()
-                ->where(function ($query) use ($startDate, $endDate) {
-                    $query->where('updated_at', '>=', $startDate)
-                        ->orWhere('updated_at', '<=', $endDate);
-                })
-                ->get()
-        );
         return $this->model::query()
-            ->where('updated_at', '>=', $startDate)
-            ->orWhere('updated_at', '<=', $endDate)
-            ->whereHas('users', function($q) use ($manager) {
-                $q->where('user_id',$manager->id);
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereHas('users', function ($q) use ($manager) {
+                $q->where('users.id', $manager->id);
             })->get();
     }
 }
