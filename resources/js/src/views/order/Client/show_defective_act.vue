@@ -105,6 +105,7 @@
 
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -182,7 +183,7 @@ const acceptOrRejectDefectact = async (status) => {
     try {
         await api.post('/api/auth/client/order/edit', order);
 
-        route.push({name: 'order-index'});
+        route.push({name: 'status'});
 
         if (status === accepted.value) {
             new window.Swal({

@@ -104,4 +104,11 @@ class OrderController extends BaseController
 
         $this->orderRepository->changeStatus($order);
     }
+
+    public function  endWork(int $orderId): void
+    {
+        $order = $this->orderRepository->findById($orderId);
+
+        $this->orderRepository->endWork($order);
+    }
 }

@@ -51,7 +51,6 @@ class OrderRepository extends BaseRepository
                         $q->select('defect_act_id', DB::raw('SUM(price_with_markup) as sum'))->groupBy('defect_act_id');
                     }]);
                 }])
-                ->whereIn('region_id', $regionId)
                 ->orderBy('id')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
@@ -162,7 +161,28 @@ class OrderRepository extends BaseRepository
 
     public function indexByStatus($page, $status)
     {
+        $user = Auth::user();
+
+        $roleName = Role::query()->where('id', $user->role_id)->value('name');
+
+        $regionId = UserToRegion::query()
+            ->where('user_id', $user->id)
+            ->pluck('region_id');
+
         $statusId = Status::query()->where('name', $status)->value('id');
+
+        if ($roleName === 'superAdmin') {
+
+            return $this->model::query()
+                ->with('users',
+                    'contract',
+                    'car',
+                    'status',
+                    'region',
+                    'station')
+                ->where('status', $statusId)
+                ->paginate($this->perPage, ['*'], 'page', $page);
+        }
 
         return $this->model::query()
             ->with('users',
@@ -172,12 +192,22 @@ class OrderRepository extends BaseRepository
                 'region',
                 'station')
             ->where('status', $statusId)
+            ->whereIn('region_id', $regionId)
             ->paginate($this->perPage, ['*'], 'page', $page);
     }
 
     public function changeStatus(Order $order): void
     {
         $statusId = Status::query()->where('name', 'Проводятся ремонтные работы ')->value('id');
+
+        $order->status = $statusId;
+
+        $order->save();
+    }
+
+    public function endWork(Order $order): void
+    {
+        $statusId = Status::query()->where('name', 'Ремонт выполнен ')->value('id');
 
         $order->status = $statusId;
 

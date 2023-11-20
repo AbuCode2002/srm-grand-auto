@@ -39,6 +39,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::post('/change-status/{id}', [OrderController::class, 'changeStatus'])
                 ->where('id', '[0-9]+');
 
+            Route::post('/end-status/{id}', [OrderController::class, 'endWork'])
+                ->where('id', '[0-9]+');
+
         });
 
         Route::group(['prefix' => 'role'], static function () {

@@ -53,6 +53,29 @@
         <div v-if="video" class="text-center mt-4">
             <video :src="video" controls class="border" width="720" height="360"></video>
         </div>
+
+      <div class="account-settings-container">
+
+        <div class="row">
+          <div class="col-6">
+            <div class="as-footer-container">
+              <button type="button" class="btn btn-success"
+                      @click.prevent="acceptOrRejectDefectact(accepted)">Принять
+              </button>
+            </div>
+          </div>
+
+          <div class="col-6 text-end">
+            <div class="as-footer-container">
+              <button type="button" class="btn btn-danger"
+                      @click.prevent="acceptOrRejectDefectact(rejected)">Отклонить
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
     <DialogsWrapper/>
 </template>

@@ -34,7 +34,6 @@ class DefectiveActRepository extends BaseRepository
      */
     public function store(DefectiveActData $data, Order $order): DefectiveAct
     {
-//        dd($data);
         $markup = Order::query()
             ->where('id', $order->id)
             ->with(['contract' => function (BelongsTo $q) {
@@ -86,7 +85,6 @@ class DefectiveActRepository extends BaseRepository
 
                     $sparePart = new SparePart();
 
-                    dd($data);
                     $sparePart->service_id = $service->id;
 
 
@@ -103,56 +101,57 @@ class DefectiveActRepository extends BaseRepository
                     $sparePart->save();
                 }
             }
+            $order->status = 4; // tables statuses "ДА ожидает согласования в отделе по работе с партнерами"
+
+            $order->save();
         } else {
-            foreach (array_keys($data->service) as $item) {
+            foreach (array_keys($data->service) as $item1) {
 
-                $service = Service::query()->findOrNew($data->service[$item]["id"], [
-
-                ]);
+                $service = Service::query()->findOrNew($data->service[$item1]["id"]);
 
                 if ($service) {
 
-                    $service->name = $data->service[$item]["name"]["name"];
-                    $service->count = $data->service[$item]["count"];
-                    $service->unit = $data->service[$item]["unit"]["unitName"];
-                    $service->price = $data->service[$item]["price"];
-                    $service->sale_percent = $data->service[$item]["sale_percent"];
+                    $service->name = $data->service[$item1]["name"]["name"];
+                    $service->count = $data->service[$item1]["count"];
+                    $service->unit = $data->service[$item1]["unit"]["unitName"];
+                    $service->price = $data->service[$item1]["price"];
+                    $service->sale_percent = $data->service[$item1]["sale_percent"];
 
                     $service->save();
                 } else {
                     $serviceModel = new Service();
 
                     $serviceModel->defective_act_id = $service->defective_act_id;
-                    $serviceModel->name = $data->service[$item]["name"]["name"];
-                    $serviceModel->count = $data->service[$item]["count"];
-                    $serviceModel->unit = $data->service[$item]["unit"]["unitName"];
-                    $serviceModel->price = $data->service[$item]["price"];
-                    $serviceModel->sale_percent = $data->service[$item]["sale_percent"];
+                    $serviceModel->name = $data->service[$item1]["name"]["name"];
+                    $serviceModel->count = $data->service[$item1]["count"];
+                    $serviceModel->unit = $data->service[$item1]["unit"]["unitName"];
+                    $serviceModel->price = $data->service[$item1]["price"];
+                    $serviceModel->sale_percent = $data->service[$item1]["sale_percent"];
 
                     $serviceModel->save();
                 }
 
-                foreach (array_keys($data->spare_parts[$item]) as $value) {
+                foreach (array_keys($data->spare_parts[$item1]) as $value) {
 
-                    $part = SparePart::query()->findOrFail($data->spare_parts[$item][$value]["id"]);
+                    $part = SparePart::query()->findOrFail($data->spare_parts[$item1][$value]["id"]);
 
                     if ($part) {
-                        $part->name = $data->spare_parts[$item][$value]["name"]["name"];
-                        $part->count = $data->spare_parts[$item][$value]["count"];
-                        $part->unit = $data->spare_parts[$item][$value]["unit"]["unitName"];
-                        $part->price = $data->spare_parts[$item][$value]["price"];
-                        $part->sale_percent = $data->spare_parts[$item][$value]["sale_percent"];
+                        $part->name = $data->spare_parts[$item1][$value]["name"]["name"];
+                        $part->count = $data->spare_parts[$item1][$value]["count"];
+                        $part->unit = $data->spare_parts[$item1][$value]["unit"]["unitName"];
+                        $part->price = $data->spare_parts[$item1][$value]["price"];
+                        $part->sale_percent = $data->spare_parts[$item1][$value]["sale_percent"];
 
                         $part->save();
                     } else {
                         $partModel = new SparePart();
 
                         $partModel->defective_act_id = $part->defective_act_id;
-                        $partModel->name = $data->spare_parts[$item][$value]["name"]["name"];
-                        $partModel->count = $data->spare_parts[$item][$value]["count"];
-                        $partModel->unit = $data->spare_parts[$item][$value]["unit"]["unitName"];
-                        $partModel->price = $data->spare_parts[$item][$value]["price"];
-                        $partModel->sale_percent = $data->spare_parts[$item][$value]["sale_percent"];
+                        $partModel->name = $data->spare_parts[$item1][$value]["name"]["name"];
+                        $partModel->count = $data->spare_parts[$item1][$value]["count"];
+                        $partModel->unit = $data->spare_parts[$item1][$value]["unit"]["unitName"];
+                        $partModel->price = $data->spare_parts[$item1][$value]["price"];
+                        $partModel->sale_percent = $data->spare_parts[$item1][$value]["sale_percent"];
 
                         $partModel->save();
                     }

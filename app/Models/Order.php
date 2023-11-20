@@ -23,6 +23,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $driver_id,
  * @property $driver_type,
  * @property $mileage,
+ * @property $kpi1,
+ * @property $kpi2,
+ * @property $kpi3,
  * @property-read \App\Models\Region    $region
  * @property-read \App\Models\Client    $client
  * @property-read \App\Models\Chatroom  $chatroom

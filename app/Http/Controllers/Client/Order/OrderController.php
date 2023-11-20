@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Client\Order;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Client\Order\Data\OrderData;
+use App\Http\Controllers\Station\Diagnostics\Data\DiagnosticsData;
 use App\Http\Requests\Order\OrderEditRequest;
 use App\Http\Requests\Order\OrderStoreRequest;
 use App\Repositories\Client\Order\OrderRepository;
+use App\Repositories\Station\Diagnostics\DiagnosticsRepository;
 use App\Transformers\Api\Client\Order\OrderIndexTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,6 +20,7 @@ class OrderController extends BaseController
      */
     public function __construct(
         private OrderRepository $orderRepository = new OrderRepository(),
+        private DiagnosticsRepository $diagnosticsRepository = new DiagnosticsRepository(),
     )
     {
         //
@@ -55,6 +58,10 @@ class OrderController extends BaseController
         $order = $this->orderRepository->findById($data->id);
 
         $order = $this->orderRepository->edit($order, $data);
+
+        if ($order->status === 2) {
+            $this->diagnosticsRepository->store($data);
+        }
 
             return $this->respondWithSuccess(
                 $this->transformItem($order, new OrderIndexTransformer),

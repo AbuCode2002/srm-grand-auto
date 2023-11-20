@@ -359,17 +359,15 @@ const postDefectiveAct = async () => {
         defectiveAct.spare_parts.push(partsData);
     });
 
-    console.log(defectiveAct)
-
     try {
-        const response = await api.post(`/api/station/auth/defective-act/${orderId}`, defectiveAct);
-
-        // console.log(router.push({name: 'Home'}));
+        await api.post(`/api/station/auth/defective-act/${orderId}`, defectiveAct);
 
         new window.Swal({
             title: "Saved succesfully",
             padding: "2em",
         });
+
+        route.push({name: 'status'});
     } catch (error) {
         new window.Swal({
             icon: "warning",

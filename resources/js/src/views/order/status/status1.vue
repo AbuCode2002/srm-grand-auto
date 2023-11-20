@@ -132,23 +132,7 @@ const postDate = async (orderId) => {
 onMounted(getRole)
 </script>
 
-<style>
-.panel-body {
-    width: 100%;
-}
-
-.layout-top-spacing {
-    width: 177%;
-}
-</style>
-
 <style lang="css" scoped>
-
-.data-feather {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-}
 
 .icon-container button {
     background-color: transparent; /* Убираем фон кнопки */

@@ -102,6 +102,10 @@ const uploadVideo = async () => {
                 'Content-Type': 'multipart/form-data',
             },
         });
+      new window.Swal({
+        title: "Файл загружен",
+        padding: "2em",
+      });
         router.push({name: 'status'})
     } catch (error) {
         console.error('Ошибка при загрузке видео:', error);

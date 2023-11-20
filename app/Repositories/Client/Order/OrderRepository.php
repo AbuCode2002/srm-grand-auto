@@ -127,13 +127,6 @@ public function edit(
 
         $order->save();
 
-        $userOrder = new UserOrder();
-
-        $userOrder->user_id = Auth::user()->id;
-        $userOrder->order_id = $order->id;
-
-        $userOrder->save();
-
         return $order;
     }
 
@@ -141,15 +134,4 @@ public function edit(
     {
         return $this->model::query()->where('id', $id)->get();
     }
-
-//    public function show()
-//    {
-//        $userId = Auth::user()->id;
-//
-//        $regionId = UserToRegion::query()->where('user_id', $userId)->pluck('region_id')->toArray();
-//
-//        $order = $this->model::query()->whereIn('region_id', $regionId);
-//
-//        return $order;
-//    }
 }

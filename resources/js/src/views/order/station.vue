@@ -80,9 +80,46 @@
                                     <tbody role="rowgroup">
                                     <tr v-for="item in station" role="row">
                                         <td aria-colindex="1"  role="cell" class="mb-4">
-                                            <button @click.prevent="selectStation(item.id)" class="btn btn-success mb-2 me-1">
+<!--                                            <button @click.prevent="selectStation(item.id)"-->
+                                            <button class="btn btn-success mb-2 me-1"
+                                                    data-bs-toggle="modal"
+                                                    :data-bs-target="'#exampleModal-' + item.id">
                                                 {{ item.id }}
                                             </button>
+
+                                            <div class="modal fade" :id="'exampleModal-' + item.id" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Выберите дату для
+                                                                проведения диагностики</h5>
+                                                            <button type="button" data-dismiss="modal"
+                                                                    data-bs-dismiss="modal" aria-label="Close"
+                                                                    class="btn-close"></button>
+                                                        </div>
+
+                                                        <div class="col-xl-12">
+                                                            <div class="">
+                                                                <input v-model="date" type="text" id="date"
+                                                                       class="form-control" v-maska="'##-##-####'"
+                                                                       placeholder="__/__/____"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn" data-dismiss="modal"
+                                                                    data-bs-dismiss="modal"><i
+                                                                class="flaticon-cancel-12"></i> Discard
+                                                            </button>
+                                                            <button @click.prevent="selectStation(item.id)" type="button"
+                                                                    class="btn btn-primary"
+                                                                    data-dismiss="modal" data-bs-dismiss="modal"> Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td aria-colindex="2" role="cell">{{ item.name }}</td>
                                         <td aria-colindex="3" role="cell">{{ item.address }}</td>
@@ -174,17 +211,20 @@ onMounted(getRegion)
 
 const router = useRouter();
 
+const date = ref(null)
+
 const selectStation = async (id) => {
     const status = ref('all');
 
     const station = {
         "id": orderId,
         "station_id": id,
-        "status": 12,//Статус: Ожидает назначение диагностики от СТО
+        "status": 2,//Статус: Ожидает назначение диагностики от СТО
+        "date": date.value,
 
     }
 
-    await api.post('/api/auth/client/order/edit', station);
+    await api.post(`/api/auth/client/order/edit`, station);
 
     router.push({name: 'status'});
 }

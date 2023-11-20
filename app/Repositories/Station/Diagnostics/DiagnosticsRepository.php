@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Station\Diagnostics;
 
+use App\Http\Controllers\Client\Order\Data\OrderData;
 use App\Http\Controllers\Station\Diagnostics\Data\DiagnosticsData;
 use App\Models\Diagnostics;
 use App\Models\Order;
@@ -20,17 +21,17 @@ class DiagnosticsRepository extends BaseRepository
         $this->model = Diagnostics::class;
     }
 
-    public function store(DiagnosticsData $data, int $orderId): Diagnostics
+    public function store(OrderData $data): Diagnostics
     {
         $diagnostics = new Diagnostics();
 
         $diagnostics->date = Carbon::createFromFormat('d-m-Y', $data->date)->format('Y-m-d');
 
-        $diagnostics->order_id = $orderId;
+        $diagnostics->order_id = $data->id;
 
         $diagnostics->save();
 
-        $order = Order::query()->findOrFail($orderId);
+        $order = Order::query()->findOrFail($data->id);
 
         $order->status = 3; // статус: Назначена диагностика
 

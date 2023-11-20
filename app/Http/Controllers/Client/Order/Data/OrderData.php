@@ -37,5 +37,6 @@ final class OrderData extends Data
         public ?string $station_id,
         public ?int $status,
         public ?string $statusName,
+        public ?string $date,
     ){}
 }

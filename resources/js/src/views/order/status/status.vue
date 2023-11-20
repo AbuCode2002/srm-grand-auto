@@ -397,46 +397,6 @@
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
-                                        <button v-if="item.status.name === 'Ожидает назначение диагностики от СТО'"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal"
-                                                class="btn btn-success mb-2 me-1">
-                                            {{ item.id }}
-                                        </button>
-
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Выберите дату для
-                                                            проведения диагностики</h5>
-                                                        <button type="button" data-dismiss="modal"
-                                                                data-bs-dismiss="modal" aria-label="Close"
-                                                                class="btn-close"></button>
-                                                    </div>
-
-                                                    <div class="col-xl-12">
-                                                        <div class="">
-                                                            <input v-model="date" type="text" id="date"
-                                                                   class="form-control" v-maska="'##-##-####'"
-                                                                   placeholder="__/__/____"/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn" data-dismiss="modal"
-                                                                data-bs-dismiss="modal"><i
-                                                            class="flaticon-cancel-12"></i> Discard
-                                                        </button>
-                                                        <button @click.prevent="postDate(item.id)" type="button"
-                                                                class="btn btn-primary"
-                                                                data-dismiss="modal" data-bs-dismiss="modal"> Save
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <button v-if="item.status.name === 'Назначена диагностика'"
                                                 @click.prevent="pushToUpdateDefectiveAct(item.id)"
@@ -462,11 +422,11 @@
                                         </button>
 
                                         <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                             aria-labelledby="exampleModalLabel2" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                        <h5 class="modal-title" id="exampleModalLabel2">
                                                             Нажмите "Да" если начинаете ремонтные работы
                                                         </h5>
                                                         <button type="button" data-dismiss="modal"
@@ -493,9 +453,44 @@
                                         </div>
 
                                         <button v-if="item.status.name === 'Проводятся ремонтные работы'"
+                                                @click.prevent="valueWork(item.id)"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal2"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+
+                                      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+                                           aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel">
+                                                Нажмите "Да" если ремонтные работы закончены
+                                              </h5>
+                                              <button type="button" data-dismiss="modal"
+                                                      data-bs-dismiss="modal" aria-label="Close"
+                                                      class="btn-close">
+                                              </button>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn" data-dismiss="modal"
+                                                      data-bs-dismiss="modal">
+                                                <i class="flaticon-cancel-12"></i>
+                                                Выйти
+                                              </button>
+                                              <button @click.prevent="endToWork()" type="button"
+                                                      class="btn btn-primary"
+                                                      data-dismiss="modal" data-bs-dismiss="modal">
+                                                <i class="flaticon-cancel-12"></i>
+                                                Да
+                                              </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
                                         <button v-if="item.status.name === 'Ремонт выполнен'"
                                                 @click.prevent="pushToUploadVideo(item.id)"
                                                 class="btn btn-success mb-2 me-1">
@@ -684,19 +679,17 @@ const getRole = async () => {
 
 onMounted(getRole)
 
-const date = ref(null)
+const valueOrderId = ref('')
+const valueWork = async (orderId) => {
+    valueOrderId.value = orderId
+}
 
-const postDate = async (orderId) => {
-
-    const diagnosticsDate = {
-        "date": date.value,
-    };
-
+const goToWork = async () => {
     try {
-        await api.post(`/api/station/auth/diagnostics/${orderId}`, diagnosticsDate);
+        await api.post(`/api/station/auth/order/change-status/${valueOrderId.value}`,);
 
         new window.Swal({
-            title: "Дата успешно выбрана",
+            title: "Можете приступать к работе",
             padding: "2em",
         });
     } catch (error) {
@@ -710,17 +703,12 @@ const postDate = async (orderId) => {
     }
 }
 
-const valueOrderId = ref('')
-const valueWork = async (orderId) => {
-    valueOrderId.value = orderId
-}
-const goToWork = async () => {
-    console.log(valueOrderId.value)
+const endToWork = async () => {
     try {
-        await api.post(`/api/station/auth/order/change-status/${valueOrderId.value}`,);
+        await api.post(`/api/station/auth/order/end-status/${valueOrderId.value}`);
 
         new window.Swal({
-            title: "Можете приступать к работе",
+            title: "Работа завершена",
             padding: "2em",
         });
     } catch (error) {

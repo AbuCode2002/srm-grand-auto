@@ -3,11 +3,13 @@
 namespace App\Repositories\Manager\Order;
 
 use App\Http\Controllers\Manager\Order\Data\OrderData;
+use App\Models\DefectiveAct;
 use App\Models\Order;
 use App\Models\Role;
 use App\Models\Status;
 use App\Models\UserOrder;
 use App\Repositories\BaseRepository;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
@@ -102,6 +104,13 @@ public function edit(
 {
         if($data->statusName){
             $data->status = Status::query()->where('name', $data->statusName)->value('id');
+
+            $dateDefectact = DefectiveAct::query()->where('order_id', $order->id)->value('created_at');
+
+            $dateNow = new DateTime();
+            if (date_diff($dateNow, $dateDefectact)->h < 24) {
+                $order->kpi2 = 1;
+            }
         }
 
         $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
