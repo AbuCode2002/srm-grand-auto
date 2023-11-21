@@ -1,5 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="panel-body">
+        <div class="account-settings-container">
         <div class="table-checkable table-highlight-head table-responsive">
             <table role="table" aria-busy="false" aria-colcount="5"
                    class="table b-table table-striped table-hover table-bordered" id="__BVID__368">
@@ -54,24 +55,20 @@
             <video :src="video" controls class="border" width="720" height="360"></video>
         </div>
 
-      <div class="account-settings-container">
-
-        <div class="row">
-          <div class="col-6">
+        <div v-if="file.url && file.url.length > 0" class="row">
             <div class="as-footer-container">
-              <button type="button" class="btn btn-success"
-                      @click.prevent="acceptOrRejectDefectact(accepted)">Принять
+              <button style="position: absolute; bottom: 30px; left: 30px;"
+                      type="button" class="btn btn-success"
+                      @click.prevent="acceptOrRejectFile(accepted)">Принять
               </button>
             </div>
-          </div>
 
-          <div class="col-6 text-end">
             <div class="as-footer-container">
-              <button type="button" class="btn btn-danger"
-                      @click.prevent="acceptOrRejectDefectact(rejected)">Отклонить
+              <button style="position: absolute; bottom: 30px; right: 30px;"
+                      type="button" class="btn btn-danger"
+                      @click.prevent="acceptOrRejectFile(rejected)">Отклонить
               </button>
             </div>
-          </div>
 
         </div>
       </div>
@@ -95,6 +92,7 @@ const getPath = async () => {
     try {
         const response = await api.get(`/api/manager/auth/show-file-path/${orderId}`);
         file.value = response.data
+        console.log(response.data.url.length)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -105,6 +103,8 @@ onMounted(getPath)
 const video = ref('')
 const image = ref('')
 const loading = ref('')
+const accepted = ref('accepted')
+const rejected = ref('rejected')
 
 const getFile = async (path) => {
     loading.value = 0
@@ -128,6 +128,31 @@ const getFile = async (path) => {
         .catch(error => {
             console.error('Error:', error);
         });
+}
+
+const acceptOrRejectFile = async (result) => {
+    const fileResult = {
+        "result": result,
+    };
+    try {
+        await api.post(`/api/manager/auth/accepted-rejected-file/${orderId}`, fileResult);
+
+        router.push({name: 'status'});
+
+        if (result === accepted.value) {
+            new window.Swal({
+                title: "Файл принят",
+                padding: "2em",
+            });
+        }else {
+            new window.Swal({
+                title: "Файл был отклонен",
+                padding: "2em",
+            });
+        }
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
 }
 
 </script>

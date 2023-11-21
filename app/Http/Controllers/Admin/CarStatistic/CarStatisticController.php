@@ -46,10 +46,10 @@ class CarStatisticController extends BaseController
 
     public function KPI(KPIRequest $request)
     {
-//        $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
-//        $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
-        $startDate = '2023-01-02 00:00:00';
-        $endDate = '2023-03-02 23:59:59';
+        $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
+        $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
+//        $startDate = '2023-11-16 00:00:00';
+//        $endDate = '2023-11-18 23:59:59';
 
         $managers = $this->userRepository->allManager();
 

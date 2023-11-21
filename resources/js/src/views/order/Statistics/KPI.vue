@@ -37,7 +37,7 @@
                             <div class="col-sm-12">
                                 <draggable class="drag-drop dragula" group="default" ghost-class="gu-transit"
                                            drag-class="el-drag-ex-1" :animation="200">
-                                    <div v-for="manager in managers"
+                                    <div v-for="(manager, index) in managers"
                                          class="media d-md-flex d-block text-sm-start text-center">
                                         <div class="media-body">
                                             <div class="d-xl-flex d-block justify-content-between">
@@ -45,7 +45,7 @@
                                                     <h6 class="">{{ manager.name }}</h6>
                                                 </div>
                                                 <div>
-                                                    <div style="border-color: #4dcf8f" size="sm">KPI</div>
+                                                    <div style="border-color: #4dcf8f" size="sm">{{kpi[index]}}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,11 +103,14 @@ const range = ref({
     end: new Date(),
 });
 
+const kpi = ref('')
+
 const postCalendar = async () => {
     try {
         seeDate.value = 0
-        console.log(range.value.end)
         const response = await api.post(`/api/admin/auth/statistic/kpi`, range.value);
+        kpi.value = response.data
+
     } catch (error) {
         console.error('Ошибка при отправке данных:', error);
     }

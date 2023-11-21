@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Station\FileUpload;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\FileUpload\FileUploadRequest;
+use App\Http\Requests\File\FileUploadRequest;
 use App\Models\OrderFile;
 use FFMpeg\Filters\Video\VideoFilters;
 use FFMpeg\Format\Video\X264;

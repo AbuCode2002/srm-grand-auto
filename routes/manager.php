@@ -68,5 +68,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             ->where('orderId', '[0-9]+');
         Route::get('/show-file-path/{orderId}', [FileController::class, 'showPath'])
             ->where('orderId', '[0-9]+');
+        Route::post('/accepted-rejected-file/{orderId}', [FileController::class, 'delete'])
+            ->where('orderId', '[0-9]+');
     });
 });

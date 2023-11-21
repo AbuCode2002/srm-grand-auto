@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Requests\FileUpload;
+namespace App\Http\Requests\File;
 
 use App\Http\Requests\BaseRequest;
 

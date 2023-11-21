@@ -194,10 +194,34 @@ class OrderRepository extends BaseRepository
 
     public function orderWithManeger(User $manager, $startDate, $endDate)
     {
-        return $this->model::query()
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereHas('users', function ($q) use ($manager) {
-                $q->where('users.id', $manager->id);
-            })->get();
+        $countOrder = $this->model::query()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->whereHas('users', function ($q) use ($manager) {
+                    $q->where('users.id', $manager->id);
+                })->count();
+
+        $kpi1 = $this->model::query()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->whereHas('users', function ($q) use ($manager) {
+                    $q->where('users.id', $manager->id);
+                })->sum('kpi1');
+
+        $kpi2 = $this->model::query()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->whereHas('users', function ($q) use ($manager) {
+                    $q->where('users.id', $manager->id);
+                })->sum('kpi2');
+
+        $kpi3 = $this->model::query()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->whereHas('users', function ($q) use ($manager) {
+                    $q->where('users.id', $manager->id);
+                })->sum('kpi3');
+
+        if ($countOrder > 0) {
+            return ( $kpi1 + $kpi2 + $kpi3) / (3*$countOrder);
+        }else {
+            return 0;
+        }
     }
 }
