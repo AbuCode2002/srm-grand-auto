@@ -3,12 +3,14 @@
 namespace App\Repositories\Admin\Order;
 
 use App\Http\Controllers\Client\Order\Data\OrderData;
+use App\Models\Contract;
 use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserOrder;
 use App\Repositories\BaseRepository;
 use Aws\ivschat\ivschatClient;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -223,5 +225,57 @@ class OrderRepository extends BaseRepository
         }else {
             return 0;
         }
+    }
+
+    public function sumUsed($regions)
+    {
+        foreach ($regions as $index => $region) {
+            $array = $region['children']->pluck('id')->toArray();
+            $array[] = $region['id'];
+
+            $sumDefectAct = $this->model::query()
+                ->with(['defectiveActs' => function(HasOne $q) {
+                    $q->get();
+                }])
+                ->where('status', 9) // 9 - Заявка закрыта table statuses
+                ->whereIn('region_id', $array)
+                ->get();
+
+            $sum[] = $sumDefectAct->pluck('defectiveActs')->sum('total_with_markup') * 1.12;
+
+            $regions[$index]->usedSum = $sum[$index];
+        }
+
+        return $regions;
+    }
+
+    public function sumWork($regions, $markup)
+    {
+        foreach ($regions as $index => $region) {
+            $array = $region['children']->pluck('id')->toArray();
+            $array[] = $region['id'];
+
+            $sumDefectAct = $this->model::query()
+                ->with(['defectiveActs' => function(HasOne $q) {
+                    $q->get();
+                }])
+                ->where('status', '<' ,9)
+                ->where('status', '>' ,5) // Проводяться ремонтные работы, тоесть еще не заплатили но но в будущим нужно заплатить
+                ->whereIn('region_id', $array)
+                ->get();
+
+            $sum[] = $sumDefectAct->pluck('defectiveActs')->sum('total_with_markup') * 1.12;
+
+            $regions[$index]->workSum = $sum[$index];
+
+
+            $regions[$index]->restSum = $regions[$index]->budget - $regions[$index]->usedSum - $regions[$index]->workSum;
+
+            $regions[$index]->restSumNotNDS = $regions[$index]->restSum / 1.12;
+
+            $regions[$index]->restSumNotNDSNotMarkup = $regions[$index]->restSumNotNDS / $markup;
+        }
+
+        return $regions;
     }
 }

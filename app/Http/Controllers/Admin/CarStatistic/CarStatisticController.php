@@ -48,8 +48,6 @@ class CarStatisticController extends BaseController
     {
         $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
         $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
-//        $startDate = '2023-11-16 00:00:00';
-//        $endDate = '2023-11-18 23:59:59';
 
         $managers = $this->userRepository->allManager();
 

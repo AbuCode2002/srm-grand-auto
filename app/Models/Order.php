@@ -135,13 +135,6 @@ class Order extends Model
         // 'updated_at' => 'timestamp',
     ];
 
-    /**
-     * Get the DefectActs for the Order.
-     */
-    public function defectActs(): HasOne
-    {
-        return $this->hasOne(DefectAct::class);
-    }
     public function defectiveActs(): HasOne
     {
         return $this->hasOne(DefectiveAct::class);

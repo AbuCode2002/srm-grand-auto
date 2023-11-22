@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int                                                         $id
  * @property string                                                      $region_name
  * @property int                                                         $parent_id
+ * @property int                                                         $budget
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Region[] $children
  */
 class Region extends Model
@@ -38,5 +39,15 @@ class Region extends Model
     public function station(): HasMany
     {
         return $this->hasMany(Station::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+    public function regions()
+    {
+        return $this->hasMany(Region::class, 'id', 'id');
+
     }
 }

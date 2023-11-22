@@ -304,12 +304,12 @@ const orderId = route.currentRoute.value.params.orderId;
 const postDefectiveAct = async () => {
 
     const totalPrice = fields.value.reduce((total, field) => {
-        return total + (field.price || 0);
+        return total + (field.price * field.count || 0);
     }, 0);
 
     const totalPartPrice = fields.value.reduce((total, field) => {
         const partPrice = field.parts.reduce((partTotal, part) => {
-            return partTotal + (part.partPrice || 0);
+            return partTotal + (part.partPrice * part.partCount || 0);
         }, 0);
 
         return total + partPrice;
