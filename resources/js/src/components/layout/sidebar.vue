@@ -973,6 +973,8 @@
                     <ul id="statistics" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
                         <li @click="toggleMobileMenu"><a target="_blank" href="/statistics">{{ $t('service_statistics') }}</a></li>
                         <li @click="toggleMobileMenu"><a target="_blank" href="/KPI">{{ $t('KPI') }}</a></li>
+                        <li @click="toggleMobileMenu"><a target="_blank" href="/budgets">{{ $t('budgets') }}</a></li>
+                        <li @click="toggleMobileMenu"><a target="_blank" href="/budget">{{ $t('budgets') }}</a></li>
                     </ul>
                 </li>
 

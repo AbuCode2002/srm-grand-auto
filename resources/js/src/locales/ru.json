@@ -24,5 +24,7 @@
     "statistics": "Cтатистика",
     "service_statistics": "Cтатистика сервиса",
     "KPI": "КПЭ",
-    "KPI_manager": "КПЭ менеджеров"
+    "KPI_manager": "КПЭ менеджеров",
+    "budgets": "Бюджет"
+
 }

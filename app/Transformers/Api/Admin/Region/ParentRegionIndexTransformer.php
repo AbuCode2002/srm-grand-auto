@@ -8,9 +8,9 @@ use App\Transformers\BaseTransformer;
 class ParentRegionIndexTransformer extends BaseTransformer
 {
 
-//    protected array $defaultIncludes = ["regions"];
-
-//    public function includeRegions(Region $regions)
+//    protected array $defaultIncludes = ["children"];
+//
+//    public function includeChildren(Region $regions)
 //    {
 //        $model = null;
 //        if ($regions->relationLoaded('regions')) {
@@ -45,6 +45,11 @@ class ParentRegionIndexTransformer extends BaseTransformer
             "id" => $region->id,
             "region_name" => $region->region_name,
             "budget" => $region->budget,
+            "usedSum" => $region->usedSum,
+            "workSum" => $region->workSum,
+            "restSum" => $region->restSum,
+            "restSumNotNDS" => $region->restSumNotNDS,
+            "restSumNotNDSNotMarkup" => $region->restSumNotNDSNotMarkup,
         ];
     }
 }

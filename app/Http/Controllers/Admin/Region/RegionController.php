@@ -52,12 +52,9 @@ class RegionController extends BaseController
 
         $this->orderRepository->sumWork($regions, $markup);
 
-//        $regions
-        return $regions;
-
-//        return $this->respondWithSuccess(
-//            $this->transformCollection($regions, new ParentRegionIndexTransformer()),
-//            "created",
-//        );
+        return $this->respondWithSuccess(
+            $this->transformCollection($regions, new ParentRegionIndexTransformer()),
+            "created",
+        );
     }
 }
