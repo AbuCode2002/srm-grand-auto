@@ -47,10 +47,11 @@ class OrderController extends BaseController
 
         if ($status === 'all') {
             $order = $this->orderRepository->index($page);
+        }elseif ($status === 'Не оплачено') {
+            $order = $this->orderRepository->paidIndex($page);
         }else {
             $order = $this->orderRepository->indexByStatus($page, $status);
         }
-
         return $this->setPagination($order)
             ->respondWithSuccess(
             $this->transformCollection($order, new OrderIndexTransformer()),
@@ -103,6 +104,16 @@ class OrderController extends BaseController
         $order = $this->orderRepository->findById($orderId);
 
         $this->orderRepository->changeStatus($order);
+    }
+
+    public function  paidStatus(Request $request, int $orderId): void
+    {
+        $order = $this->orderRepository->findById($orderId);
+
+        $paid = array_key_first($request->input());
+
+
+        $this->orderRepository->paidStatus($order, $paid);
     }
 
     public function  endWork(int $orderId): void

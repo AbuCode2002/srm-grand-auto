@@ -45,12 +45,8 @@ class OrderRepository extends BaseRepository
                     'car',
                     'status',
                     'region',
+                    'defectiveActs',
                     'station')
-                ->with(['defectActs' => function (hasOne $q) {
-                    $q->with(['defectParts' => function (hasMany $q) {
-                        $q->select('defect_act_id', DB::raw('SUM(price_with_markup) as sum'))->groupBy('defect_act_id');
-                    }]);
-                }])
                 ->orderBy('id')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
@@ -196,11 +192,38 @@ class OrderRepository extends BaseRepository
             ->paginate($this->perPage, ['*'], 'page', $page);
     }
 
+    public function paidIndex($page)
+    {
+        $statusId = Status::query()->where('name', 'Заявка закрыта')->value('id');
+
+            return $this->model::query()
+                ->with('users',
+                    'contract',
+                    'car',
+                    'status',
+                    'region',
+                    'station')
+                ->where('status', $statusId)
+                ->where('paid', 0)
+                ->paginate($this->perPage, ['*'], 'page', $page);
+    }
+
     public function changeStatus(Order $order): void
     {
         $statusId = Status::query()->where('name', 'Проводятся ремонтные работы ')->value('id');
 
         $order->status = $statusId;
+
+        $order->save();
+    }
+
+    public function paidStatus(Order $order, $paid): void
+    {
+        if ($paid != null) {
+            $order->paid = $paid;
+        }else {
+            $order->paid = 0;
+        }
 
         $order->save();
     }

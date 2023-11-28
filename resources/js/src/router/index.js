@@ -372,6 +372,10 @@ const routes = [
         path: '/order/new',
         name: 'status10',
         component: () => import('../views/order/status/status10.vue'),
+    },{
+        path: '/order/new',
+        name: 'status11',
+        component: () => import('../views/order/status/status11.vue'),
     },
     {
         path: '/order/index/station/:regionId/:orderId',

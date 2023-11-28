@@ -1,23 +1,27 @@
 <template>
-    <div v-if="roleUser != null" class="container">
+    <div v-if="roleUser != null" class="container" style="position: absolute; right:0; left:0;">
         <div class="row layout-top-spacing">
             <div id="tableFooter" class="col-lg-12 col-12 layout-spacing">
                 <div class="statbox panel box box-shadow">
-
-                    <div class="col-md-11 mx-5">
-                    </div>
                     <div class="panel-heading">
-                        <div class="row">
+                        <div class="position-relative">
                             <div class="col-xl-6 col-md-6 col-sm-6 col-6">
                                 <h4>Бюджет</h4>
                             </div>
-
+                            <div class="col-md-3 mb-4 mt-4">
+                                <select v-model="selectedContracts" @change="handleChange" class="form-select w-100">
+                                    <option :value="null">Выберите компанию</option>
+                                    <option v-for="item in contracts" :value="item">
+                                        {{ item.number_of_contract }}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="table-checkable table-highlight-head table-responsive">
-                            <table role="table" aria-busy="false" aria-colcount="5"
-                                   class="table b-table table-striped table-hover table-bordered table-fluid" id="__BVID__368">
+                            <table role="table" aria-colcount="5"
+                                   class="table table-striped table-bordered table-fluid" id="__BVID__368">
                                 <thead role="rowgroup" class="">
                                 <tr role="row" class="">
                                     <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
@@ -85,41 +89,8 @@ onMounted(() => {
 
 useMeta({title: "Tables"});
 
-const cars = ref(null);
-
-const getCars = async () => {
-    try {
-        const response = await api.get('/api/admin/auth/car/name');
-        cars.value = response.data;
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-onMounted(getCars)
-
 const code_arr = ref([]);
 const order = ref([]);
-
-onMounted(() => {
-    initTooltip();
-});
-
-const toggleCode = (name) => {
-    if (code_arr.value.includes(name)) {
-        code_arr.value = code_arr.value.filter((d) => d != name);
-    } else {
-        code_arr.value.push(name);
-    }
-};
-
-const initTooltip = () => {
-    setTimeout(() => {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map((tooltipTriggerEl) => {
-            return new window.bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
-};
 
 import {useRouter} from 'vue-router';
 import VueMultiselect from "vue-multiselect";
@@ -137,17 +108,20 @@ const currentPage = ref(1);
 
 const regions = ref([]);
 
-const getManegers = async () => {
-    try {
-        const response = await api.get(`/api/admin/auth/region/parent-region`);
+const getRegions = async () => {
+        try {
+            const response = await api.get(`/api/admin/auth/region/parent-region/${selectedContracts.value.id}`);
 
-        regions.value = response.data.regions
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
+            regions.value = response.data.regions
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+        }
+};
+const handleChange = () => {
+    getRegions();
 };
 
-onMounted(getManegers)
+// onMounted(getRegions)
 
 const pageChanged = (pageNum) => {
     getOrders(pageNum);
@@ -166,39 +140,20 @@ const getRole = async () => {
 
 onMounted(getRole)
 
-const service = ref('Услуга');
-const getServiceName = async () => {
-    try {
-        const response = await api.get(`/api/auth/client/service-name`);
-        service.value = response.data.serviceNames;
+const selectedContracts = ref(null);
 
+const contracts = ref(null);
+
+const getContracts = async () => {
+    console.log(selectedContracts)
+    try {
+        const response = await api.get('/api/auth/client/all-contracts');
+        contracts.value = response.data.contracts;
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
 };
-onMounted(getServiceName)
-
-const carMultiselect = ref([]);
-const statistic = ref('');
-
-const postCarStatistic = async () => {
-    const carName = {
-        "carName": carMultiselect.value,
-    };
-
-    try {
-        const response = await api.post(`/api/admin/auth/statistic/car-statistic`, carName);
-        service.value = response.data;
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-watch(carMultiselect, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-        postCarStatistic();
-    }
-})
-
+onMounted(getContracts)
 </script>
 
 <style>
@@ -213,8 +168,8 @@ watch(carMultiselect, (newVal, oldVal) => {
 
 <style lang="css" scoped>
 
-.align-top {
-    vertical-align: top;
+.table-fluid {
+    width: 100%;
 }
 
 .icon-container button {

@@ -227,7 +227,7 @@ class OrderRepository extends BaseRepository
         }
     }
 
-    public function sumUsed($regions)
+    public function sumUsed($regions, $contractId)
     {
         foreach ($regions as $index => $region) {
             $array = $region['children']->pluck('id')->toArray();
@@ -238,6 +238,7 @@ class OrderRepository extends BaseRepository
                     $q->get();
                 }])
                 ->where('status', 9) // 9 - Заявка закрыта table statuses
+                ->where('contract_id', $contractId)
                 ->whereIn('region_id', $array)
                 ->get();
 
@@ -249,7 +250,7 @@ class OrderRepository extends BaseRepository
         return $regions;
     }
 
-    public function sumWork($regions, $markup)
+    public function sumWork($regions, $markup, $contractId)
     {
         foreach ($regions as $index => $region) {
             $array = $region['children']->pluck('id')->toArray();
@@ -261,6 +262,7 @@ class OrderRepository extends BaseRepository
                 }])
                 ->where('status', '<' ,9)
                 ->where('status', '>' ,5) // Проводяться ремонтные работы, тоесть еще не заплатили но но в будущим нужно заплатить
+                ->where('contract_id', $contractId)
                 ->whereIn('region_id', $array)
                 ->get();
 

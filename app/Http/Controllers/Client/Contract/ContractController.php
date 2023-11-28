@@ -31,4 +31,14 @@ class ContractController extends BaseController
                 "created",
             );
     }
+
+    public function indexAll()
+    {
+        $contracts = $this->contractRepository->indexAll();
+
+            return $this->respondWithSuccess(
+                $this->transformCollection($contracts, new ContractIndexTransformer()),
+                "created",
+            );
+    }
 }

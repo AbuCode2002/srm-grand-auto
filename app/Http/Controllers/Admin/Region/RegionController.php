@@ -40,17 +40,15 @@ class RegionController extends BaseController
         );
     }
 
-    public function indexParentRegion()
+    public function indexParentRegion(int $contractId)
     {
-        $contractId = 1; //TODO: contractId должен передавать фронт
-
         $markup = 1 + ($this->contractRepository->companyByContractId($contractId)->company->markup) / 100;
 
         $regions = $this->regionRepository->region();
 
-        $this->orderRepository->sumUsed($regions);
+        $this->orderRepository->sumUsed($regions, $contractId);
 
-        $this->orderRepository->sumWork($regions, $markup);
+        $this->orderRepository->sumWork($regions, $markup, $contractId);
 
         return $this->respondWithSuccess(
             $this->transformCollection($regions, new ParentRegionIndexTransformer()),

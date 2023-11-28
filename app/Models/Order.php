@@ -140,6 +140,11 @@ class Order extends Model
         return $this->hasOne(DefectiveAct::class);
     }
 
+    public function defectActs(): HasOne
+    {
+        return $this->hasOne(DefectAct::class);
+    }
+
     public function shop()
     {
         return $this->belongsTo(Shop::class);

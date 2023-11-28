@@ -58,6 +58,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 
             Route::get('/application', [ApplicationController::class, 'index']);
             Route::get('/contract', [ContractController::class, 'index']);
+            Route::get('/all-contracts', [ContractController::class, 'indexAll']);
 
             Route::group(['prefix' => 'region'], static function () {
                 Route::get('/', [RegionController::class, 'index']);

@@ -304,7 +304,8 @@
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
                                     <td aria-colindex="1" role="cell" class="mb-4">
-                                        <button @click.prevent="pushToCreateDefectiveAct(item.id)"
+                                        <button v-if="item.status.name === 'Назначена диагностика'"
+                                                @click.prevent="pushToCreateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
@@ -324,12 +325,12 @@
                                     <td aria-colindex="9" role="cell" class="">{{ item.region.region_name }}</td>
                                     <td aria-colindex="10" role="cell" class="">
                                         {{
-                                            item.defect_acts ? item.defect_acts.defect_parts[0] ? item.defect_acts.defect_parts[0].sum : '-' : '-'
+                                            item.defectiveActs ? item.defectiveActs.total : '-'
                                         }}
                                     </td>
                                     <td aria-colindex="11" role="cell" class="">
                                         {{
-                                            item.defect_acts ? item.defect_acts.defect_parts[0] ? item.defect_acts.defect_parts[0].sum : '-' : '-'
+                                            item.defectiveActs ? item.defectiveActs.total_with_markup : '-'
                                         }}
                                     </td>
                                     <td aria-colindex="12" role="cell" class="">{{ item.service_type }}</td>
@@ -497,9 +498,44 @@
                                             {{ item.id }}
                                         </button>
                                         <button v-if="item.status.name === 'Заявка закрыта'"
+                                                @click.prevent="valueWork(item.id)"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal3"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+
+                                        <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel3">
+                                                            Нажмите "Да" если была произведена оплата за выполненную рабату
+                                                        </h5>
+                                                        <button type="button" data-dismiss="modal"
+                                                                data-bs-dismiss="modal" aria-label="Close"
+                                                                class="btn-close">
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button @click.prevent="paid(0)" type="button"
+                                                                class="btn" data-dismiss="modal"
+                                                                data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Нет
+                                                        </button>
+                                                        <button @click.prevent="paid(1)" type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal" data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Да
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <button v-if="item.status.name === 'ДА акт не принят'"
                                                 @click.prevent="pushToUpdateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
@@ -703,6 +739,32 @@ const goToWork = async () => {
     }
 }
 
+const paid = async (status) => {
+    try {
+        await api.post(`/api/station/auth/order/paid-status/${valueOrderId.value}`, status);
+
+        if (status === 1) {
+            new window.Swal({
+                title: "Оплата была произведена",
+                padding: "2em",
+            });
+        }else {
+            new window.Swal({
+                title: "Оплата не была произведена",
+                padding: "2em",
+            });
+        }
+    } catch (error) {
+        new window.Swal({
+            icon: "warning",
+            title: "Ошибка",
+            text: "Что то пошло не так!",
+            padding: "2em"
+        });
+        console.error('Ошибка при получении данных:', error);
+    }
+}
+
 const endToWork = async () => {
     try {
         await api.post(`/api/station/auth/order/end-status/${valueOrderId.value}`);
@@ -735,12 +797,6 @@ const endToWork = async () => {
 </style>
 
 <style lang="css" scoped>
-
-.data-feather {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-}
 
 .icon-container button {
     background-color: transparent; /* Убираем фон кнопки */

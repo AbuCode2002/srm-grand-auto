@@ -26,4 +26,9 @@ class ContractRepository extends BaseRepository
                 $q->where('user_id', $userId);
             })->get();
     }
+
+    public function indexAll(): Collection|array
+    {
+            return $this->model::query()->get();
+    }
 }

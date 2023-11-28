@@ -5,6 +5,7 @@ namespace App\Transformers\Api\Station\Order;
 use App\Models\Order;
 use App\Transformers\Api\Station\Car\CarIndexTransformer;
 use App\Transformers\Api\Station\Contract\ContractIndexTransformer;
+use App\Transformers\Api\Station\DefectiveAct\DefectiveActIndexTransformer;
 use App\Transformers\Api\Station\Region\RegionIndexTransformer;
 use App\Transformers\Api\Station\Station\StationShowTransformer;
 use App\Transformers\Api\Station\Status\StatusIndexTransformer;
@@ -21,7 +22,8 @@ class OrderIndexTransformer extends BaseTransformer
         'car',
         'status',
         'region',
-        'station'
+        'station',
+        'defectiveActs'
     ];
 
     public function includeUsers(Order $order)
@@ -82,6 +84,16 @@ class OrderIndexTransformer extends BaseTransformer
         }
 
         return $model ? $this->item($model, new StationShowTransformer()) : null;
+    }
+
+    public function includeDefectiveActs(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('defectiveActs')) {
+            $model = $order->defectiveActs;
+        }
+
+        return $model ? $this->item($model, new DefectiveActIndexTransformer()) : null;
     }
 
     /**

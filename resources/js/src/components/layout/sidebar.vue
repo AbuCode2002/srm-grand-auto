@@ -733,6 +733,9 @@
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
                             filter(statusName10, status10)">ДА акт не принят</router-link>
+                        </li><li>
+                            <router-link to="order/new" @click.prevent="toggleMobileMenu;
+                            filter(statusName11, status11)">Не оплачено</router-link>
                         </li>
                     </ul>
                 </li>
@@ -1024,6 +1027,7 @@
     const status8 = ref('Ремонт выполнен ');
     const status9 = ref('Заявка закрыта');
     const status10 = ref('ДА акт не принят');
+    const status11 = ref('Не оплачено');
 
     const statusName = ref('status');
     const statusName1 = ref('status1');
@@ -1036,6 +1040,7 @@
     const statusName8 = ref('status8');
     const statusName9 = ref('status9');
     const statusName10 = ref('status10');
+    const statusName11 = ref('status11');
 
     const router = useRouter();
 

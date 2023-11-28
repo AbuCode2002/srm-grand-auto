@@ -44,7 +44,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/', [RegionController::class, 'index']);
             Route::get('/show/{id}', [RegionController::class, 'show'])
                 ->where('id', '[0-9]+');
-            Route::get('/parent-region', [RegionController::class, 'indexParentRegion']);
+            Route::get('/parent-region/{id}', [RegionController::class, 'indexParentRegion'])
+                ->where('id', '[0-9]+');
         });
 
         Route::get('/driver', [DriverController::class, 'index']);
