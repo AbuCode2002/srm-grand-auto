@@ -20,4 +20,9 @@ class Service extends Model
     {
         return $this->hasMany(SparePart::class, 'service_id', 'id');
     }
+
+    public function serviceName(): BelongsTo
+    {
+        return $this->belongsTo(ServiceName::class, 'service_name_id', 'id');
+    }
 }

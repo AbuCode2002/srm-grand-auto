@@ -7,6 +7,11 @@ use App\Models\Car;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Log;
+use function Symfony\Component\String\s;
 
 class CarRepository extends BaseRepository
 {
@@ -62,5 +67,109 @@ class CarRepository extends BaseRepository
                 ->pluck('id');
         }
         return $carId;
+    }
+
+    public function serviceStatistic()
+    {
+        $cars = $this->model::query()
+            ->with(['orders' => function ($q) {
+                $q->with(['defectiveActs' => function (HasOne $q) {
+                    $q->with(['service' => function (HasMany $q) {
+                        $q->with('serviceName');
+                }]);
+            }]);
+            }])
+            ->get()
+            ->groupBy('model');
+
+        $carServiceNameIds = [];
+
+        foreach ($cars as $groupIndex => $carGroup) {
+            foreach ($carGroup as $statistic) {
+                $services = $statistic['orders']->pluck('defectiveActs')->pluck('service');
+
+                foreach ($services as $service) {
+                    if ($service && $service->pluck('service_name_id')->isNotEmpty()) {
+                        foreach ($service->pluck('serviceName')->pluck('name') as $item) {
+                            $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
+                            array_push($carServiceNameIds[$groupIndex], $item);
+                        }
+                    }
+                }
+            }
+        }
+
+        $statistics = [];
+
+        foreach ($carServiceNameIds as $index => $carServiceNameId) { // $carServiceNameId id названия сервесной услуги
+            $uniqueService = array_unique($carServiceNameId);
+
+            foreach ($uniqueService as $value) {
+
+                $count = array_count_values($carServiceNameId)[$value];
+
+                $statistics[$index] = $statistics[$index] ?? [];
+
+                array_push($statistics[$index], [$value => $count / count($carServiceNameId)]);
+            }
+        }
+        return $statistics;
+    }
+
+    public function partStatistic()
+    {
+        $cars = $this->model::query()
+            ->with(['orders' => function ($q) {
+                $q->with(['defectiveActs' => function (HasOne $q) {
+                    $q->with(['service' => function (HasMany $q) {
+                        $q->with(['sparePart' => function($q) {
+                            $q->with('partNames');
+                        }]);
+                        $q->pluck('service_name_id');
+                    }]);
+                }]);
+            }])
+            ->get()
+            ->groupBy('model');
+
+        $carPartNameIds = [];
+
+        foreach ($cars as $groupIndex => $carGroup) {
+            foreach ($carGroup as $statistic) {
+                $services = $statistic['orders']->pluck('defectiveActs')->pluck('service');
+                foreach ($services as $service) {
+                    if ($service !== null) {
+
+                        foreach ($service as $value) {
+                            $parts = $value->getRelation('sparePart');
+                            if ($parts->isNotEmpty()) {
+                                foreach ($parts as $part) {
+                                    if ($part && $part->getRelation('partNames')->category_id) {
+
+                                        $carPartNameIds[$groupIndex] = $carPartNameIds[$groupIndex] ?? [];
+                                        array_push($carPartNameIds[$groupIndex], $part->getRelation('partNames')->name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $statistics = [];
+
+        foreach ($carPartNameIds as $index => $carPartNameId) { // $carPartNameId id названия запчастей
+            $uniquePart = array_unique($carPartNameId);
+
+            foreach ($uniquePart as $value) {
+                $count = array_count_values($carPartNameId)[$value];
+
+                $statistics[$index] = $statistics[$index] ?? [];
+
+                array_push($statistics[$index], [$value => $count / count($carPartNameId)]);
+            }
+        }
+        return $statistics;
     }
 }

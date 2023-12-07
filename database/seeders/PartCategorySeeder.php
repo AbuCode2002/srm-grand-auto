@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\PartCategory;
+use App\Models\ServiceName;
 use Illuminate\Database\Seeder;
 
 class PartCategorySeeder extends Seeder
 {
-    private $part = [
+    private $category = [
         'двигатель',
         'крепеж',
         'кузовные запчасти',
@@ -26,17 +27,20 @@ class PartCategorySeeder extends Seeder
         'трансмиссия',
         'фильтры',
         'электрооборудование',
+        'Салон',
+        'Шланги',
+        'Прочее',
     ];
 
     public function run()
     {
-        foreach ($this->part as $item) {
+        foreach ($this->category as $index => $item) {
+            $partCategory = new PartCategory();
 
-            $serviceName = new PartCategory();
+            $partCategory->id = $index + 1;
+            $partCategory->name = $item;
 
-            $serviceName->name = $item;
-
-            $serviceName->save();
+            $partCategory->save();
         }
     }
 }

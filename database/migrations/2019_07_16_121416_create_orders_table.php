@@ -96,11 +96,6 @@ class CreateOrdersTable extends Migration
                   ->references('id')
                   ->on('regions')
             ;
-            // $table->foreign('status')->references('id')->on('statuses');
-            $table->foreign('client_id')
-                  ->references('id')
-                  ->on('clients')
-            ;
             $table->foreign('driver_id')
                   ->references('id')
                   ->on('drivers')
@@ -109,7 +104,6 @@ class CreateOrdersTable extends Migration
                   ->references('id')
                   ->on('contracts')
             ;
-            // $table->foreign('transportation_id')->references('id')->on('transportations');
         });
     }
 

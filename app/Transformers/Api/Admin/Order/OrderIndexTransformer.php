@@ -3,13 +3,22 @@
 namespace App\Transformers\Api\Admin\Order;
 
 use App\Models\Order;
+use App\Transformers\Api\Admin\DefectiveAct\DefectiveActIndexTransformer;
 use App\Transformers\BaseTransformer;
 
 class OrderIndexTransformer extends BaseTransformer
 {
 
-//    protected array $defaultIncludes = [];
+    protected array $defaultIncludes = ['defectiveActs'];
 
+    public function includeDefectiveActs(Order $order)
+    {
+        $model = null;
+        if ($order->relationLoaded('defectiveActs')) {
+            $model = $order->defectiveActs;
+        }
+        return $model ? $this->item($model, new DefectiveActIndexTransformer()) : null;
+    }
     /**
      * @return string
      */

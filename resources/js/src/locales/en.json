@@ -23,6 +23,7 @@
     "applications": "Applications",
     "statistics": "Statistics",
     "service_statistics": "Service statistics",
+    "percent_statistics": "Percentage statistics",
     "KPI": "KPI",
     "KPI_manager": "Managers' KPIs",
     "budgets": "Budgets"

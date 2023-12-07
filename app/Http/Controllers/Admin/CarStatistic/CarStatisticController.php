@@ -28,9 +28,9 @@ class CarStatisticController extends BaseController
     public function sumDefectiveActWorkForCar(CarStatisticRequest $request)
     {
         $serviceName = $this->serviceNameRepository->getAll()->pluck('name');
+
         if (!empty($request->input())) {
             $data = CarStatisticData::from($request->validated());
-
 
             $carIds = $this->carRepository->carIds($data);
 

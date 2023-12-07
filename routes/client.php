@@ -8,6 +8,7 @@ use App\Http\Controllers\Client\Contract\ContractController;
 use App\Http\Controllers\Client\DefectiveAct\DefectiveActController;
 use App\Http\Controllers\Client\Driver\DriverController;
 use App\Http\Controllers\Client\Order\OrderController;
+use App\Http\Controllers\Client\Part\PartNameController;
 use App\Http\Controllers\Client\Region\RegionController;
 use App\Http\Controllers\Client\Role\RoleController;
 use App\Http\Controllers\Client\ServiceName\ServiceNameController;
@@ -55,6 +56,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             });
 
             Route::get('/service-name', [ServiceNameController::class, 'index']);
+
+            Route::get('/part-name', [PartNameController::class, 'index']);
 
             Route::get('/application', [ApplicationController::class, 'index']);
             Route::get('/contract', [ContractController::class, 'index']);

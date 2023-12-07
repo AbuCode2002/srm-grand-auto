@@ -117,7 +117,7 @@
                         <td aria-colindex="1" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
-                                    <vue-multiselect v-model="part.partNameModel" :options="service"
+                                    <vue-multiselect v-model="part.partNameModel" :options="parts"
                                                      :custom-label="serviceNames" placeholder="Запчасть"
                                                      class="custom-multiselect-part">
                                     </vue-multiselect>
@@ -228,6 +228,7 @@ const fields = ref([
     }
 ]);
 
+
 const getServiceName = async () => {
     try {
         const response = await api.get(`/api/auth/client/service-name`);
@@ -244,6 +245,25 @@ const getServiceName = async () => {
 };
 
 onMounted(getServiceName);
+
+const parts = ref('Запчасть');
+
+const getPartName = async () => {
+    try {
+        const response = await api.get(`/api/auth/client/part-name`);
+        parts.value = response.data.partNames;
+        unit.value = [
+            {unitName: "Штук"},
+            {unitName: "Литр"},
+            {unitName: "Комплект"},
+            {unitName: "Грамм"},
+        ];
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getPartName);
 
 const serviceNames = ({name}) => {
     return `${name}`;

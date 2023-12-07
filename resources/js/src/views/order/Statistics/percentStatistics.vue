@@ -13,7 +13,7 @@
                             </div>
 
                             <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
-                                <vue-multiselect v-model="carMultiselect" :options="cars" :multiple="true"
+                                <vue-multiselect v-model="carMultiselect" :options="models" :multiple="true"
                                                  placeholder="Машина">
                                 </vue-multiselect>
                             </div>
@@ -28,26 +28,24 @@
                                     <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
                                         <div>Услуга</div>
                                     </th>
-                                    <th v-for="item1 in carMultiselect" :value="item1" role="columnheader" scope="col"
-                                        aria-colindex="2"
-                                        class="text-success">
-                                        <div>{{ item1 }}</div>
+                                    <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
+                                        <div>Процент</div>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody role="rowgroup">
-                                <tr v-for="item2 in service" :value="item2" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="">{{ item2.name }}</td>
-                                    <td v-for="item3 in item2.car" aria-colindex="2" role="cell" class="">
-                                        <td v-for="item4 in item3" aria-colindex="2" role="cell" class="">{{ item4 }}</td>
-                                    </td>
+                                <tr v-if="carMultiselect" v-for="item in percentStatistic.service[carMultiselect]" :value="item" role="row" class="">
+                                    <td aria-colindex="1" role="cell" class="">{{ Object.keys(item)[0] }}</td>
+                                </tr>
+                                <tr v-if="carMultiselect" v-for="item1 in percentStatistic.service[carMultiselect]" :value="item1" role="row" class="">
+                                    <td aria-colindex="2" role="cell" class="">{{ Object.values(item1) }}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>name
         </div>
     </div>
 
@@ -74,32 +72,12 @@ onMounted(() => {
 
 useMeta({title: "Tables"});
 
-const cars = ref(null);
-
-const getCars = async () => {
-    try {
-        const response = await api.get('/api/admin/auth/car/name');
-        cars.value = response.data;
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-onMounted(getCars)
-
 const code_arr = ref([]);
 const order = ref([]);
 
 onMounted(() => {
     initTooltip();
 });
-
-const toggleCode = (name) => {
-    if (code_arr.value.includes(name)) {
-        code_arr.value = code_arr.value.filter((d) => d != name);
-    } else {
-        code_arr.value.push(name);
-    }
-};
 
 const initTooltip = () => {
     setTimeout(() => {
@@ -124,28 +102,6 @@ const pagination = ref({
 });
 const currentPage = ref(1);
 
-
-const getOrders = async (page = 1) => {
-    try {
-        const status = ref('all')
-        if (router.currentRoute.value.query.status) {
-            status.value = router.currentRoute.value.query.status
-        }
-
-        const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status.value}`);
-
-        order.value = response.data.orders;
-
-        pagination.value = response.data.pagination;
-        currentPage.value = page;
-
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-
-onMounted(getOrders)
-
 const pageChanged = (pageNum) => {
     getOrders(pageNum);
 };
@@ -163,40 +119,24 @@ const getRole = async () => {
 
 onMounted(getRole)
 
-const service = ref('Услуга');
-const getServiceName = async () => {
-    try {
-        const response = await api.get(`/api/auth/client/service-name`);
-        service.value = response.data.serviceNames;
-        console.log(response.data.serviceNames)
-
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-onMounted(getServiceName)
-
 const carMultiselect = ref([]);
-const statistic = ref('');
 
-const postCarStatistic = async () => {
-    const carName = {
-        "carName": carMultiselect.value,
-    };
+const models = ref([]);
 
+const percentStatistic = ref([]);
+
+const getPercentStatistic = async () => {
     try {
-        const response = await api.post(`/api/admin/auth/statistic/car-statistic`, carName);
-        service.value = response.data;
+        const response = await api.get(`/api/admin/auth/car/statistic`);
+        percentStatistic.value = response.data;
+        models.value = Object.keys(response.data.service);
+
+        console.log(Object.keys(response.data.service))
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
 };
-watch(carMultiselect, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-        postCarStatistic();
-    }
-})
-
+onMounted(getPercentStatistic)
 </script>
 
 <style>

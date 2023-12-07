@@ -12,7 +12,6 @@ use App\Http\Controllers\Admin\Region\RegionController;
 use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\ServiceName\ServiceNameController;
 use App\Http\Controllers\Admin\Station\StationController;
-use App\Http\Controllers\Admin\Statistic\StatisticController;
 use App\Http\Controllers\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +59,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/{id}', [CarController::class, 'show'])
                 ->where('id', '[0-9]+');
             Route::get('/name', [CarController::class, 'carName']);
+            Route::get('/statistic', [CarController::class, 'statistic']);
         });
 
         Route::get('/user', [UserController::class, 'show']);

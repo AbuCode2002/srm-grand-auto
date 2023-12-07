@@ -3,11 +3,6 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Home from '../views/index.vue';
 import store from '../store';
 
-// Vue.use(VueRouter);
-// import { createApp } from 'vue';
-// const app = createApp();
-// app.use(createRouter);
-
 const routes = [
     //dashboard
     {path: '/', name: 'Home', component: Home},
@@ -410,6 +405,11 @@ const routes = [
         path: '/statistics',
         name: 'statistics',
         component: () => import('../views/order/Statistics/statistics.vue'),
+    },
+    {
+        path: '/percent-statistic',
+        name: '/percent-statistic',
+        component: () => import('../views/order/Statistics/percentStatistics.vue'),
     },
     {
         path: '/KPI',

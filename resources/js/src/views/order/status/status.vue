@@ -103,7 +103,7 @@
                                         </button>
                                     </td>
 
-                                    <td aria-colindex="2" role="cell" class="">{{ item.users[0].email }}</td>
+                                    <td aria-colindex="2" role="cell" class="">{{ item.users[0] ? item.users[0].email : '-' }}</td>
                                     <td aria-colindex="3" role="cell" class="">{{ item.car.number }}</td>
                                     <td aria-colindex="4" role="cell" class="">{{ item.car.brand }}</td>
                                     <td aria-colindex="5" role="cell" class="">{{ item.car.model }}</td>
@@ -310,7 +310,7 @@
                                             {{ item.id }}
                                         </button>
                                     </td>
-                                    <td aria-colindex="2" role="cell" class="">{{ item.users[0].email }}</td>
+                                    <td aria-colindex="2" role="cell" class="">{{ item.users ? item.users[0].email : '-' }}</td>
                                     <td aria-colindex="3" role="cell" class="">{{ item.car.number }}</td>
                                     <td aria-colindex="4" role="cell" class="">{{ item.car.brand }}</td>
                                     <td aria-colindex="5" role="cell" class="">{{ item.car.model }}</td>

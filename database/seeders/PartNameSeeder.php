@@ -7,7 +7,7 @@ use App\Models\PartName;
 use App\Models\ServiceName;
 use Illuminate\Database\Seeder;
 
-class PartAndCategorySeeder extends Seeder
+class PartNameSeeder extends Seeder
 {
     private $part = [
         'двигатель' => [
@@ -252,6 +252,15 @@ class PartAndCategorySeeder extends Seeder
             'Стартеры',
             'Электростеклоподъемники',
         ],
+        'Салон' => [
+
+        ],
+        'Шланги' => [
+
+        ],
+        'Прочее' => [
+
+        ]
     ];
 
     public function run()

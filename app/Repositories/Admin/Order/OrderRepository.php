@@ -140,18 +140,23 @@ class OrderRepository extends BaseRepository
     {
         $orders = [];
         foreach ($carIds as $carId) {
-            $orders[] = $this->model::query()->whereIn('car_id', $carId)->with(['defectiveActs' => function (HasOne $q) {
-                $q->with(['defectWorks' => function (HasMany $q) {
-                    $q->pluck('price_with_markup');
+            $orders[] = $this->model::query()->whereIn('car_id', $carId)->with(['defectiveActs' => function ($q) {
+                $q->with(['service' => function ($q) {
+                    $q->with('serviceName');
                 }]);
             }])->get();
+
+//            $orders[] = $this->model::query()->whereIn('car_id', $carId)->with(['defectiveActs' => function (HasOne $q) {
+//                $q->with(['defectWorks' => function (HasMany $q) {
+//                    $q->pluck('price_with_markup');
+//                }]);
+//            }])->get();
         }
 
         $defectActWorks = [];
         foreach ($orders as $order) {
-            $defectActWorks[] = $order->pluck('defectiveActs')->pluck('defectWorks');
+            $defectActWorks[] = $order->pluck('defectiveActs');//->pluck('service');
         }
-
 
         foreach ($serviceNames as $value => $serviceName) {
             $tempArray = ['name' => $serviceNames[$value]];
@@ -160,14 +165,13 @@ class OrderRepository extends BaseRepository
             foreach ($defectActWorks as $index1 => $defectActWork) {
                 foreach ($defectActWork as $value1) {
 
-                    if ($value1 && in_array($serviceName, $value1->pluck('work_name')->toArray())) {
+                    if ($value1 && in_array($serviceName, $value1->service->pluck('serviceName')->pluck('name')->toArray())) {
                         $tempArray1[$index1] = '-';
                     } else {
                         $tempArray1[$index1] = '-';
                     }
                 }
             }
-
             $tempArray['car'] = $tempArray1;
             $statistics[] = $tempArray;
         }
@@ -175,16 +179,18 @@ class OrderRepository extends BaseRepository
         foreach ($statistics as $index => $statistic) {
             foreach ($defectActWorks as $index1 => $defectActWork) {
                 foreach ($defectActWork as $value1) {
-                    if ($value1 && in_array($statistic['name'], $value1->pluck('work_name')->toArray())) {
-
-                        $price = $value1->where('work_name', $statistic['name'])->pluck('price')->toArray();
+                    if ($value1 && in_array($statistic['name'], $value1->service->pluck('serviceName')->pluck('name')->toArray())) {
+//                        $price = $value1->total_with_markup;
+                        $price = $defectActWork->pluck('total_with_markup')->toArray();
 
                         sort($price);
 
-                        if (reset($price) != end($price)) {
-                            $statistics[$index]['car'][$index1] = [reset($price) . 'тг ', '  ' . end($price) . 'тг ', '  ' . count($value1->where('work_name', $statistic['name'])) . 'шт'];
+                        $result = array_filter($price, fn($value) => $value !== null);
+
+                        if (reset($result) != end($result)) {
+                            $statistics[$index]['car'][$index1] = [reset($result) . 'тг ', '  ' . end($result) . 'тг ', '  ' . count($value1->service->pluck('serviceName')->where('name', $statistic['name'])) . 'шт'];
                         } else {
-                            $statistics[$index]['car'][$index1] = [$price[0] . 'тг ', '  ' . count($value1->where('work_name', $statistic['name'])) . 'шт'];
+                            $statistics[$index]['car'][$index1] = [reset($result) . 'тг ', '  ' . count($value1->service->pluck('serviceName')->where('name', $statistic['name'])) . 'шт'];
                         }
                     }
                 }
@@ -197,32 +203,32 @@ class OrderRepository extends BaseRepository
     public function orderWithManeger(User $manager, $startDate, $endDate)
     {
         $countOrder = $this->model::query()
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->whereHas('users', function ($q) use ($manager) {
-                    $q->where('users.id', $manager->id);
-                })->count();
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereHas('users', function ($q) use ($manager) {
+                $q->where('users.id', $manager->id);
+            })->count();
 
         $kpi1 = $this->model::query()
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->whereHas('users', function ($q) use ($manager) {
-                    $q->where('users.id', $manager->id);
-                })->sum('kpi1');
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereHas('users', function ($q) use ($manager) {
+                $q->where('users.id', $manager->id);
+            })->sum('kpi1');
 
         $kpi2 = $this->model::query()
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->whereHas('users', function ($q) use ($manager) {
-                    $q->where('users.id', $manager->id);
-                })->sum('kpi2');
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereHas('users', function ($q) use ($manager) {
+                $q->where('users.id', $manager->id);
+            })->sum('kpi2');
 
         $kpi3 = $this->model::query()
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->whereHas('users', function ($q) use ($manager) {
-                    $q->where('users.id', $manager->id);
-                })->sum('kpi3');
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereHas('users', function ($q) use ($manager) {
+                $q->where('users.id', $manager->id);
+            })->sum('kpi3');
 
         if ($countOrder > 0) {
-            return ( $kpi1 + $kpi2 + $kpi3) / (3*$countOrder);
-        }else {
+            return ($kpi1 + $kpi2 + $kpi3) / (3 * $countOrder);
+        } else {
             return 0;
         }
     }
@@ -234,7 +240,7 @@ class OrderRepository extends BaseRepository
             $array[] = $region['id'];
 
             $sumDefectAct = $this->model::query()
-                ->with(['defectiveActs' => function(HasOne $q) {
+                ->with(['defectiveActs' => function (HasOne $q) {
                     $q->get();
                 }])
                 ->where('status', 9) // 9 - Заявка закрыта table statuses
@@ -257,11 +263,11 @@ class OrderRepository extends BaseRepository
             $array[] = $region['id'];
 
             $sumDefectAct = $this->model::query()
-                ->with(['defectiveActs' => function(HasOne $q) {
+                ->with(['defectiveActs' => function (HasOne $q) {
                     $q->get();
                 }])
-                ->where('status', '<' ,9)
-                ->where('status', '>' ,5) // Проводяться ремонтные работы, тоесть еще не заплатили но но в будущим нужно заплатить
+                ->where('status', '<', 9)
+                ->where('status', '>', 5) // Проводяться ремонтные работы, тоесть еще не заплатили но но в будущим нужно заплатить
                 ->where('contract_id', $contractId)
                 ->whereIn('region_id', $array)
                 ->get();

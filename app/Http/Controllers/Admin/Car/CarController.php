@@ -39,4 +39,17 @@ class CarController extends BaseController
     {
         return $this->carRepository->carName();
     }
+
+    public function statistic()
+    {
+        $service = $this->carRepository->serviceStatistic();
+
+        $part = $this->carRepository->partStatistic();
+
+        $car['service'] = $service;
+
+        $car['part'] = $part;
+
+        return $car;
+    }
 }
