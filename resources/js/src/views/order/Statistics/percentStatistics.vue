@@ -2,18 +2,19 @@
     <div v-if="roleUser != null" class="container">
         <div class="row layout-top-spacing">
             <div id="tableFooter" class="col-lg-12 col-12 layout-spacing">
-                <div class="statbox panel box box-shadow">
-
-                    <div class="col-md-11 mx-5">
-                    </div>
+                <div class="statbox panel box box-shadow" style="position: absolute; !important;left: 23.5% !important;">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-sm-6 col-6">
                                 <h4>Статистика</h4>
                             </div>
-
                             <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
                                 <vue-multiselect v-model="carMultiselect" :options="models" :multiple="true"
+                                                 placeholder="Машина">
+                                </vue-multiselect>
+                            </div>
+                            <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
+                                <vue-multiselect v-model="valueName" :options="servicePart"
                                                  placeholder="Машина">
                                 </vue-multiselect>
                             </div>
@@ -28,24 +29,31 @@
                                     <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
                                         <div>Услуга</div>
                                     </th>
-                                    <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>Процент</div>
+                                    <th v-for="car in carMultiselect" :value="car" role="columnheader" scope="col"
+                                        aria-colindex="2" class="text-success">
+                                        <div>{{ car }}</div>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody role="rowgroup">
-                                <tr v-if="carMultiselect" v-for="item in percentStatistic.service[carMultiselect]" :value="item" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="">{{ Object.keys(item)[0] }}</td>
-                                </tr>
-                                <tr v-if="carMultiselect" v-for="item1 in percentStatistic.service[carMultiselect]" :value="item1" role="row" class="">
-                                    <td aria-colindex="2" role="cell" class="">{{ Object.values(item1) }}</td>
+                                <tr v-for="item in service" :value="item" role="row" class="">
+                                    <td aria-colindex="1" role="cell" class="">{{ item.name }}</td>
+                                    <td v-for="car in carMultiselect" :value="car">
+                                        <td v-if="Object.keys(percentStatistic.service[car]).includes(item.name)"
+                                            aria-colindex="2" role="cell" class="">
+                                            {{ (percentStatistic.service[car][item.name] * 100).toFixed(2) + "%" }}
+                                        </td>
+                                        <td v-else aria-colindex="2" role="cell" class="">
+                                            {{ '-' }}
+                                        </td>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>name
+            </div>
         </div>
     </div>
 
@@ -93,18 +101,10 @@ import VueMultiselect from "vue-multiselect";
 
 const router = useRouter();
 
-const getRegionId = (regionId, orderId) => {
-    router.push({name: 'order-index-station', params: {regionId, orderId}});
-};
-
 const pagination = ref({
     "last_page": 1
 });
 const currentPage = ref(1);
-
-const pageChanged = (pageNum) => {
-    getOrders(pageNum);
-};
 
 const roleUser = ref(null)
 
@@ -120,23 +120,58 @@ const getRole = async () => {
 onMounted(getRole)
 
 const carMultiselect = ref([]);
-
 const models = ref([]);
 
-const percentStatistic = ref([]);
+const valueName = ref([]);
+const servicePart = ref([
+    'Услуга',
+    'Запчасть'
+]);
+
+const percentStatistic = ref();
 
 const getPercentStatistic = async () => {
     try {
         const response = await api.get(`/api/admin/auth/car/statistic`);
         percentStatistic.value = response.data;
-        models.value = Object.keys(response.data.service);
+        if (valueName.value === 'Услуга') {
+            models.value = Object.keys(percentStatistic.value.service);
+        }else if (valueName.value === 'Запчасть') {
+            models.value = Object.keys(percentStatistic.value.part);
+        }
 
-        console.log(Object.keys(response.data.service))
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
 };
+
 onMounted(getPercentStatistic)
+
+watch(carMultiselect, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+        getPercentStatistic();
+    }
+})
+
+watch(valueName, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+        getPercentStatistic();
+    }
+})
+
+const service = ref([]);
+
+const getServiceName = async () => {
+    try {
+        const response = await api.get(`/api/auth/client/service-name`);
+        service.value = response.data.serviceNames;
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getServiceName)
+
 </script>
 
 <style>
@@ -150,10 +185,6 @@ onMounted(getPercentStatistic)
 </style>
 
 <style lang="css" scoped>
-
-.custom-border {
-    border: 1px solid #ff0000; /* Красный цвет рамки, замените на нужный цвет */
-}
 
 .icon-container button {
     background-color: transparent; /* Убираем фон кнопки */

@@ -73,7 +73,7 @@
                                             <div>IIK</div>
                                         </th>
                                         <th role="columnheader"  scope="col" aria-colindex="8" class="text-center text-success">
-                                            <div>Телефон</div>
+                                            <div>Фактический адрес</div>
                                         </th>
                                     </tr>
                                     </thead>

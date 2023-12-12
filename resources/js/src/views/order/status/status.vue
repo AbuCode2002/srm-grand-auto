@@ -193,14 +193,8 @@
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
-                                    <td v-if="item.status.name === 'Новая заявка'" aria-colindex="1" role="cell"
-                                        class="mb-4">
-                                        <button @click.prevent="getRegionId(item.region.id, item.id)"
-                                                class="btn btn-success mb-2 me-1">
-                                            {{ item.id }}
-                                        </button>
-                                    </td>
-                                    <td v-else-if="item.status.name === 'ДА на согласовании в отделе по работе с клиентами'"
+
+                                    <td v-if="item.status.name === 'ДА на согласовании в отделе по работе с клиентами'"
                                         aria-colindex="1" role="cell" class="mb-4">
                                         <button @click.prevent="pushShowDefectiveActForClient(item.id)"
                                                 class="btn btn-success mb-2 me-1">

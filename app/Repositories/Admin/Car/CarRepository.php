@@ -88,11 +88,13 @@ class CarRepository extends BaseRepository
             foreach ($carGroup as $statistic) {
                 $services = $statistic['orders']->pluck('defectiveActs')->pluck('service');
 
+
                 foreach ($services as $service) {
                     if ($service && $service->pluck('service_name_id')->isNotEmpty()) {
                         foreach ($service->pluck('serviceName')->pluck('name') as $item) {
+
                             $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
-                            array_push($carServiceNameIds[$groupIndex], $item);
+                            $carServiceNameIds[$groupIndex][$item] = null;
                         }
                     }
                 }
@@ -102,15 +104,15 @@ class CarRepository extends BaseRepository
         $statistics = [];
 
         foreach ($carServiceNameIds as $index => $carServiceNameId) { // $carServiceNameId id названия сервесной услуги
-            $uniqueService = array_unique($carServiceNameId);
+            $uniqueService = array_unique(array_keys($carServiceNameId));
 
             foreach ($uniqueService as $value) {
 
-                $count = array_count_values($carServiceNameId)[$value];
+                $count = array_count_values(array_keys($carServiceNameIds[$index]))[$value];
 
                 $statistics[$index] = $statistics[$index] ?? [];
 
-                array_push($statistics[$index], [$value => $count / count($carServiceNameId)]);
+                $statistics[$index][$value] = $count / count($carServiceNameId);
             }
         }
         return $statistics;
@@ -147,7 +149,9 @@ class CarRepository extends BaseRepository
                                     if ($part && $part->getRelation('partNames')->category_id) {
 
                                         $carPartNameIds[$groupIndex] = $carPartNameIds[$groupIndex] ?? [];
-                                        array_push($carPartNameIds[$groupIndex], $part->getRelation('partNames')->name);
+
+                                        $carPartNameIds[$groupIndex][$part->getRelation('partNames')->name] = null;
+
                                     }
                                 }
                             }
@@ -160,14 +164,15 @@ class CarRepository extends BaseRepository
         $statistics = [];
 
         foreach ($carPartNameIds as $index => $carPartNameId) { // $carPartNameId id названия запчастей
-            $uniquePart = array_unique($carPartNameId);
+            $uniquePart = array_unique(array_keys($carPartNameId));
 
             foreach ($uniquePart as $value) {
-                $count = array_count_values($carPartNameId)[$value];
+
+                $count = array_count_values(array_keys($carPartNameId))[$value];
 
                 $statistics[$index] = $statistics[$index] ?? [];
 
-                array_push($statistics[$index], [$value => $count / count($carPartNameId)]);
+                $statistics[$index][$value] = $count / count($carPartNameId);
             }
         }
         return $statistics;
