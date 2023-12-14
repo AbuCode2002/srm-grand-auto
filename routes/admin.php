@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Application\ApplicationController;
 use App\Http\Controllers\Admin\Car\CarController;
 use App\Http\Controllers\Admin\CarStatistic\CarStatisticController;
+use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Client\ClientController;
 use App\Http\Controllers\Admin\Contract\ContractController;
 use App\Http\Controllers\Admin\DefectiveAct\DefectiveActController;
@@ -35,6 +36,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
         });
 
         Route::get('/service-name', [ServiceNameController::class, 'index']);
+
+        Route::get('/category-name', [CategoryController::class, 'index']);
 
         Route::get('/application', [ApplicationController::class, 'index']);
         Route::get('/contract', [ContractController::class, 'index']);

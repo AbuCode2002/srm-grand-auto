@@ -85,6 +85,7 @@ class OrderRepository extends BaseRepository
         $order->driver_type = $data->driver_type;
         $order->mileage = $data->mileage;
         $order->status = 1;
+        $order->paid = 0;
 
         $order->save();
 

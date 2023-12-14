@@ -697,7 +697,6 @@
                             <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
                         </li>
                         <li>
-<!--                            <router-link to="/order/index" @click="toggleMobileMenu">Все заявки</router-link>-->
                             <router-link to="/order/new" @click="toggleMobileMenu;
                             filter(statusName, status)">Все заявки</router-link>
                         </li>
@@ -977,7 +976,6 @@
                         <li @click="toggleMobileMenu"><a target="_blank" href="/statistics">{{ $t('service_statistics') }}</a></li>
                         <li @click="toggleMobileMenu"><a target="_blank" href="/percent-statistic">{{ $t('percent_statistics') }}</a></li>
                         <li @click="toggleMobileMenu"><a target="_blank" href="/KPI">{{ $t('KPI') }}</a></li>
-                        <li @click="toggleMobileMenu"><a target="_blank" href="/budgets">{{ $t('budgets') }}</a></li>
                         <li @click="toggleMobileMenu"><a target="_blank" href="/budget">{{ $t('budgets') }}</a></li>
                     </ul>
                 </li>

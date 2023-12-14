@@ -47,7 +47,8 @@ class OrderRepository extends BaseRepository
                     'region',
                     'defectiveActs',
                     'station')
-                ->orderBy('id')
+//                ->orderBy('id')
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
         } else if ($roleName === 'manager') {
@@ -59,7 +60,8 @@ class OrderRepository extends BaseRepository
                 ->with('status')
                 ->with('region')
                 ->whereIn('region_id', $regionId)
-                ->orderBy('id')
+//                ->orderBy('id')
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
         } else if ($roleName === 'client') {
@@ -71,7 +73,8 @@ class OrderRepository extends BaseRepository
                 ->with('status')
                 ->with('region')
                 ->whereIn('region_id', $regionId)
-                ->orderBy('id')
+//                ->orderBy('id')
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
         } else if ($roleName === 'station') {
 
@@ -82,7 +85,8 @@ class OrderRepository extends BaseRepository
                 ->with('status')
                 ->with('region')
                 ->whereIn('region_id', $regionId)
-                ->orderBy('id')
+//                ->orderBy('id')
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
         }
     }
@@ -177,6 +181,7 @@ class OrderRepository extends BaseRepository
                     'region',
                     'station')
                 ->where('status', $statusId)
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
         }
 
@@ -189,6 +194,7 @@ class OrderRepository extends BaseRepository
                 'station')
             ->where('status', $statusId)
             ->whereIn('region_id', $regionId)
+            ->orderBy('created_at', 'desc')
             ->paginate($this->perPage, ['*'], 'page', $page);
     }
 
@@ -205,6 +211,7 @@ class OrderRepository extends BaseRepository
                     'station')
                 ->where('status', $statusId)
                 ->where('paid', 0)
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
     }
 

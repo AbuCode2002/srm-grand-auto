@@ -69,11 +69,12 @@ class DefectiveActRepository extends BaseRepository
 
                 $service->defective_act_id = $defectiveAct->id;
 
-                $service->name = $data->service[$item]["name"]["name"];
+                $service->service_name_id = $data->service[$item]["name"]["id"] ?? 0;
+
 
                 $service->count = $data->service[$item]["count"];
 
-                $service->unit = $data->service[$item]["unit"]["unitName"];
+                $service->unit = $data->service[$item]["unit"]["unitName"] ?? 0;
 
                 $service->price = $data->service[$item]["price"];
 
@@ -87,8 +88,8 @@ class DefectiveActRepository extends BaseRepository
 
                     $sparePart->service_id = $service->id;
 
-
-                    $sparePart->name = $data->spare_parts[$item][$value]["name"]["name"];
+//                    $sparePart->name = $data->spare_parts[$item][$value]["name"]["name"];
+                    $sparePart->part_name_id = $data->spare_parts[$item][$value]["name"]["id"];
 
                     $sparePart->count = $data->spare_parts[$item][$value]["count"];
 
@@ -111,9 +112,11 @@ class DefectiveActRepository extends BaseRepository
 
                 if ($service) {
 
-                    $service->name = $data->service[$item1]["name"]["name"];
+//                    $service->name = $data->service[$item1]["name"]["name"];
+                    $service->service_name_id = $data->service[$item1]["name"]["id"] ?? 0;
+
                     $service->count = $data->service[$item1]["count"];
-                    $service->unit = $data->service[$item1]["unit"]["unitName"];
+                    $service->unit  = $data->service[$item1]["unit"]["unitName"] ?? 0;
                     $service->price = $data->service[$item1]["price"];
                     $service->sale_percent = $data->service[$item1]["sale_percent"];
 
@@ -122,7 +125,9 @@ class DefectiveActRepository extends BaseRepository
                     $serviceModel = new Service();
 
                     $serviceModel->defective_act_id = $service->defective_act_id;
-                    $serviceModel->name = $data->service[$item1]["name"]["name"];
+//                    $serviceModel->name = $data->service[$item1]["name"]["name"];
+                    $service->service_name_id = $data->service[$item1]["name"]["id"];
+
                     $serviceModel->count = $data->service[$item1]["count"];
                     $serviceModel->unit = $data->service[$item1]["unit"]["unitName"];
                     $serviceModel->price = $data->service[$item1]["price"];
@@ -136,7 +141,9 @@ class DefectiveActRepository extends BaseRepository
                     $part = SparePart::query()->findOrFail($data->spare_parts[$item1][$value]["id"]);
 
                     if ($part) {
-                        $part->name = $data->spare_parts[$item1][$value]["name"]["name"];
+//                        $part->name = $data->spare_parts[$item1][$value]["name"]["name"];
+                        $part->part_name_id = $data->spare_parts[$item1][$value]["name"]["id"];
+
                         $part->count = $data->spare_parts[$item1][$value]["count"];
                         $part->unit = $data->spare_parts[$item1][$value]["unit"]["unitName"];
                         $part->price = $data->spare_parts[$item1][$value]["price"];
@@ -147,7 +154,9 @@ class DefectiveActRepository extends BaseRepository
                         $partModel = new SparePart();
 
                         $partModel->defective_act_id = $part->defective_act_id;
-                        $partModel->name = $data->spare_parts[$item1][$value]["name"]["name"];
+//                        $partModel->name = $data->spare_parts[$item1][$value]["name"]["name"];
+                        $partModel->part_name_id = $data->spare_parts[$item1][$value]["name"]["id"];
+
                         $partModel->count = $data->spare_parts[$item1][$value]["count"];
                         $partModel->unit = $data->spare_parts[$item1][$value]["unit"]["unitName"];
                         $partModel->price = $data->spare_parts[$item1][$value]["price"];
@@ -185,7 +194,10 @@ class DefectiveActRepository extends BaseRepository
     public function show(int $orderId)
     {
         return $this->model::query()->with(['service' => function (HasMany $q) {
-            $q->with('sparePart');
+            $q->with('serviceName');
+            $q->with(['sparePart' => function ($q) {
+                $q->with('partNames');
+            }]);
         }])->where('order_id', $orderId)->get();
     }
 }

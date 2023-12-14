@@ -12,7 +12,7 @@ use App\Transformers\BaseTransformer;
 class DefectiveActIndexTransformer extends BaseTransformer
 {
 
-    protected array $defaultIncludes = ['service', 'defectWorks', 'defectParts'];
+    protected array $defaultIncludes = ['service'];
 
     public function includeService(DefectiveAct $defectiveAct)
     {
@@ -22,26 +22,6 @@ class DefectiveActIndexTransformer extends BaseTransformer
         }
 
         return $model ? $this->collection($model, new ServiceIndexTransformer()) : null;
-    }
-
-    public function includeDefectWorks(DefectiveAct $defectiveAct)
-    {
-        $model = null;
-        if ($defectiveAct->relationLoaded('defectWorks')) {
-            $model = $defectiveAct->defectWorks;
-        }
-
-        return $model ? $this->collection($model, new DefectiveActWorksIndexTransformer()) : null;
-    }
-
-    public function includeDefectParts(DefectiveAct $defectiveAct)
-    {
-        $model = null;
-        if ($defectiveAct->relationLoaded('defectParts')) {
-            $model = $defectiveAct->defectParts;
-        }
-
-        return $model ? $this->collection($model, new Defective()) : null;
     }
 
     /**

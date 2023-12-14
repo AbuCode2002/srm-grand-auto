@@ -5,16 +5,16 @@
                 <div class="statbox panel box box-shadow" style="position: absolute; !important;left: 23.5% !important;">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-xl-6 col-md-6 col-sm-6 col-6">
+                            <div style="width: 200px;">
                                 <h4>Статистика</h4>
                             </div>
-                            <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
-                                <vue-multiselect v-model="carMultiselect" :options="models" :multiple="true"
-                                                 placeholder="Машина">
+                            <div style="width: 300px">
+                                <vue-multiselect v-model="valueName" :options="servicePart"
+                                                 placeholder="Вид работы">
                                 </vue-multiselect>
                             </div>
-                            <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">
-                                <vue-multiselect v-model="valueName" :options="servicePart"
+                            <div v-if="valueName != null" style="width: 400px">
+                                <vue-multiselect v-model="carMultiselect" :options="models" :multiple="true"
                                                  placeholder="Машина">
                                 </vue-multiselect>
                             </div>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-checkable table-highlight-head table-responsive">
-                            <table role="table" aria-busy="false" aria-colcount="5"
+                            <table v-if="valueName === 'Услуга'" role="table" aria-busy="false" aria-colcount="5"
                                    class="table b-table table-striped table-hover table-bordered" id="__BVID__368">
                                 <thead role="rowgroup" class="">
                                 <tr role="row" class="">
@@ -42,6 +42,62 @@
                                         <td v-if="Object.keys(percentStatistic.service[car]).includes(item.name)"
                                             aria-colindex="2" role="cell" class="">
                                             {{ (percentStatistic.service[car][item.name] * 100).toFixed(2) + "%" }}
+                                        </td>
+                                        <td v-else aria-colindex="2" role="cell" class="">
+                                            {{ '-' }}
+                                        </td>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table v-if="valueName === 'Запчасть'" role="table" aria-busy="false" aria-colcount="5"
+                                   class="table b-table table-striped table-hover table-bordered" id="__BVID__368">
+                                <thead role="rowgroup" class="">
+                                <tr role="row" class="">
+                                    <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
+                                        <div>Запчасть</div>
+                                    </th>
+                                    <th v-for="car in carMultiselect" :value="car" role="columnheader" scope="col"
+                                        aria-colindex="2" class="text-success">
+                                        <div>{{ car }}</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody role="rowgroup">
+                                <tr v-for="item in part" :value="item" role="row" class="">
+                                    <td aria-colindex="1" role="cell" class="">{{ item.name }}</td>
+                                    <td v-for="car in carMultiselect" :value="car">
+                                        <td v-if="Object.keys(percentStatistic.part[car]).includes(item.name)"
+                                            aria-colindex="2" role="cell" class="">
+                                            {{ (percentStatistic.part[car][item.name] * 100).toFixed(2) + "%" }}
+                                        </td>
+                                        <td v-else aria-colindex="2" role="cell" class="">
+                                            {{ '-' }}
+                                        </td>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table v-if="valueName === 'Категорий'" role="table" aria-busy="false" aria-colcount="5"
+                                   class="table b-table table-striped table-hover table-bordered" id="__BVID__368">
+                                <thead role="rowgroup" class="">
+                                <tr role="row" class="">
+                                    <th role="columnheader" scope="col" aria-colindex="1" class="text-success">
+                                        <div>Запчасть</div>
+                                    </th>
+                                    <th v-for="car in carMultiselect" :value="car" role="columnheader" scope="col"
+                                        aria-colindex="2" class="text-success">
+                                        <div>{{ car }}</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody role="rowgroup">
+                                <tr v-for="item in category" :value="item" role="row" class="">
+                                    <td aria-colindex="1" role="cell" class="">{{ item.name }}</td>
+                                    <td v-for="car in carMultiselect" :value="car">
+                                        <td v-if="Object.keys(percentStatistic.category[car]).includes(item.name)"
+                                            aria-colindex="2" role="cell" class="">
+                                            {{ (percentStatistic.category[car][item.name] * 100).toFixed(2) + "%" }}
                                         </td>
                                         <td v-else aria-colindex="2" role="cell" class="">
                                             {{ '-' }}
@@ -122,10 +178,11 @@ onMounted(getRole)
 const carMultiselect = ref([]);
 const models = ref([]);
 
-const valueName = ref([]);
+const valueName = ref(null);
 const servicePart = ref([
     'Услуга',
-    'Запчасть'
+    'Запчасть',
+    'Категорий',
 ]);
 
 const percentStatistic = ref();
@@ -138,6 +195,8 @@ const getPercentStatistic = async () => {
             models.value = Object.keys(percentStatistic.value.service);
         }else if (valueName.value === 'Запчасть') {
             models.value = Object.keys(percentStatistic.value.part);
+        }else if (valueName.value === 'Категорий') {
+            models.value = Object.keys(percentStatistic.value.category);
         }
 
     } catch (error) {
@@ -171,6 +230,32 @@ const getServiceName = async () => {
 };
 
 onMounted(getServiceName)
+
+const part = ref([]);
+
+const getPartName = async () => {
+    try {
+        const response = await api.get(`/api/auth/client/part-name`);
+        part.value = response.data.partNames;
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getPartName)
+
+const category = ref([]);
+
+const getCategoryName = async () => {
+    try {
+        const response = await api.get(`/api/admin/auth/category-name`);
+        category.value = response.data.categories;
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+};
+
+onMounted(getCategoryName)
 
 </script>
 

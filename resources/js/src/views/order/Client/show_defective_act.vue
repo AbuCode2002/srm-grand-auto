@@ -155,6 +155,7 @@ const getServiceName = async () => {
             {unitName: "Литр"},
             {unitName: "Комплект"},
             {unitName: "Грамм"},
+            {unitName: "Метр"},
         ];
     } catch (error) {
         console.error('Ошибка при получении данных:', error);

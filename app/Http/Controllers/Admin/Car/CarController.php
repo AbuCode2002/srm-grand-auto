@@ -46,9 +46,13 @@ class CarController extends BaseController
 
         $part = $this->carRepository->partStatistic();
 
+        $category = $this->carRepository->categoryStatistic();
+
         $car['service'] = $service;
 
         $car['part'] = $part;
+
+        $car['category'] = $category;
 
         return $car;
     }

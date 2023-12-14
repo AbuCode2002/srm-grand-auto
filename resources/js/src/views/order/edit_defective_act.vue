@@ -238,6 +238,7 @@ const getServiceName = async () => {
             {unitName: "Литр"},
             {unitName: "Комплект"},
             {unitName: "Грамм"},
+            {unitName: "Метр"},
         ];
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
@@ -257,6 +258,7 @@ const getPartName = async () => {
             {unitName: "Литр"},
             {unitName: "Комплект"},
             {unitName: "Грамм"},
+            {unitName: "Метр"},
         ];
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
@@ -358,11 +360,11 @@ const postDefectiveAct = async () => {
     fields.value.forEach((field, index) => {
         defectiveAct.service.push({
             "id": field.id || null,
-            "name": field.serviceNameModel || null,
-            "count": field.count || null,
-            "unit": field.unitNameModel || null,
-            "price": field.price || null,
-            "sale_percent": field.procentSale || null,
+            "name": field.serviceNameModel || null,//{'nullName':  {'id': 0, 'name': 'nullName'}},
+            "count": field.count || null,//0,
+            "unit": field.unitNameModel || null,//'nullName',
+            "price": field.price || null,//0,
+            "sale_percent": field.procentSale || null,//0,
         });
 
         const parts = field.parts;
@@ -382,12 +384,13 @@ const postDefectiveAct = async () => {
     try {
         await api.post(`/api/station/auth/defective-act/${orderId}`, defectiveAct);
 
+        route.push({name: 'status'});
+
         new window.Swal({
             title: "Saved succesfully",
             padding: "2em",
         });
 
-        route.push({name: 'status'});
     } catch (error) {
         new window.Swal({
             icon: "warning",

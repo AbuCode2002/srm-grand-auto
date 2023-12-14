@@ -121,8 +121,6 @@ const handleChange = () => {
     getRegions();
 };
 
-// onMounted(getRegions)
-
 const pageChanged = (pageNum) => {
     getOrders(pageNum);
 };

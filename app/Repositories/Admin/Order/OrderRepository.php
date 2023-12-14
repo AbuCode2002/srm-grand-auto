@@ -253,7 +253,7 @@ class OrderRepository extends BaseRepository
             $regions[$index]->usedSum = $sum[$index];
         }
 
-        return $regions;
+            return $regions;
     }
 
     public function sumWork($regions, $markup, $contractId)
@@ -283,6 +283,7 @@ class OrderRepository extends BaseRepository
 
             $regions[$index]->restSumNotNDSNotMarkup = $regions[$index]->restSumNotNDS / $markup;
         }
+
 
         return $regions;
     }

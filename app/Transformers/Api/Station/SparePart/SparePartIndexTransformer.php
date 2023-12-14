@@ -4,12 +4,23 @@ namespace App\Transformers\Api\Station\SparePart;
 
 use App\Models\Service;
 use App\Models\SparePart;
+use App\Transformers\Api\Station\Part\PartNameIndexTransformer;
 use App\Transformers\BaseTransformer;
 
 class SparePartIndexTransformer extends BaseTransformer
 {
 
-//    protected array $defaultIncludes = [''];
+    protected array $defaultIncludes = ['partNames'];
+
+    public function includePartNames(SparePart $sparePart)
+    {
+        $model = null;
+        if ($sparePart->relationLoaded('partNames')) {
+            $model = $sparePart->partNames;
+        }
+
+        return $model ? $this->item($model, new PartNameIndexTransformer()) : null;
+    }
 
     /**
      * @return string
@@ -32,7 +43,7 @@ class SparePartIndexTransformer extends BaseTransformer
         return [
             "id" => $sparePart->id,
             "service_id" => $sparePart->service_id,
-            "name" => $sparePart->name,
+            "part_name_id" => $sparePart->part_name_id,
             "count" => $sparePart->count,
             "unit" => $sparePart->unit,
             "price" => $sparePart->price,

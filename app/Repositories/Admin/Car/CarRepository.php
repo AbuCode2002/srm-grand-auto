@@ -94,7 +94,7 @@ class CarRepository extends BaseRepository
                         foreach ($service->pluck('serviceName')->pluck('name') as $item) {
 
                             $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
-                            $carServiceNameIds[$groupIndex][$item] = null;
+                            $carServiceNameIds[$groupIndex][] = $item;
                         }
                     }
                 }
@@ -104,11 +104,11 @@ class CarRepository extends BaseRepository
         $statistics = [];
 
         foreach ($carServiceNameIds as $index => $carServiceNameId) { // $carServiceNameId id названия сервесной услуги
-            $uniqueService = array_unique(array_keys($carServiceNameId));
+            $uniqueService = array_unique($carServiceNameId);
 
             foreach ($uniqueService as $value) {
 
-                $count = array_count_values(array_keys($carServiceNameIds[$index]))[$value];
+                $count = array_count_values($carServiceNameIds[$index])[$value];
 
                 $statistics[$index] = $statistics[$index] ?? [];
 
@@ -150,7 +150,7 @@ class CarRepository extends BaseRepository
 
                                         $carPartNameIds[$groupIndex] = $carPartNameIds[$groupIndex] ?? [];
 
-                                        $carPartNameIds[$groupIndex][$part->getRelation('partNames')->name] = null;
+                                        $carPartNameIds[$groupIndex][] = $part->getRelation('partNames')->name;
 
                                     }
                                 }
@@ -164,17 +164,75 @@ class CarRepository extends BaseRepository
         $statistics = [];
 
         foreach ($carPartNameIds as $index => $carPartNameId) { // $carPartNameId id названия запчастей
-            $uniquePart = array_unique(array_keys($carPartNameId));
+            $uniquePart = array_unique($carPartNameId);
 
             foreach ($uniquePart as $value) {
 
-                $count = array_count_values(array_keys($carPartNameId))[$value];
+                $count = array_count_values($carPartNameId)[$value];
 
                 $statistics[$index] = $statistics[$index] ?? [];
 
                 $statistics[$index][$value] = $count / count($carPartNameId);
             }
         }
+        return $statistics;
+    }
+
+    public function categoryStatistic()
+    {
+        $cars = $this->model::query()
+            ->with(['orders' => function ($q) {
+                $q->with(['defectiveActs' => function (HasOne $q) {
+                    $q->with(['service' => function (HasMany $q) {
+                        $q->with(['serviceName' => function ($q) {
+                            $q->with('category');
+                        }
+                        ]);
+                        $q->with(['sparePart' => function($q) {
+                            $q->with('partNames');
+                        }]);
+                    }]);
+                }]);
+            }])
+            ->get()
+            ->groupBy('model');
+
+        $carServiceNameIds = [];
+
+        foreach ($cars as $groupIndex => $carGroup) {
+            foreach ($carGroup as $statistic) {
+                $services = $statistic['orders']->pluck('defectiveActs')->pluck('service');
+
+                foreach ($services as $service) {
+                    if ($service && $service->pluck('service_name_id')->isNotEmpty()) {
+                        $categoryName = $service->pluck('serviceName')->pluck('category')->pluck('name')->toArray();
+
+                        foreach ($categoryName as $item) {
+//                        foreach ($service->pluck('serviceName')->pluck('name') as $item) {
+
+                            $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
+                            $carServiceNameIds[$groupIndex][] = $item;
+                        }
+                    }
+                }
+            }
+        }
+
+        $statistics = [];
+
+        foreach ($carServiceNameIds as $index => $carServiceNameId) { // $carServiceNameId id названия сервесной услуги
+            $uniqueService = array_unique($carServiceNameId);
+
+            foreach ($uniqueService as $value) {
+
+                $count = array_count_values($carServiceNameIds[$index])[$value];
+
+                $statistics[$index] = $statistics[$index] ?? [];
+
+                $statistics[$index][$value] = $count / count($carServiceNameId);
+            }
+        }
+
         return $statistics;
     }
 }
