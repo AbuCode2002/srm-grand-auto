@@ -397,7 +397,7 @@ const routes = [
         component: () => import('../views/order/FileUpload/fileUpload.vue'),
     },
     {
-        path: '/order/show/:orderId',
+        path: '/order/show/:orderId, :status',
         name: 'file-show',
         component: () => import('../views/order/FileShow/fileShow.vue'),
     },

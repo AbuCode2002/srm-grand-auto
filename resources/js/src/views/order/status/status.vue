@@ -92,7 +92,14 @@
                                     </td>
                                     <td v-else-if="item.status.name === 'Ремонт выполнен'"
                                         aria-colindex="1" role="cell" class="mb-4">
-                                        <button @click.prevent="pushInstalFile(item.id)"
+                                        <button @click.prevent="pushInstalFile(item.id, 'Ремонт выполнен')"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else-if="item.status.name === 'Заявка закрыта'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushInstalFile(item.id, 'Заявка закрыта')"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
@@ -384,7 +391,7 @@
                                 </tr>
                                 </thead>
                                 <tbody role="rowgroup">
-                                <tr v-for="item in order" :value="item" role="row" class="">
+                                <tr v-for="(item) in order" :value="item" role="row" class="">
                                     <td aria-colindex="1" role="cell" class="mb-4">
 
                                         <button v-if="item.status.name === 'Новая заявка'"
@@ -659,8 +666,8 @@ const pushToUploadVideo = (orderId) => {
     router.push({name: 'order-upload', params: {orderId}});
 }
 
-const pushInstalFile = (orderId) => {
-    router.push({name: 'file-show', params: {orderId}});
+const pushInstalFile = (orderId, status) => {
+    router.push({name: 'file-show', params: {orderId, status}});
 }
 
 const pagination = ref({

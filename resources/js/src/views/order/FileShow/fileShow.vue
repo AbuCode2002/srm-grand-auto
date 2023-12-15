@@ -55,7 +55,7 @@
             <video :src="video" controls class="border" width="720" height="360"></video>
         </div>
 
-        <div v-if="file.url && file.url.length > 0" class="row">
+        <div v-if="file.url && file.url.length > 0 && status === 'Ремонт выполнен' " class="row">
             <div class="as-footer-container">
               <button style="position: absolute; bottom: 30px; left: 30px;"
                       type="button" class="btn btn-success"
@@ -87,8 +87,10 @@ const router = useRouter();
 const file = ref([]);
 
 const orderId = router.currentRoute.value.params.orderId
+const status = router.currentRoute.value.params.status
 
 const getPath = async () => {
+    console.log(status);
     try {
         const response = await api.get(`/api/manager/auth/show-file-path/${orderId}`);
         file.value = response.data

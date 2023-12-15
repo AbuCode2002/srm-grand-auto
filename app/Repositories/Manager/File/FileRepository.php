@@ -5,6 +5,7 @@ namespace App\Repositories\Manager\File;
 use App\Http\Controllers\Manager\File\Data\FileDeleteData;
 use App\Models\Order;
 use App\Models\OrderFile;
+use App\Models\Status;
 use App\Repositories\BaseRepository;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
@@ -35,6 +36,12 @@ class FileRepository extends BaseRepository
                 $orderFiles->delete();
             }
         } elseif ($data->result === 'accepted') {
+            $statusId = Status::query()->where('name', 'Заявка закрыта')->value('id');
+
+            $order->status = $statusId;
+
+            $order->save();
+
             $createdAt = $orderFiles->value('created_at');
 
             $dateNow = new DateTime();

@@ -18,12 +18,10 @@
                 <div class="text-center">
                     <img src="/assets/images/features_overview.svg" alt="..." class="img-fluid" />
                 </div>
-                <h5 class="mb-0 text-center">TEMPLATE CUSTOMIZER</h5>
-                <p class="text-center">Set preferences that will be cookied for your live preview demonstration.</p>
                 <hr />
 
-                <h6 class="mb-1">Color Scheme</h6>
-                <p class="small text-muted mb-3">Overall light or dark presentation.</p>
+                <h6 class="mb-1">Цветовая схема</h6>
+                <p class="small text-muted mb-3">Светлая или темная презентация.</p>
                 <div class="btn-group-toggle row mb-4 mx-0">
                     <div class="text-color radio-primary col-6 ps-0 mb-3 custom-control custom-radio">
                         <input type="radio" id="light_mode" v-model="$store.state.dark_mode" class="custom-control-input" value="light" @change="setTemplateStyle" />
@@ -95,8 +93,8 @@
 <!--                        </label>-->
 <!--                    </div>-->
                 </div>
-                <h6 class="mb-1">Navigation Position</h6>
-                <p class="small text-muted mb-3">Select the primary navigation paradigm for your app.</p>
+                <h6 class="mb-1">Навигационная позиция</h6>
+                <p class="small text-muted mb-3">Выберите основную парадигму навигации для вашего приложения.</p>
                 <div class="btn-group-toggle row mb-4 mx-0">
                     <div class="text-color radio-primary col-6 ps-0 mb-3 custom-control custom-radio">
                         <input type="radio" id="horizontal" v-model="$store.state.menu_style" class="custom-control-input" value="horizontal" @change="setMenuStyle" />
@@ -111,22 +109,22 @@
                         <label class="custom-control-label" for="collapsible">Collapsible Vertical</label>
                     </div>
                 </div>
-                <h6 class="mb-1">Layout Style</h6>
-                <p class="small text-muted mb-3">Select the primary Layout Style for your app.</p>
-                <div class="btn-group-toggle row mx-0">
-                    <div class="text-color radio-primary col-3 ps-0 mb-3 custom-control custom-radio">
-                        <input type="radio" id="boxed" v-model="$store.state.layout_style" class="custom-control-input" value="boxed-layout" @change="setLayoutStyle" />
-                        <label class="custom-control-label" for="boxed">Box</label>
-                    </div>
-                    <div class="text-color radio-primary col-5 ps-0 mb-3 custom-control custom-radio">
-                        <input type="radio" id="largeboxed" v-model="$store.state.layout_style" class="custom-control-input" value="large-boxed-layout" @change="setLayoutStyle" />
-                        <label class="custom-control-label" for="largeboxed">Large box</label>
-                    </div>
-                    <div class="text-color radio-primary col-4 ps-0 mb-3 custom-control custom-radio">
-                        <input type="radio" id="full" v-model="$store.state.layout_style" class="custom-control-input" value="full" @change="setLayoutStyle" />
-                        <label class="custom-control-label" for="full">Full</label>
-                    </div>
-                </div>
+<!--                <h6 class="mb-1">Layout Style</h6>-->
+<!--                <p class="small text-muted mb-3">Select the primary Layout Style for your app.</p>-->
+<!--                <div class="btn-group-toggle row mx-0">-->
+<!--                    <div class="text-color radio-primary col-3 ps-0 mb-3 custom-control custom-radio">-->
+<!--                        <input type="radio" id="boxed" v-model="$store.state.layout_style" class="custom-control-input" value="boxed-layout" @change="setLayoutStyle" />-->
+<!--                        <label class="custom-control-label" for="boxed">Box</label>-->
+<!--                    </div>-->
+<!--                    <div class="text-color radio-primary col-5 ps-0 mb-3 custom-control custom-radio">-->
+<!--                        <input type="radio" id="largeboxed" v-model="$store.state.layout_style" class="custom-control-input" value="large-boxed-layout" @change="setLayoutStyle" />-->
+<!--                        <label class="custom-control-label" for="largeboxed">Large box</label>-->
+<!--                    </div>-->
+<!--                    <div class="text-color radio-primary col-4 ps-0 mb-3 custom-control custom-radio">-->
+<!--                        <input type="radio" id="full" v-model="$store.state.layout_style" class="custom-control-input" value="full" @change="setLayoutStyle" />-->
+<!--                        <label class="custom-control-label" for="full">Full</label>-->
+<!--                    </div>-->
+<!--                </div>-->
             </perfect-scrollbar>
         </div>
     </div>
