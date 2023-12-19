@@ -4,13 +4,18 @@
             <div id="tableFooter" class="col-lg-12 col-12 layout-spacing">
                 <div class="statbox panel box box-shadow">
                     <div class="panel-heading">
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                <h4>Заявки</h4>
+                                <h4>{{ $t('orders')}}</h4>
                             </div>
                         </div>
+                        <div style="position: absolute; width: 300px">
+                            <input v-model="searchQuery" type="text"
+                                   class="form-control search-form-control ms-lg-auto"
+                                   placeholder="Search..."/>
+                        </div>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body mt-4">
                         <div class="table-checkable table-highlight-head table-responsive">
                             <!-- 1 - Manager -->
                             <table v-if="roleUser === 1" role="table" aria-busy="false" aria-colcount="5"
@@ -21,16 +26,16 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>Клиент</div>
+                                        <div>{{ $t('client')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>Госномер</div>
+                                        <div>{{ $t('state_number')}}</div>
+                                    </th>
+                                    <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
+                                        <div>{{ $t('car_mark')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>Марка</div>
-                                    </th>
-                                    <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
-                                        <div>Модель</div>
+                                        <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
                                         <div>Год производства</div>
@@ -110,7 +115,9 @@
                                         </button>
                                     </td>
 
-                                    <td aria-colindex="2" role="cell" class="">{{ item.users[0] ? item.users[0].email : '-' }}</td>
+                                    <td aria-colindex="2" role="cell" class="">
+                                        {{ item.users[0] ? item.users[0].email : '-' }}
+                                    </td>
                                     <td aria-colindex="3" role="cell" class="">{{ item.car.number }}</td>
                                     <td aria-colindex="4" role="cell" class="">{{ item.car.brand }}</td>
                                     <td aria-colindex="5" role="cell" class="">{{ item.car.model }}</td>
@@ -158,13 +165,13 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>Госномер</div>
+                                        <div>{{ $t('state_number')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>Марка</div>
+                                        <div>{{ $t('car_mark')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>Модель</div>
+                                        <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
                                         <div>Год производства</div>
@@ -247,16 +254,16 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>Клиент</div>
+                                        <div>{{ $t('client')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>Госномер</div>
+                                        <div>{{ $t('state_number')}}</div>
+                                    </th>
+                                    <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
+                                        <div>{{ $t('car_mark')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>Марка</div>
-                                    </th>
-                                    <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
-                                        <div>Модель</div>
+                                        <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
                                         <div>Год производства</div>
@@ -311,7 +318,10 @@
                                             {{ item.id }}
                                         </button>
                                     </td>
-                                    <td aria-colindex="2" role="cell" class="">{{ item.users ? item.users[0].email : '-' }}</td>
+                                    <td aria-colindex="2" role="cell" class="">{{
+                                            item.users ? item.users[0].email : '-'
+                                        }}
+                                    </td>
                                     <td aria-colindex="3" role="cell" class="">{{ item.car.number }}</td>
                                     <td aria-colindex="4" role="cell" class="">{{ item.car.brand }}</td>
                                     <td aria-colindex="5" role="cell" class="">{{ item.car.model }}</td>
@@ -359,13 +369,13 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>Госномер</div>
+                                        <div>{{ $t('state_number')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>Марка</div>
+                                        <div>{{ $t('car_mark')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>Модель</div>
+                                        <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
                                         <div>Год производства</div>
@@ -462,36 +472,36 @@
                                             {{ item.id }}
                                         </button>
 
-                                      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
-                                           aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLabel">
-                                                Нажмите "Да" если ремонтные работы закончены
-                                              </h5>
-                                              <button type="button" data-dismiss="modal"
-                                                      data-bs-dismiss="modal" aria-label="Close"
-                                                      class="btn-close">
-                                              </button>
-                                            </div>
+                                        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            Нажмите "Да" если ремонтные работы закончены
+                                                        </h5>
+                                                        <button type="button" data-dismiss="modal"
+                                                                data-bs-dismiss="modal" aria-label="Close"
+                                                                class="btn-close">
+                                                        </button>
+                                                    </div>
 
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn" data-dismiss="modal"
-                                                      data-bs-dismiss="modal">
-                                                <i class="flaticon-cancel-12"></i>
-                                                Выйти
-                                              </button>
-                                              <button @click.prevent="endToWork()" type="button"
-                                                      class="btn btn-primary"
-                                                      data-dismiss="modal" data-bs-dismiss="modal">
-                                                <i class="flaticon-cancel-12"></i>
-                                                Да
-                                              </button>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn" data-dismiss="modal"
+                                                                data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Выйти
+                                                        </button>
+                                                        <button @click.prevent="endToWork()" type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal" data-bs-dismiss="modal">
+                                                            <i class="flaticon-cancel-12"></i>
+                                                            Да
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                          </div>
                                         </div>
-                                      </div>
 
                                         <button v-if="item.status.name === 'Ремонт выполнен'"
                                                 @click.prevent="pushToUploadVideo(item.id)"
@@ -512,7 +522,8 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel3">
-                                                            Нажмите "Да" если была произведена оплата за выполненную рабату
+                                                            Нажмите "Да" если была произведена оплата за выполненную
+                                                            рабату
                                                         </h5>
                                                         <button type="button" data-dismiss="modal"
                                                                 data-bs-dismiss="modal" aria-label="Close"
@@ -593,7 +604,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, onMounted, computed, watch} from "vue";
 
 import "../../../assets/sass/scrollspyNav.scss";
 import "../../../assets/sass/tables/table-basic.scss";
@@ -620,14 +631,6 @@ const order = ref([]);
 onMounted(() => {
     initTooltip();
 });
-
-const toggleCode = (name) => {
-    if (code_arr.value.includes(name)) {
-        code_arr.value = code_arr.value.filter((d) => d != name);
-    } else {
-        code_arr.value.push(name);
-    }
-};
 
 const initTooltip = () => {
     setTimeout(() => {
@@ -675,17 +678,19 @@ const pagination = ref({
 });
 const currentPage = ref(1);
 
+const all = ref(1);
 
 const getOrders = async (page = 1) => {
     try {
         const status = ref('all')
-        if(router.currentRoute.value.query.status) {
+        if (router.currentRoute.value.query.status) {
             status.value = router.currentRoute.value.query.status
         }
 
         const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status.value}`);
 
         order.value = response.data.orders;
+        all.value = response.data.orders;
         pagination.value = response.data.pagination;
         currentPage.value = page;
 
@@ -698,6 +703,38 @@ const getOrders = async (page = 1) => {
 };
 
 onMounted(getOrders)
+
+const searchQuery = ref('');
+
+const filteredPeople = async () => {
+    if (searchQuery.value != '') {
+        order.value = order.value.filter(person => {
+            const lowerCaseQuery = searchQuery.value.toLowerCase();
+            return (
+                person.id !== undefined && person.id.toString().includes(lowerCaseQuery) ||
+                person.users !== undefined && person.users[0].email.toLowerCase().toString().includes(lowerCaseQuery) ||
+                person.car !== undefined && person.car.number.toLowerCase().includes(lowerCaseQuery) ||
+                person.car !== undefined && person.car.brand.toLowerCase().includes(lowerCaseQuery) ||
+                person.car !== undefined && person.car.model.toLowerCase().includes(lowerCaseQuery) ||
+                person.car !== undefined && person.car.year.toString().includes(lowerCaseQuery) ||
+                person.contract.number_of_contract !== undefined && person.contract.number_of_contract.toString().includes(lowerCaseQuery) ||
+                person.mileage !== undefined && person.mileage.toString().includes(lowerCaseQuery) ||
+                person.created_at !== undefined && person.created_at.toString().includes(lowerCaseQuery) ||
+                person.region !== undefined && person.region.region_name.toLowerCase().toString().includes(lowerCaseQuery) ||
+                person.contract.signed_at !== undefined && person.contract.signed_at.toString().includes(lowerCaseQuery) ||
+                person.contract.expire_at !== undefined && person.contract.expire_at.toString().includes(lowerCaseQuery)
+            );
+        });
+    } else {
+        order.value = all.value
+    }
+};
+
+watch(searchQuery, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+        filteredPeople();
+    }
+})
 
 const pageChanged = (pageNum) => {
     getOrders(pageNum);
@@ -749,7 +786,7 @@ const paid = async (status) => {
                 title: "Оплата была произведена",
                 padding: "2em",
             });
-        }else {
+        } else {
             new window.Swal({
                 title: "Оплата не была произведена",
                 padding: "2em",

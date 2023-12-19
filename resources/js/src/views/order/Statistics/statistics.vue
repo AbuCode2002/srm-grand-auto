@@ -9,7 +9,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-sm-6 col-6">
-                                <h4>Статистика</h4>
+                                <h4>{{ $t('statistic') }}</h4>
                             </div>
 
                             <div class="col-md-6 col-md-6 col-md-6 col-md-6 d-flex justify-content-end">

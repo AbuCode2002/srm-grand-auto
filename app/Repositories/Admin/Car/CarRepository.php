@@ -76,8 +76,8 @@ class CarRepository extends BaseRepository
                 $q->with(['defectiveActs' => function (HasOne $q) {
                     $q->with(['service' => function (HasMany $q) {
                         $q->with('serviceName');
+                    }]);
                 }]);
-            }]);
             }])
             ->get()
             ->groupBy('model');
@@ -93,8 +93,10 @@ class CarRepository extends BaseRepository
                     if ($service && $service->pluck('service_name_id')->isNotEmpty()) {
                         foreach ($service->pluck('serviceName')->pluck('name') as $item) {
 
-                            $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
-                            $carServiceNameIds[$groupIndex][] = $item;
+                            if ($item != null) {
+                                $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
+                                $carServiceNameIds[$groupIndex][] = $item;
+                            }
                         }
                     }
                 }
@@ -124,7 +126,7 @@ class CarRepository extends BaseRepository
             ->with(['orders' => function ($q) {
                 $q->with(['defectiveActs' => function (HasOne $q) {
                     $q->with(['service' => function (HasMany $q) {
-                        $q->with(['sparePart' => function($q) {
+                        $q->with(['sparePart' => function ($q) {
                             $q->with('partNames');
                         }]);
                         $q->pluck('service_name_id');
@@ -188,7 +190,7 @@ class CarRepository extends BaseRepository
                             $q->with('category');
                         }
                         ]);
-                        $q->with(['sparePart' => function($q) {
+                        $q->with(['sparePart' => function ($q) {
                             $q->with('partNames');
                         }]);
                     }]);
@@ -208,10 +210,11 @@ class CarRepository extends BaseRepository
                         $categoryName = $service->pluck('serviceName')->pluck('category')->pluck('name')->toArray();
 
                         foreach ($categoryName as $item) {
-//                        foreach ($service->pluck('serviceName')->pluck('name') as $item) {
 
-                            $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
-                            $carServiceNameIds[$groupIndex][] = $item;
+                            if ($item != null) {
+                                $carServiceNameIds[$groupIndex] = $carServiceNameIds[$groupIndex] ?? [];
+                                $carServiceNameIds[$groupIndex][] = $item;
+                            }
                         }
                     }
                 }

@@ -50,43 +50,43 @@
                         </li>
                         <li>
                             <router-link to="/order/new" @click="toggleMobileMenu;
-                            filter(statusName, status)">Все заявки</router-link>
+                            filter(statusName, status)">{{ $t('all_applications') }}</router-link>
                         </li>
                         <li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName1, status1)">Новая заявка</router-link>
+                            filter(statusName1, status1)">{{ $t('new_application') }}</router-link>
                         </li>
                         <li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName2, status2)">Ожидает назначение диагностики от СТО</router-link>
+                            filter(statusName2, status2)">{{ $t('waiting_for_diagnostic_appointment_from_service_station') }}</router-link>
                         </li>
                         <li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName3, status3)">Назначена диагностика</router-link>
+                            filter(statusName3, status3)">{{ $t('diagnostics_prescribed') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName4, status4)">ДА ожидает согласования в отделе по работе с партнерами</router-link>
+                            filter(statusName4, status4)">{{ $t('yes_is_awaiting_approval_from_the_partner_relations_department') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName5, status5)">ДА на согласовании в отделе по работе с клиентами</router-link>
+                            filter(statusName5, status5)">{{ $t('yes_subject_to_approval_by_the_customer_service_department') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName6, status6)">Согласован</router-link>
+                            filter(statusName6, status6)">{{ $t('agreed') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName7, status7)">Проводятся ремонтные работы</router-link>
+                            filter(statusName7, status7)">{{ $t('repair_work_is_underway') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName8, status8)">Ремонт выполнен</router-link>
+                            filter(statusName8, status8)">{{ $t('repair_completed') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName9, status9)">Заявка закрыта</router-link>
+                            filter(statusName9, status9)">{{ $t('application_closed') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName10, status10)">ДА акт не принят</router-link>
+                            filter(statusName10, status10)">{{ $t('yes_the_act_was_not_accepted') }}</router-link>
                         </li><li>
                             <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName11, status11)">Не оплачено</router-link>
+                            filter(statusName11, status11)">{{ $t('not_paid') }}</router-link>
                         </li>
                     </ul>
                 </li>
@@ -109,7 +109,7 @@
                                 <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
                                 <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
                             </svg>
-                            <span>{{ $t('statistics') }}</span>
+                            <span>{{ $t('statistic') }}</span>
                         </div>
                         <div>
                             <svg
