@@ -91,7 +91,7 @@
                     </ul>
                 </li>
 
-                <li class="menu">
+                <li v-if="roleUser === 3" class="menu">
                     <a class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#statistics" aria-controls="statistics" aria-expanded="false">
                         <div class="">
                             <svg

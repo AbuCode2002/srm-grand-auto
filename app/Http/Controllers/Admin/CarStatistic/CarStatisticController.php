@@ -12,14 +12,15 @@ use App\Repositories\Admin\Order\OrderRepository;
 use App\Repositories\Admin\ServiceName\ServiceNameRepository;
 use App\Repositories\Admin\User\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CarStatisticController extends BaseController
 {
     public function __construct(
-        private CarRepository $carRepository = new CarRepository(),
-        private OrderRepository $orderRepository = new OrderRepository(),
+        private CarRepository         $carRepository = new CarRepository(),
+        private OrderRepository       $orderRepository = new OrderRepository(),
         private ServiceNameRepository $serviceNameRepository = new ServiceNameRepository(),
-        private UserRepository $userRepository = new UserRepository(),
+        private UserRepository        $userRepository = new UserRepository(),
     )
     {
         //
@@ -27,36 +28,48 @@ class CarStatisticController extends BaseController
 
     public function sumDefectiveActWorkForCar(CarStatisticRequest $request)
     {
-        $serviceName = $this->serviceNameRepository->getAll()->pluck('name');
+        $roleId = Auth::user()->role_id;
 
-        if (!empty($request->input())) {
-            $data = CarStatisticData::from($request->validated());
+        if ($roleId === 3) {
+            $serviceName = $this->serviceNameRepository->getAll()->pluck('name');
 
-            $carIds = $this->carRepository->carIds($data);
+            if (!empty($request->input())) {
+                $data = CarStatisticData::from($request->validated());
 
-            $statistics = $this->orderRepository->sumDefectAct($carIds, $serviceName);
+                $carIds = $this->carRepository->carIds($data);
 
-            return response()->json($statistics, 200, [], JSON_FORCE_OBJECT);
-        }else {
-            foreach ($serviceName as $value)
-                $service[] = ['name' => $value];
-            return  $service;
+                $statistics = $this->orderRepository->sumDefectAct($carIds, $serviceName);
+
+                return response()->json($statistics, 200, [], JSON_FORCE_OBJECT);
+            } else {
+                foreach ($serviceName as $value)
+                    $service[] = ['name' => $value];
+                return $service;
+            }
+        } else {
+            return null;
         }
     }
 
     public function KPI(KPIRequest $request)
     {
-//        $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
-//        $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
-        $startDate = '2023-10-10 00:00:00';
-        $endDate =   '2023-11-10 23:59:59';
+        $roleId = Auth::user()->role_id;
 
-        $managers = $this->userRepository->allManager();
+        if ($roleId === 3) {
+            $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
+            $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
+//            $startDate = '2023-10-10 00:00:00';
+//            $endDate =   '2023-11-10 23:59:59';
 
-        foreach ($managers as $index => $manager) {
-            $order = $this->orderRepository->orderWithManeger($manager, $startDate, $endDate);
-            $kpi[$index] = $order;
+            $managers = $this->userRepository->allManager();
+
+            foreach ($managers as $index => $manager) {
+                $order = $this->orderRepository->orderWithManeger($manager, $startDate, $endDate);
+                $kpi[$index] = $order;
+            }
+            return $kpi;
+        } else {
+            return null;
         }
-        return $kpi;
     }
 }

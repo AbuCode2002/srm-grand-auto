@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Car;
 use App\Http\Controllers\BaseController;
 use App\Repositories\Admin\Car\CarRepository;
 use App\Transformers\Api\Admin\Car\CarIndexTransformer;
+use Illuminate\Support\Facades\Auth;
 
 class CarController extends BaseController
 {
@@ -42,18 +43,24 @@ class CarController extends BaseController
 
     public function statistic()
     {
-        $service = $this->carRepository->serviceStatistic();
+        $roleId = Auth::user()->role_id;
 
-        $part = $this->carRepository->partStatistic();
+        if ($roleId === 3) {
+            $service = $this->carRepository->serviceStatistic();
 
-        $category = $this->carRepository->categoryStatistic();
+            $part = $this->carRepository->partStatistic();
 
-        $car['service'] = $service;
+            $category = $this->carRepository->categoryStatistic();
 
-        $car['part'] = $part;
+            $car['service'] = $service;
 
-        $car['category'] = $category;
+            $car['part'] = $part;
 
-        return $car;
+            $car['category'] = $category;
+
+            return $car;
+        }else {
+            return null;
+        }
     }
 }

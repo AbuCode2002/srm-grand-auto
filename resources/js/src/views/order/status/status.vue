@@ -38,43 +38,44 @@
                                         <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                                        <div>Год производства</div>
+                                        <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
-                                        <div>Номер договора</div>
+                                        <div>{{ $t('contract_number')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="8" class="text-success">
-                                        <div>Статус заявки</div>
+                                        <div>{{ $t('application_status')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="9" class="text-success">
-                                        <div>Местоположение машины</div>
+                                        <div>{{ $t('machine_location') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>Итоговая цена по ДА без наценки</div>
+                                        <div>{{ $t('total_price_for_the_defective_certificate_without_extra_charge')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>Итоговая сумма по ДА</div>
+                                        <div>{{$t('the_total_amount_of_the_defective_act')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
-                                        <div>Тип услуги</div>
+                                        <div>{{ $t('service_type') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="13" class="text-success">
-                                        <div>Пробег машины</div>
+                                        <div>{{ $t('vehicle_mileage') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="14" class="text-success">
-                                        <div>Состояние машины</div>
+                                        <div>{{ $t('car_condition') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="15" class="text-success">
-                                        <div>Дата создания заявки</div>
+                                        <div>{{ $t('application_creation_date') }}</div>
                                     </th>
+
                                     <th role="columnheader" scope="col" aria-colindex="16" class="text-success">
-                                        <div>Номер телефона СТО</div>
+                                        <div>{{ $t('phone_station') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="17" class="text-success">
-                                        <div>Дата подписания</div>
+                                        <div>{{ $t('date_of_signing') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="18" class="text-success">
-                                        <div>Дата истечения</div>
+                                        <div>{{ $t('expiration_date') }}</div>
                                     </th>
                                 </tr>
                                 </thead>
@@ -174,34 +175,34 @@
                                         <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
-                                        <div>Год производства</div>
+                                        <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                                        <div>Номер договора</div>
+                                        <div>{{ $t('contract_number')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
-                                        <div>Статус заявки</div>
+                                        <div>{{ $t('application_status')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="8" class="text-success">
-                                        <div>Местоположение машины</div>
+                                        <div>{{ $t('machine_location') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="9" class="text-success">
-                                        <div>Тип услуги</div>
+                                        <div>{{ $t('service_type') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>Пробег машины</div>
+                                        <div>{{ $t('vehicle_mileage') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>Состояние машины</div>
+                                        <div>{{ $t('car_condition') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
-                                        <div>Дата создания заявки</div>
+                                        <div>{{ $t('application_creation_date') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="13" class="text-success">
-                                        <div>Дата подписания</div>
+                                        <div>{{ $t('date_of_signing') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="14" class="text-success">
-                                        <div>Дата истечения</div>
+                                        <div>{{ $t('expiration_date') }}</div>
                                     </th>
                                 </tr>
                                 </thead>
@@ -266,46 +267,47 @@
                                         <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                                        <div>Год производства</div>
+                                        <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
-                                        <div>Номер договора</div>
+                                        <div>{{ $t('contract_number')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="8" class="text-success">
-                                        <div>Статус заявки</div>
+                                        <div>{{ $t('application_status')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="9" class="text-success">
-                                        <div>Местоположение машины</div>
+                                        <div>{{ $t('machine_location') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>Итоговая цена по ДА без наценки</div>
+                                        <div>{{ $t('total_price_for_the_defective_certificate_without_extra_charge')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>Итоговая сумма по ДА</div>
+                                        <div>{{$t('the_total_amount_of_the_defective_act')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
-                                        <div>Тип услуги</div>
+                                        <div>{{ $t('service_type') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="13" class="text-success">
-                                        <div>Пробег машины</div>
+                                        <div>{{ $t('vehicle_mileage') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="14" class="text-success">
-                                        <div>Состояние машины</div>
+                                        <div>{{ $t('car_condition') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="15" class="text-success">
-                                        <div>Дата создания заявки</div>
+                                        <div>{{ $t('application_creation_date') }}</div>
                                     </th>
+
                                     <th role="columnheader" scope="col" aria-colindex="16" class="text-success">
-                                        <div>Номер телефона СТО</div>
+                                        <div>{{ $t('phone_station') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="17" class="text-success">
-                                        <div>Точное местоположение</div>
+                                        <div>{{ $t('machine_location') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="18" class="text-success">
-                                        <div>Дата подписания</div>
+                                        <div>{{ $t('date_of_signing') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="19" class="text-success">
-                                        <div>Дата истечения</div>
+                                        <div>{{ $t('expiration_date') }}</div>
                                     </th>
                                 </tr>
                                 </thead>
@@ -378,25 +380,25 @@
                                         <div>{{ $t('car_model')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
-                                        <div>Год производства</div>
+                                        <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                                        <div>Номер договора</div>
+                                        <div>{{ $t('contract_number')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>Пробег машины</div>
+                                        <div>{{ $t('vehicle_mileage')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>Состояние машины</div>
+                                        <div>{{ $t('car_condition')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
-                                        <div>Дата создания заявки</div>
+                                        <div>{{ $t('application_creation_date')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="13" class="text-success">
-                                        <div>Дата подписания</div>
+                                        <div>{{ $t('date_of_signing')}}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="14" class="text-success">
-                                        <div>Дата истечения</div>
+                                        <div>{{ $t('expiration_date')}}</div>
                                     </th>
                                 </tr>
                                 </thead>

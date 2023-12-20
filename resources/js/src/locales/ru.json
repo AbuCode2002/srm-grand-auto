@@ -44,5 +44,18 @@
     "client": "Клиент",
     "state_number": "Госномер",
     "car_model": "Модель",
-    "car_mark": "Марка"
+    "car_mark": "Марка",
+    "production_year": "Год производства",
+    "contract_number": "Номер договора",
+    "vehicle_mileage": "Пробег автомобиля",
+    "car_condition": "Состояние машины",
+    "application_creation_date": "Дата создания заявки",
+    "date_of_signing": "Дата подписания",
+    "expiration_date": "Дата истечения",
+    "application_status": "Статус заявки",
+    "machine_location": "Местоположение машины",
+    "service_type": "Тип услуги",
+    "total_price_for_the_defective_certificate_without_extra_charge": "Итоговая цена по Дефектному акту без наценки",
+    "the_total_amount_of_the_defective_act": "Итоговая сумма по ДА",
+    "phone_station": "Номер телефона СТО"
 }

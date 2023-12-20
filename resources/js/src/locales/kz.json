@@ -43,5 +43,18 @@
     "orders": "Өтініштер",
     "state_number": "Мемлекеттік нөмір",
     "car_model": "Моделі",
-    "car_mark": "Маркасы"
+    "car_mark": "Маркасы",
+    "production_year": "Өндіріс жылы",
+    "contract_number": "Келісім нөмірі",
+    "vehicle_mileage": "Көлік жүрісі",
+    "car_condition": "Көлік жағдайы",
+    "application_creation_date": "Өтініш берілген күн",
+    "date_of_signing": "Қолтаңбанын қойылған күні",
+    "expiration_date": "Мерзімнің өту күні",
+    "application_status": "Өтініш күйі",
+    "machine_location": "Көліктің орналасқан жері",
+    "service_ype": "Қызмет түрі",
+    "total_price_for_the_defective_certificate_without_extra_charge": "ДА бойынша устемесіз қорытынды баға",
+    "the_total_amount_of_the_defective_act": "ДА бойынша қорытынды сома",
+    "phone_station": "СТО нөмірі"
 }

@@ -8,12 +8,13 @@ use App\Repositories\Admin\Order\OrderRepository;
 use App\Repositories\Admin\Region\RegionRepository;
 use App\Transformers\Api\Admin\Region\ParentRegionIndexTransformer;
 use App\Transformers\Api\Admin\Region\RegionIndexTransformer;
+use Illuminate\Support\Facades\Auth;
 
 class RegionController extends BaseController
 {
     public function __construct(
-        private RegionRepository $regionRepository = new RegionRepository(),
-        private OrderRepository $orderRepository = new OrderRepository(),
+        private RegionRepository   $regionRepository = new RegionRepository(),
+        private OrderRepository    $orderRepository = new OrderRepository(),
         private ContractRepository $contractRepository = new ContractRepository(),
     )
     {
@@ -24,10 +25,10 @@ class RegionController extends BaseController
     {
         $contracts = $this->regionRepository->regionByUser();
 
-            return $this->respondWithSuccess(
-                $this->transformCollection($contracts, new RegionIndexTransformer()),
-                "created",
-            );
+        return $this->respondWithSuccess(
+            $this->transformCollection($contracts, new RegionIndexTransformer()),
+            "created",
+        );
     }
 
     public function show(int $id)
@@ -42,17 +43,23 @@ class RegionController extends BaseController
 
     public function indexParentRegion(int $contractId)
     {
-        $markup = 1 + ($this->contractRepository->companyByContractId($contractId)->company->markup) / 100;
+        $roleId = Auth::user()->role_id;
 
-        $regions = $this->regionRepository->region();
+        if ($roleId === 3) {
+            $markup = 1 + ($this->contractRepository->companyByContractId($contractId)->company->markup) / 100;
 
-        $this->orderRepository->sumUsed($regions, $contractId);
+            $regions = $this->regionRepository->region();
 
-        $this->orderRepository->sumWork($regions, $markup, $contractId);
+            $this->orderRepository->sumUsed($regions, $contractId);
 
-        return $this->respondWithSuccess(
-            $this->transformCollection($regions, new ParentRegionIndexTransformer()),
-            "created",
-        );
+            $this->orderRepository->sumWork($regions, $markup, $contractId);
+
+            return $this->respondWithSuccess(
+                $this->transformCollection($regions, new ParentRegionIndexTransformer()),
+                "created",
+            );
+        } else {
+            return null;
+        }
     }
 }
