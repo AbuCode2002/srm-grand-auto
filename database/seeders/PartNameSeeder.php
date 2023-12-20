@@ -10,6 +10,9 @@ use Illuminate\Database\Seeder;
 class PartNameSeeder extends Seeder
 {
     private $part = [
+        'null' => [
+
+        ],
         'двигатель' => [
             'Блок цилиндров',
             'Блоки',
@@ -270,13 +273,13 @@ class PartNameSeeder extends Seeder
             $categoryId = PartCategory::query()->where('name', $index)->value('id');
 
             foreach ($item as $value) {
-                $serviceName = new PartName();
+                $partName = new PartName();
 
-                $serviceName->name = $value;
+                $partName->name = $value;
 
-                $serviceName->category_id = $categoryId;
+                $partName->category_id = $categoryId;
 
-                $serviceName->save();
+                $partName->save();
             }
         }
     }

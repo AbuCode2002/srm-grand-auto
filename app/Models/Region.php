@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string                                                      $region_name
  * @property int                                                         $parent_id
  * @property int                                                         $budget
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Region[] $children
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Region[] $children
  */
 class Region extends Model
 {

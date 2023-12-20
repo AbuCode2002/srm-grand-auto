@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer           $id
  * @property integer           $user_id
  * @property string            $name
- * @property-read \App\User    $user
- * @property-read \App\Company $company
+ * @property-read \App\Models\User    $user
+ * @property-read \App\Models\Company $company
  */
 class Client extends Model
 {

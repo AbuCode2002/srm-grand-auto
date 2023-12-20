@@ -9,6 +9,7 @@ use Illuminate\Database\Seeder;
 class PartCategorySeeder extends Seeder
 {
     private $category = [
+        'null',
         'двигатель',
         'крепеж',
         'кузовные запчасти',
@@ -37,7 +38,7 @@ class PartCategorySeeder extends Seeder
         foreach ($this->category as $index => $item) {
             $partCategory = new PartCategory();
 
-            $partCategory->id = $index + 1;
+            $partCategory->id = $index;
             $partCategory->name = $item;
 
             $partCategory->save();

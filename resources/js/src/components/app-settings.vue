@@ -15,10 +15,10 @@
             </a>
             <perfect-scrollbar class="sidbarchat p-3" tag="div">
                 <a class="btn-close" href="javascript:;" @click="isOpen = !isOpen"> </a>
-                <div class="text-center">
-                    <img src="/assets/images/features_overview.svg" alt="..." class="img-fluid" />
-                </div>
-                <hr />
+<!--                <div class="text-center">-->
+<!--                    <img src="/assets/images/features_overview.svg" alt="..." class="img-fluid" />-->
+<!--                </div>-->
+<!--                <hr />-->
 
                 <h6 class="mb-1">Цветовая схема</h6>
                 <p class="small text-muted mb-3">Светлая или темная презентация.</p>
@@ -71,27 +71,6 @@
                             Dark Mode
                         </label>
                     </div>
-<!--                    <div class="text-color radio-primary col-12 ps-0 custom-control custom-radio">-->
-<!--                        <input type="radio" id="system_mode" v-model="$store.state.dark_mode" class="custom-control-input" value="system" @change="setTemplateStyle" />-->
-<!--                        <label class="custom-control-label" for="system_mode">-->
-<!--                            <svg-->
-<!--                                xmlns="http://www.w3.org/2000/svg"-->
-<!--                                width="24"-->
-<!--                                height="24"-->
-<!--                                viewBox="0 0 24 24"-->
-<!--                                fill="none"-->
-<!--                                stroke="currentColor"-->
-<!--                                stroke-width="2"-->
-<!--                                stroke-linecap="round"-->
-<!--                                stroke-linejoin="round"-->
-<!--                                class="feather feather-airplay me-2"-->
-<!--                            >-->
-<!--                                <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>-->
-<!--                                <polygon points="12 15 17 21 7 21 12 15"></polygon>-->
-<!--                            </svg>-->
-<!--                            System-->
-<!--                        </label>-->
-<!--                    </div>-->
                 </div>
                 <h6 class="mb-1">Навигационная позиция</h6>
                 <p class="small text-muted mb-3">Выберите основную парадигму навигации для вашего приложения.</p>

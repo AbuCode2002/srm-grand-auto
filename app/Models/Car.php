@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string             $brand
  * @property string             $model
  * @property integer            $year
- * @property-read \App\Company  $company
- * @property-read \App\Contract $contract
+ * @property-read \App\Models\Company  $company
+ * @property-read \App\Models\Contract $contract
  */
 class Car extends Model
 {

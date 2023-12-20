@@ -45,14 +45,4 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
-
-
-    /**
-     * Get the Urls for the Role.
-     */
-    public function urls()
-    {
-        return $this->hasMany(Url::class);
-    }
-
 }

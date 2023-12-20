@@ -65,19 +65,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Client::class);
     }
 
-    public function stationManager()
-    {
-        return $this->hasOne(StationManager::class);
-    }
-
-    /**
-     * Get the Comments for the User.
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     /**
      * Get the Role for the User.
      */
@@ -123,51 +110,6 @@ class User extends Authenticatable implements JWTSubject
         return [
             "id" => $this->id,
         ];
-    }
-
-    public function receivesBroadcastNotificationsOn()
-    {
-        return 'App.User.' . $this->id;
-    }
-
-    public function isOrk()
-    {
-        return $this->role_id == 1;
-    }
-
-    public function isClient()
-    {
-        return $this->role_id == 2;
-    }
-
-    public function isOrpu()
-    {
-        return $this->role_id == 3;
-    }
-
-    public function isOrpa()
-    {
-        return $this->role_id == 4;
-    }
-
-    public function isStation()
-    {
-        return $this->role_id == 5;
-    }
-
-    public function isOp()
-    {
-        return $this->role_id == 6;
-    }
-
-    public function isAccountant()
-    {
-        return $this->role_id == 7;
-    }
-
-    public function isAdmin()
-    {
-        return $this->role_id == 8;
     }
 
     /**

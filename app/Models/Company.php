@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string  $updated_at
  * @property string  $deleted_at
  * @property Region  $region
- * @property Bank    $bank
  */
 class Company extends Model
 {
@@ -91,11 +90,6 @@ class Company extends Model
     public function cars()
     {
         return $this->hasMany(Car::class);
-    }
-
-    public function bank()
-    {
-        return $this->belongsTo(Bank::class);
     }
 
     public function region()

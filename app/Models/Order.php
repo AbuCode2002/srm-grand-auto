@@ -28,11 +28,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $kpi3,
  * @property-read \App\Models\Region    $region
  * @property-read \App\Models\Client    $client
- * @property-read \App\Models\Chatroom  $chatroom
  * @property-read \App\Models\Car       $car
  * @property-read \App\Models\Station   $station
  * @property-read \App\Models\Contract  $contract
- * @property-read \App\Models\DefectAct $defectActs
  */
 class Order extends Model
 {
@@ -127,35 +125,11 @@ class Order extends Model
         'problem_description' => 'string',
         'status'              => 'string',
         'status_internal'     => 'integer',
-        // 'signed_at' => 'timestamp',
-        // 'expire_at' => 'timestamp',
-        // 'ready_to_diagnose_at' => 'timestamp',
-        // 'ready_to_repair_at' => 'timestamp',
-        // 'created_at' => 'timestamp',
-        // 'updated_at' => 'timestamp',
     ];
 
     public function defectiveActs(): HasOne
     {
         return $this->hasOne(DefectiveAct::class);
-    }
-
-    public function defectActs(): HasOne
-    {
-        return $this->hasOne(DefectAct::class);
-    }
-
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class);
-    }
-
-    /**
-     * Get the Comments for the Order.
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
     }
 
     /**
@@ -180,38 +154,12 @@ class Order extends Model
         return $this->belongsTo(Status::class, 'status', 'id');
     }
 
-
-    /**
-     * Get the Evacuator for the Order.
-     */
-    public function evacuator()
-    {
-        return $this->belongsTo(Evacuator::class);
-    }
-
-
     /**
      * Get the Station for the Order.
      */
     public function station()
     {
         return $this->belongsTo(Station::class);
-    }
-
-    public function bills()
-    {
-        $this->bills = $this->media()
-                            ->where('media_type', 3)
-                            ->get()
-        ;
-    }
-
-    /**
-     * Get the Media for the Order.
-     */
-    public function media()
-    {
-        return $this->hasMany(Media::class);
     }
 
     public function contract()
@@ -224,46 +172,8 @@ class Order extends Model
         return $this->belongsTo(Region::class, 'region_id');
     }
 
-    public function chatroom()
-    {
-        return $this->hasOne(Chatroom::class);
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_order');
     }
-
-    public function defectActInProcess()
-    {
-        return $this->hasOne(DefectActInProcess::class);
-    }
-
-//    public function shownStatus()
-//    {
-//        return $this->belongsTo(Status::class, 'status');
-//    }
-
-//    public function checkPaid()
-//    {
-//        $parent    = Status::where('name', 'Ремонт выполнен')
-//                           ->first()->id;
-//        $status_id = Status::where('name', 'Оплата')
-//                           ->where('parent_id', $parent)
-//                           ->first()->id;
-//
-//        if ($this->media()
-//                 ->where('media_type', 3)
-//                 ->whereNull('media.paid_at')
-//                 ->count() == 0) {
-//            $this->status_internal == 21;
-//            $this->save();
-//
-//            event(new StatusChanged($status_id, $this->chatroom->id));
-//
-//            return true;
-//        }
-//
-//        return false;
-//    }
 }

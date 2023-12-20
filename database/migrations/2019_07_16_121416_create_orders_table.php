@@ -29,8 +29,6 @@ class CreateOrdersTable extends Migration
             $table->boolean('is_broken')
                   ->nullable()
             ;
-
-            $table->boolean('is_evacuated');
             $table->unsignedBigInteger('region_id');
             $table->string('actual_location')
                   ->nullable()
@@ -67,13 +65,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('completed_at')
                   ->nullable()
             ;
-            $table->unsignedBigInteger('evacuator_id')
-                  ->nullable()
-            ;
-            $table->foreign('evacuator_id')
-                  ->references('id')
-                  ->on('evacuators')
-            ;
+
             $table->timestamp('created_at')
                   ->nullable()
             ;

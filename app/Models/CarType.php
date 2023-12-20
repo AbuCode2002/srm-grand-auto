@@ -45,12 +45,4 @@ class CarType extends Model
     {
         return $this->belongsToMany(Station::class);
     }
-
-    /**
-     * Get the Shops for the CarType.
-     */
-    public function shops()
-    {
-        return $this->belongsToMany(Shop::class);
-    }
 }

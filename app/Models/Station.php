@@ -4,6 +4,8 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer          $region_id
  * @property string           fact_address
  * @property string           jur_address
- * @property-read \App\Region $region
+ * @property-read \App\Models\Region $region
  */
 class Station extends Model
 {
@@ -71,7 +73,7 @@ class Station extends Model
     /**
      * Get the Orders for the Station.
      */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
@@ -86,34 +88,10 @@ class Station extends Model
     }
 
     /**
-     * Get the CarTypes for the Station.
-     */
-    public function bank(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Bank::class);
-    }
-
-    /**
      * Get the Region for the Station.
      */
-    public function region(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class);
-    }
-
-    public function user($id)
-    {
-        $manager = StationManager::query()
-                                 ->where('station_id', $id)
-                                 ->first()
-        ;
-        if ($manager) {
-            return User::query()
-                       ->where('id', $manager->user_id)
-                       ->first()
-            ;
-        }
-
-        return null;
     }
 }
