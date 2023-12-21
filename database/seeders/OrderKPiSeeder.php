@@ -13,7 +13,6 @@ class OrderKPiSeeder extends Seeder
         $orders = Order::all();
 
         foreach ($orders as $order) {
-            dd($order);
             $order->kpi1 = rand(0,1);
             $order->kpi2 = rand(0,1);
             $order->kpi3 = rand(0,1);

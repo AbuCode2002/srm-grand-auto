@@ -13,6 +13,7 @@ use App\Transformers\Api\Station\Order\OrderIndexTransformer;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 
 class OrderController extends BaseController
 {
@@ -52,6 +53,7 @@ class OrderController extends BaseController
         }else {
             $order = $this->orderRepository->indexByStatus($page, $status);
         }
+//        dd($order->pluck('defectiveActs')[0]);
         return $this->setPagination($order)
             ->respondWithSuccess(
             $this->transformCollection($order, new OrderIndexTransformer()),

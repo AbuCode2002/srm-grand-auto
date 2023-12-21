@@ -26,9 +26,16 @@ class FileUploadController extends  BaseController
                 $ffmpeg = FFMpeg\FFMpeg::create();
                 $video = $ffmpeg->open($value->path());
 
+//                $video
+//                    ->filters()
+//                    ->resize(new FFMpeg\Coordinate\Dimension(1280, 720))
+//                    ->synchronize();
+
+                $videoDimensions = $video->getStreams()->videos()->first()->getDimensions();
+
                 $video
                     ->filters()
-                    ->resize(new FFMpeg\Coordinate\Dimension(1280, 720))
+                    ->resize(new FFMpeg\Coordinate\Dimension($videoDimensions->getWidth(), $videoDimensions->getHeight()))
                     ->synchronize();
 
                 $format = new X264();

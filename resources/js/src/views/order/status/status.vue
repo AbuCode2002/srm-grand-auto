@@ -6,7 +6,7 @@
                     <div class="panel-heading">
                         <div class="row mb-3">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                <h4>{{ $t('orders')}}</h4>
+                                <h4>{{ $t('orders') }}</h4>
                             </div>
                         </div>
                         <div style="position: absolute; width: 300px">
@@ -26,34 +26,36 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>{{ $t('client')}}</div>
+                                        <div>{{ $t('client') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>{{ $t('state_number')}}</div>
+                                        <div>{{ $t('state_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>{{ $t('car_mark')}}</div>
+                                        <div>{{ $t('car_mark') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>{{ $t('car_model')}}</div>
+                                        <div>{{ $t('car_model') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
                                         <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
-                                        <div>{{ $t('contract_number')}}</div>
+                                        <div>{{ $t('contract_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="8" class="text-success">
-                                        <div>{{ $t('application_status')}}</div>
+                                        <div>{{ $t('application_status') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="9" class="text-success">
                                         <div>{{ $t('machine_location') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>{{ $t('total_price_for_the_defective_certificate_without_extra_charge')}}</div>
+                                        <div>
+                                            {{ $t('total_price_for_the_defective_certificate_without_extra_charge') }}
+                                        </div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>{{$t('the_total_amount_of_the_defective_act')}}</div>
+                                        <div>{{ $t('the_total_amount_of_the_defective_act') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
                                         <div>{{ $t('service_type') }}</div>
@@ -166,22 +168,22 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>{{ $t('state_number')}}</div>
+                                        <div>{{ $t('state_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>{{ $t('car_mark')}}</div>
+                                        <div>{{ $t('car_mark') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>{{ $t('car_model')}}</div>
+                                        <div>{{ $t('car_model') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
                                         <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                                        <div>{{ $t('contract_number')}}</div>
+                                        <div>{{ $t('contract_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
-                                        <div>{{ $t('application_status')}}</div>
+                                        <div>{{ $t('application_status') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="8" class="text-success">
                                         <div>{{ $t('machine_location') }}</div>
@@ -255,34 +257,36 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>{{ $t('client')}}</div>
+                                        <div>{{ $t('client') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>{{ $t('state_number')}}</div>
+                                        <div>{{ $t('state_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>{{ $t('car_mark')}}</div>
+                                        <div>{{ $t('car_mark') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>{{ $t('car_model')}}</div>
+                                        <div>{{ $t('car_model') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
                                         <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="7" class="text-success">
-                                        <div>{{ $t('contract_number')}}</div>
+                                        <div>{{ $t('contract_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="8" class="text-success">
-                                        <div>{{ $t('application_status')}}</div>
+                                        <div>{{ $t('application_status') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="9" class="text-success">
                                         <div>{{ $t('machine_location') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>{{ $t('total_price_for_the_defective_certificate_without_extra_charge')}}</div>
+                                        <div>
+                                            {{ $t('total_price_for_the_defective_certificate_without_extra_charge') }}
+                                        </div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>{{$t('the_total_amount_of_the_defective_act')}}</div>
+                                        <div>{{ $t('the_total_amount_of_the_defective_act') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
                                         <div>{{ $t('service_type') }}</div>
@@ -296,17 +300,13 @@
                                     <th role="columnheader" scope="col" aria-colindex="15" class="text-success">
                                         <div>{{ $t('application_creation_date') }}</div>
                                     </th>
-
                                     <th role="columnheader" scope="col" aria-colindex="16" class="text-success">
                                         <div>{{ $t('phone_station') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="17" class="text-success">
-                                        <div>{{ $t('machine_location') }}</div>
-                                    </th>
-                                    <th role="columnheader" scope="col" aria-colindex="18" class="text-success">
                                         <div>{{ $t('date_of_signing') }}</div>
                                     </th>
-                                    <th role="columnheader" scope="col" aria-colindex="19" class="text-success">
+                                    <th role="columnheader" scope="col" aria-colindex="18" class="text-success">
                                         <div>{{ $t('expiration_date') }}</div>
                                     </th>
                                 </tr>
@@ -319,9 +319,12 @@
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+                                        <button v-else class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
                                     </td>
                                     <td aria-colindex="2" role="cell" class="">{{
-                                            item.users ? item.users[0].email : '-'
+                                            item.users[0] ? item.users[0].email : '-'
                                         }}
                                     </td>
                                     <td aria-colindex="3" role="cell" class="">{{ item.car.number }}</td>
@@ -356,9 +359,8 @@
                                     <td aria-colindex="16" role="cell" class="">
                                         {{ item.station?.contact_phone ?? 'Нет данных' }}
                                     </td>
-                                    <td aria-colindex="17" role="cell" class="">{{ item.region.region_name }}</td>
-                                    <td aria-colindex="18" role="cell" class="">{{ item.contract.signed_at }}</td>
-                                    <td aria-colindex="19" role="cell" class="">{{ item.contract.expire_at }}</td>
+                                    <td aria-colindex="17" role="cell" class="">{{ item.contract.signed_at }}</td>
+                                    <td aria-colindex="18" role="cell" class="">{{ item.contract.expire_at }}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -371,34 +373,34 @@
                                         <div>ID</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="2" class="text-success">
-                                        <div>{{ $t('state_number')}}</div>
+                                        <div>{{ $t('state_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="3" class="text-success">
-                                        <div>{{ $t('car_mark')}}</div>
+                                        <div>{{ $t('car_mark') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="4" class="text-success">
-                                        <div>{{ $t('car_model')}}</div>
+                                        <div>{{ $t('car_model') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="5" class="text-success">
                                         <div>{{ $t('production_year') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="6" class="text-success">
-                                        <div>{{ $t('contract_number')}}</div>
+                                        <div>{{ $t('contract_number') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="10" class="text-success">
-                                        <div>{{ $t('vehicle_mileage')}}</div>
+                                        <div>{{ $t('vehicle_mileage') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="11" class="text-success">
-                                        <div>{{ $t('car_condition')}}</div>
+                                        <div>{{ $t('car_condition') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="12" class="text-success">
-                                        <div>{{ $t('application_creation_date')}}</div>
+                                        <div>{{ $t('application_creation_date') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="13" class="text-success">
-                                        <div>{{ $t('date_of_signing')}}</div>
+                                        <div>{{ $t('date_of_signing') }}</div>
                                     </th>
                                     <th role="columnheader" scope="col" aria-colindex="14" class="text-success">
-                                        <div>{{ $t('expiration_date')}}</div>
+                                        <div>{{ $t('expiration_date') }}</div>
                                     </th>
                                 </tr>
                                 </thead>
@@ -555,6 +557,11 @@
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
+                                        <button v-if="item.status.name === 'Ожидает назначение диагностики от СТО'"
+                                                @click.prevent="pushToUpdateDefectiveAct(item.id)"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
 
                                     </td>
                                     <td aria-colindex="2" role="cell" class="">{{ item.car.number }}</td>
@@ -682,6 +689,8 @@ const currentPage = ref(1);
 
 const all = ref(1);
 
+const orderAll = ref([]);
+
 const getOrders = async (page = 1) => {
     try {
         const status = ref('all')
@@ -692,13 +701,11 @@ const getOrders = async (page = 1) => {
         const response = await api.get(`/api/station/auth/order/index-by-status?page=${page}&status=${status.value}`);
 
         order.value = response.data.orders;
+        orderAll.value = response.data.orders;
         all.value = response.data.orders;
         pagination.value = response.data.pagination;
         currentPage.value = page;
 
-        console.log(order.value)
-        console.log(pagination.value)
-        console.log(currentPage.value)
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
@@ -708,33 +715,33 @@ onMounted(getOrders)
 
 const searchQuery = ref('');
 
-const filteredPeople = async () => {
-    if (searchQuery.value != '') {
-        order.value = order.value.filter(person => {
-            const lowerCaseQuery = searchQuery.value.toLowerCase();
-            return (
-                person.id !== undefined && person.id.toString().includes(lowerCaseQuery) ||
-                person.users !== undefined && person.users[0].email.toLowerCase().toString().includes(lowerCaseQuery) ||
-                person.car !== undefined && person.car.number.toLowerCase().includes(lowerCaseQuery) ||
-                person.car !== undefined && person.car.brand.toLowerCase().includes(lowerCaseQuery) ||
-                person.car !== undefined && person.car.model.toLowerCase().includes(lowerCaseQuery) ||
-                person.car !== undefined && person.car.year.toString().includes(lowerCaseQuery) ||
-                person.contract.number_of_contract !== undefined && person.contract.number_of_contract.toString().includes(lowerCaseQuery) ||
-                person.mileage !== undefined && person.mileage.toString().includes(lowerCaseQuery) ||
-                person.created_at !== undefined && person.created_at.toString().includes(lowerCaseQuery) ||
-                person.region !== undefined && person.region.region_name.toLowerCase().toString().includes(lowerCaseQuery) ||
-                person.contract.signed_at !== undefined && person.contract.signed_at.toString().includes(lowerCaseQuery) ||
-                person.contract.expire_at !== undefined && person.contract.expire_at.toString().includes(lowerCaseQuery)
-            );
-        });
-    } else {
-        order.value = all.value
-    }
-};
-
 watch(searchQuery, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-        filteredPeople();
+    order.value = orderAll.value.filter(person => {
+        const lowerCaseQuery = newVal.toLowerCase();
+        return (
+            person.id !== undefined && person.id.toString().includes(lowerCaseQuery) ||
+            person.users[0] !== undefined && person.users[0].email.toLowerCase().toString().includes(lowerCaseQuery) ||
+            person.car !== undefined && person.car.number.toLowerCase().includes(lowerCaseQuery) ||
+            person.car !== undefined && person.car.brand.toLowerCase().includes(lowerCaseQuery) ||
+            person.car !== undefined && person.car.model.toLowerCase().includes(lowerCaseQuery) ||
+            person.car !== undefined && person.car.year.toString().includes(lowerCaseQuery) ||
+            person.contract.number_of_contract !== undefined && person.contract.number_of_contract.toString().toLowerCase().includes(lowerCaseQuery) ||
+            person.mileage !== undefined && person.mileage.toString().includes(lowerCaseQuery) ||
+            person.created_at !== undefined && person.created_at.toString().includes(lowerCaseQuery) ||
+            person.region !== undefined && person.region.region_name.toLowerCase().toString().includes(lowerCaseQuery) ||
+            person.contract.signed_at !== undefined && person.contract.signed_at.toString().includes(lowerCaseQuery) ||
+            person.contract.expire_at !== undefined && person.contract.expire_at.toString().includes(lowerCaseQuery) ||
+            person.station?.contact_phone !== undefined && person.station?.contact_phone.toString().includes(lowerCaseQuery) ||
+            person.status.name !== undefined && person.status.name.toString().toLowerCase().includes(lowerCaseQuery) ||
+            person.defectiveActs !== undefined && person.defectiveActs.total.toString().includes(lowerCaseQuery) ||
+            person.defectiveActs !== undefined && person.defectiveActs.total_with_markup.toString().includes(lowerCaseQuery) ||
+            person.service_type !== undefined && person.service_type.toString().toLowerCase().includes(lowerCaseQuery) ||
+            person.mileage !== undefined && person.mileage.toString().includes(lowerCaseQuery)
+        );
+
+    });
+    if (newVal === '') {
+        order.value = all.value
     }
 })
 

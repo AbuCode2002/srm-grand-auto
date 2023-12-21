@@ -39,7 +39,6 @@
                     <tbody role="rowgroup" v-for="(field, fieldIndex) in fields">
 
                     <tr role="row" class="" :key="fieldIndex">
-
                         <td aria-colindex="1" role="cell" class="">
                             <div class="row">
                                 <div class="col-md-auto">
@@ -421,7 +420,7 @@ const getDefectiveAct = async () => {
                 fields.value = item.service.map(item => {
                     return {
                         id: item.id,
-                        serviceNameModel: {name: item.name},
+                        serviceNameModel: {name: item.serviceName && item.serviceName.name},
                         count: item.count,
                         unitNameModel: {unitName: item.unit},
                         price: item.price,
@@ -429,7 +428,7 @@ const getDefectiveAct = async () => {
                         parts: item.sparePart.map(part => {
                             return {
                                 partId: part.id,
-                                partNameModel: {name: part.name},
+                                partNameModel: {name: part.partNames && part.partNames.name},
                                 partCount: part.count,
                                 partUnitNameModel: {unitName: part.unit},
                                 partPrice: part.price,

@@ -47,7 +47,6 @@ class OrderRepository extends BaseRepository
                     'region',
                     'defectiveActs',
                     'station')
-//                ->orderBy('id')
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
@@ -60,7 +59,6 @@ class OrderRepository extends BaseRepository
                 ->with('status')
                 ->with('region')
                 ->whereIn('region_id', $regionId)
-//                ->orderBy('id')
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
 
@@ -73,7 +71,6 @@ class OrderRepository extends BaseRepository
                 ->with('status')
                 ->with('region')
                 ->whereIn('region_id', $regionId)
-//                ->orderBy('id')
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
         } else if ($roleName === 'station') {
@@ -85,7 +82,6 @@ class OrderRepository extends BaseRepository
                 ->with('status')
                 ->with('region')
                 ->whereIn('region_id', $regionId)
-//                ->orderBy('id')
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage, ['*'], 'page', $page);
         }
@@ -238,6 +234,17 @@ class OrderRepository extends BaseRepository
     public function endWork(Order $order): void
     {
         $statusId = Status::query()->where('name', 'Ремонт выполнен ')->value('id');
+
+        $order->status = $statusId;
+
+        $order->save();
+    }
+
+    public function editStatus(int $orderId): void
+    {
+        $statusId = Status::query()->where('name', 'ДА ожидает согласования в отделе по работе с партнерами')->value('id');
+
+        $order = $this->findById($orderId);
 
         $order->status = $statusId;
 

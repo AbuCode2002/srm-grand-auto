@@ -5,7 +5,9 @@ namespace App\Repositories\Station\DefectiveAct;
 use App\Http\Controllers\Station\DefectiveAct\Data\DefectiveActData;
 use App\Models\DefectiveAct;
 use App\Models\Order;
+use App\Models\PartName;
 use App\Models\Service;
+use App\Models\ServiceName;
 use App\Models\SparePart;
 use App\Models\UserToRegion;
 use App\Repositories\BaseRepository;
@@ -69,8 +71,7 @@ class DefectiveActRepository extends BaseRepository
 
                 $service->defective_act_id = $defectiveAct->id;
 
-                $service->service_name_id = $data->service[$item]["name"]["id"] ?? 0;
-
+                $service->service_name_id = $data->service[$item]["serviceName"]["name"]["id"] ?? 0;
 
                 $service->count = $data->service[$item]["count"];
 
@@ -88,8 +89,7 @@ class DefectiveActRepository extends BaseRepository
 
                     $sparePart->service_id = $service->id;
 
-//                    $sparePart->name = $data->spare_parts[$item][$value]["name"]["name"];
-                    $sparePart->part_name_id = $data->spare_parts[$item][$value]["name"]["id"];
+                    $sparePart->part_name_id = $data->spare_parts[$item][$value]["partNames"]["name"]["id"];
 
                     $sparePart->count = $data->spare_parts[$item][$value]["count"];
 
@@ -112,8 +112,9 @@ class DefectiveActRepository extends BaseRepository
 
                 if ($service) {
 
-//                    $service->name = $data->service[$item1]["name"]["name"];
-                    $service->service_name_id = $data->service[$item1]["name"]["id"] ?? 0;
+                    $service->service_name_id = ServiceName::query()
+                        ->where('name', $data->service[$item1]["name"]["name"])
+                        ->value('id') ?? 0;
 
                     $service->count = $data->service[$item1]["count"];
                     $service->unit  = $data->service[$item1]["unit"]["unitName"] ?? 0;
@@ -125,8 +126,10 @@ class DefectiveActRepository extends BaseRepository
                     $serviceModel = new Service();
 
                     $serviceModel->defective_act_id = $service->defective_act_id;
-//                    $serviceModel->name = $data->service[$item1]["name"]["name"];
-                    $service->service_name_id = $data->service[$item1]["name"]["id"];
+                    $service->service_name_id = ServiceName::query()
+                        ->where('name', $data->service[$item1]["name"]["name"])
+                        ->value('id') ?? 0;
+
 
                     $serviceModel->count = $data->service[$item1]["count"];
                     $serviceModel->unit = $data->service[$item1]["unit"]["unitName"];
@@ -141,8 +144,9 @@ class DefectiveActRepository extends BaseRepository
                     $part = SparePart::query()->findOrFail($data->spare_parts[$item1][$value]["id"]);
 
                     if ($part) {
-//                        $part->name = $data->spare_parts[$item1][$value]["name"]["name"];
-                        $part->part_name_id = $data->spare_parts[$item1][$value]["name"]["id"];
+                        $part->part_name_id = PartName::query()
+                            ->where('name', $data->spare_parts[$item1][$value]["name"]["name"])
+                            ->value('id');
 
                         $part->count = $data->spare_parts[$item1][$value]["count"];
                         $part->unit = $data->spare_parts[$item1][$value]["unit"]["unitName"];
@@ -154,8 +158,9 @@ class DefectiveActRepository extends BaseRepository
                         $partModel = new SparePart();
 
                         $partModel->defective_act_id = $part->defective_act_id;
-//                        $partModel->name = $data->spare_parts[$item1][$value]["name"]["name"];
-                        $partModel->part_name_id = $data->spare_parts[$item1][$value]["name"]["id"];
+                        $partModel->part_name_id = PartName::query()
+                            ->where('name', $data->spare_parts[$item1][$value]["name"]["name"])
+                            ->value('id');
 
                         $partModel->count = $data->spare_parts[$item1][$value]["count"];
                         $partModel->unit = $data->spare_parts[$item1][$value]["unit"]["unitName"];
@@ -168,6 +173,7 @@ class DefectiveActRepository extends BaseRepository
             }
 
         }
+
         return $defectiveAct;
     }
 

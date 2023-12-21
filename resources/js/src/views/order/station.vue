@@ -219,7 +219,7 @@ const selectStation = async (id) => {
     const station = {
         "id": orderId,
         "station_id": id,
-        "status": 2,//Статус: Ожидает назначение диагностики от СТО
+        "status": 3,//Статус: Назначена диагностика
         "date": date.value,
 
     }

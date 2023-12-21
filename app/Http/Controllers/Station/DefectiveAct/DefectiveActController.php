@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Station\DefectiveAct\Data\DefectiveActData;
 use App\Http\Requests\DefectiveAct\DefectiveActRequest;
 use App\Models\Order;
+use App\Models\Status;
 use App\Repositories\Station\DefectiveAct\DefectiveActRepository;
 use App\Repositories\Station\Order\OrderRepository;
 use App\Transformers\Api\Station\DefectiveAct\DefectiveActIndexTransformer;
@@ -30,14 +31,15 @@ class DefectiveActController extends BaseController
      */
     public function store(int $orderId, DefectiveActRequest $defectiveActRequest)
     {
-
         $data = DefectiveActData::from($defectiveActRequest->validated());
 
         $order = $this->orderRepository->findById($orderId);
 
         $defectiveAct = $this->defectiveActRepository->store($data, $order);
 
-            return $this->respondWithSuccess(
+        $this->orderRepository->editStatus($orderId);
+
+        return $this->respondWithSuccess(
                 $this->transformItem($defectiveAct, new DefectiveActIndexTransformer()),
                 "created",
             );

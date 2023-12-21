@@ -29,8 +29,9 @@
                     <tr v-if="field.price > 0" role="row" class="" :key="fieldIndex">
 
                         <td aria-colindex="1" role="cell" class="">
-                            <div class="text-success">{{
-                                field.serviceNameModel ? field.serviceNameModel.name : ''
+                            <div class="text-success">
+                                {{
+                                field.serviceNameModel ? field.serviceNameModel.name.name : ''
 
                               }}
                             </div>

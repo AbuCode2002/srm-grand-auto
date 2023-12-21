@@ -201,19 +201,19 @@ const getRegions = async () => {
 onMounted(getRegions);
 
 const workModel = ref({name: 'Описание'});
-const works = ref('Описание');
-
-const getWorks = async () => {
-    try {
-        const response = await api.get('/api/auth/client/work');
-        works.value = response.data.works;
-        console.log(response.data.works)
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error);
-    }
-};
-
-onMounted(getWorks)
+// const works = ref('Описание');
+//
+// const getWorks = async () => {
+//     try {
+//         const response = await api.get('/api/auth/client/work');
+//         works.value = response.data.works;
+//         console.log(response.data.works)
+//     } catch (error) {
+//         console.error('Ошибка при получении данных:', error);
+//     }
+// };
+//
+// onMounted(getWorks)
 
 const driverModel = ref({name: 'Водитель'});
 const drivers = ref('Водитель');

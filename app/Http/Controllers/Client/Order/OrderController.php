@@ -59,9 +59,9 @@ class OrderController extends BaseController
 
         $order = $this->orderRepository->edit($order, $data);
 
-        if ($order->status === 2) {
-            $this->diagnosticsRepository->store($data);
-        }
+//        if ($order->status === 2) {
+//            $this->diagnosticsRepository->store($data);
+//        }
 
             return $this->respondWithSuccess(
                 $this->transformItem($order, new OrderIndexTransformer),

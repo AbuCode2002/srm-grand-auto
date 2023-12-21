@@ -76,7 +76,6 @@ class OrderRepository extends BaseRepository
 
         $order->car_id = $data->car_id;
         $order->region_id = $data->region_id;
-        $order->is_evacuated = $data->is_evacuated;
         $order->contract_id = $data->contract_id;
         $order->problem_description = $data->problem_description;
         $order->is_broken = $data->is_broken;
@@ -111,7 +110,6 @@ public function edit(
 
         $order->car_id = $data->car_id ? $data->car_id : $order->car_id;
         $order->region_id = $data->region_id ? $data->region_id : $order->region_id;
-        $order->is_evacuated = $data->is_evacuated ? $data->is_evacuated : $order->is_evacuated;
         $order->contract_id = $data->contract_id ? $data->contract_id : $order->contract_id;
         $order->problem_description = $data->problem_description ? $data->problem_description : $order->problem_description;
         $order->is_broken = $data->is_broken ? $data->is_broken : $order->is_broken;
