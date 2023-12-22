@@ -56,10 +56,10 @@ class CarStatisticController extends BaseController
         $roleId = Auth::user()->role_id;
 
         if ($roleId === 3) {
-            $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
-            $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
-//            $startDate = '2023-10-10 00:00:00';
-//            $endDate =   '2023-11-10 23:59:59';
+//            $startDate = Carbon::parse($request->input()['start'])->format('Y-m-d') . ' 00:00:00';
+//            $endDate = Carbon::parse($request->input()['end'])->format('Y-m-d') . ' 23:59:59';
+            $startDate = '2023-10-10 00:00:00';
+            $endDate =   '2023-12-22 23:59:59';
 
             $managers = $this->userRepository->allManager();
 

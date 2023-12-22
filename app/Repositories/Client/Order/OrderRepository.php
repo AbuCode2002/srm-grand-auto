@@ -75,15 +75,16 @@ class OrderRepository extends BaseRepository
         $order = new Order();
 
         $order->car_id = $data->car_id;
-        $order->region_id = $data->region_id;
-        $order->contract_id = $data->contract_id;
-        $order->problem_description = $data->problem_description;
-        $order->is_broken = $data->is_broken;
         $order->service_type = $data->service_type;
-        $order->driver_id = $data->driver_id;
         $order->driver_type = $data->driver_type;
         $order->mileage = $data->mileage;
+        $order->is_broken = $data->is_broken;
+        $order->region_id = $data->region_id;
+        $order->driver_id = $data->driver_id;
+        $order->problem_description = $data->problem_description;
         $order->status = 1;
+        $order->contract_id = $data->contract_id;
+
         $order->paid = 0;
 
         $order->save();

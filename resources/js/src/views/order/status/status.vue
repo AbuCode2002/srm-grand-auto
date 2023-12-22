@@ -313,13 +313,28 @@
                                 </thead>
                                 <tbody role="rowgroup">
                                 <tr v-for="item in order" :value="item" role="row" class="">
-                                    <td aria-colindex="1" role="cell" class="mb-4">
-                                        <button v-if="item.status.name === 'Назначена диагностика'"
-                                                @click.prevent="pushToCreateDefectiveAct(item.id)"
+                                    <td v-if="item.status.name === 'Назначена диагностика'" aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushToCreateDefectiveAct(item.id)"
                                                 class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
-                                        <button v-else class="btn btn-success mb-2 me-1">
+                                    </td>
+                                    <td v-else-if="item.status.name === 'Ремонт выполнен'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushInstalFile(item.id, 'Ремонт выполнен')"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else-if="item.status.name === 'Заявка закрыта'"
+                                        aria-colindex="1" role="cell" class="mb-4">
+                                        <button @click.prevent="pushInstalFile(item.id, 'Заявка закрыта')"
+                                                class="btn btn-success mb-2 me-1">
+                                            {{ item.id }}
+                                        </button>
+                                    </td>
+                                    <td v-else aria-colindex="1" role="cell" class="mb-4">
+                                        <button class="btn btn-success mb-2 me-1">
                                             {{ item.id }}
                                         </button>
                                     </td>

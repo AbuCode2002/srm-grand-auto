@@ -40,42 +40,20 @@ class CreateOrdersTable extends Migration
             $table->integer('status')
                   ->nullable()
             ;
-            $table->integer('status_internal')
-                  ->nullable()
-            ;
-            $table->timestamp('ready_to_repair_at')
-                  ->nullable()
-            ;
-            $table->timestamp('diagnosed_at')
-                  ->nullable()
-            ;
             $table->unsignedBigInteger('contract_id')
                   ->nullable()
             ;
             $table->unsignedBigInteger('station_id')
                   ->nullable()
             ;
-            $table->unsignedBigInteger('transportation_id')
-                  ->nullable()
-            ;
             $table->foreign('station_id')
                   ->references('id')
                   ->on('stations')
             ;
-            $table->timestamp('completed_at')
-                  ->nullable()
-            ;
-
             $table->timestamp('created_at')
                   ->nullable()
             ;
             $table->timestamp('updated_at')
-                  ->nullable()
-            ;
-            $table->timestamp('ready_to_diagnose_at')
-                  ->nullable()
-            ;
-            $table->timestamp('planned_to_completed_at')
                   ->nullable()
             ;
             $table->softDeletes();
