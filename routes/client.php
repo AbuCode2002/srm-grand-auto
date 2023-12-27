@@ -74,6 +74,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::group(['prefix' => 'defective-act'], static function () {
                 Route::post('/{orderId}', [DefectiveActController::class, 'store'])
                     ->where('orderId', '[0-9]+');
+                Route::get('/ACW/{orderId}', [DefectiveActController::class, 'ACW']);
             });
 
             Route::group(['prefix' => 'car'], static function () {
@@ -87,7 +88,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::get('/station/{regionId}/{orderId}', [StationController::class, 'show'])
                 ->where('regionId', '[0-9]+')
                 ->where('orderId', '[0-9]+');
-            Route::get('/work', [WorkController::class, 'index']);
         });
     });
 

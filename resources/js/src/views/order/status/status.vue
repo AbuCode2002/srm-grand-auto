@@ -694,7 +694,8 @@ const pushToUploadVideo = (orderId) => {
 }
 
 const pushInstalFile = (orderId, status) => {
-    router.push({name: 'file-show', params: {orderId, status}});
+    router.push({name: 'file-show', params: {orderId}, query: {status}});
+    // router.push({name: 'file-show', params: {orderId, status}});
 }
 
 const pagination = ref({

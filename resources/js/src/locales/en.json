@@ -32,6 +32,7 @@
     "waiting_for_diagnostic_appointment_from_service_station": "Waiting for diagnostic appointment from service station",
     "diagnostics_prescribed": "Diagnostics prescribed",
     "yes_is_awaiting_approval_from_the_partner_relations_department": "YES is awaiting approval from the partner relations department",
+    "yes_the_act_was_not_accepted": "Yes the act was not accepted",
     "yes_subject_to_approval_by_the_customer_service_department": "YES, subject to approval by the customer service department",
     "agreed": "Agreed",
     "repair_work_is_underway": "Repair work is underway",
@@ -56,5 +57,7 @@
     "service_type": "Service type",
     "total_price_for_the_defective_certificate_without_extra_charge": "Total price for the Defective Certificate without extra charge",
     "the_total_amount_of_the_defective_act": "The total amount of the Defective Act",
-    "phone_station": "Phone station"
+    "phone_station": "Phone station",
+    "install_acw": "Install ACW"
+
 }

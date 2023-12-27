@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Collection;
 
 class OrderRepository extends BaseRepository
 {
@@ -25,43 +26,19 @@ class OrderRepository extends BaseRepository
 
     public function index(int $page)
     {
-//        $user = Auth::user();
-
-//        $roleName = Role::query()->where('id', $user->role_id)->value('name');
-
-//        if ($roleName === 'client') {
-
-            return $this->model::query()
-                ->with('users',
-                    'contract',
-                    'car',
-                    'status',
-                    'region',
-                    'station')
-                ->with(['defectActs' => function (hasOne $q) {
-                    $q->with(['defectParts' => function (hasMany $q) {
-                        $q->select('defect_act_id', DB::raw('SUM(price_with_markup) as sum'))->groupBy('defect_act_id');
-                    }]);
-                }])
-                ->paginate($this->perPage, ['*'], 'page', $page);
-
-//        }
-//        else if ($roleName === 'manager') {
-//
-//            return $this->model::query()
-//                ->with('car')
-//                ->with('status')
-//                ->with('region')
-//                ->paginate($this->perPage, ['*'], 'page', $page);
-//
-//        } else if ($roleName === 'client') {
-//
-//            return $this->model::query()
-//                ->with('car')
-//                ->with('status')
-//                ->with('region')
-//                ->paginate($this->perPage, ['*'], 'page', $page);
-//        }
+        return $this->model::query()
+            ->with('users',
+                'contract',
+                'car',
+                'status',
+                'region',
+                'station')
+            ->with(['defectActs' => function (hasOne $q) {
+                $q->with(['defectParts' => function (hasMany $q) {
+                    $q->select('defect_act_id', DB::raw('SUM(price_with_markup) as sum'))->groupBy('defect_act_id');
+                }]);
+            }])
+            ->paginate($this->perPage, ['*'], 'page', $page);
     }
 
     /**
@@ -98,12 +75,13 @@ class OrderRepository extends BaseRepository
 
         return $order;
     }
-public function edit(
-    Order $order,
-    OrderData $data
+
+    public function edit(
+        Order     $order,
+        OrderData $data
     )
     {
-        if($data->statusName){
+        if ($data->statusName) {
             $data->status = Status::query()->where('name', $data->statusName)->value('id');
         }
 
@@ -122,7 +100,7 @@ public function edit(
         $order->status = $data->status ? $data->status : $order->status;
 
         if (date_diff($dateNow, $order->created_at)->h < 24) {
-            $order->kpi1 =  1;
+            $order->kpi1 = 1;
         }
 
         $order->save();
@@ -133,5 +111,46 @@ public function edit(
     public function show(int $id)
     {
         return $this->model::query()->where('id', $id)->get();
+    }
+
+    public function acw1(int $id)
+    {
+        return DB::table('orders')
+            ->join('defective_acts', 'orders.id', '=', 'defective_acts.order_id')
+            ->join('cars', 'orders.car_id', '=', 'cars.id')
+            ->join('contracts', 'orders.contract_id', '=', 'contracts.id')
+            ->join('companies', 'companies.id', '=', 'contracts.company_id')
+            ->select('orders.id as order_id',
+                DB::raw("CONCAT(cars.brand, ' ', cars.model) as car"),
+                'companies.name as company_name',
+                'cars.number as car_number',
+                'cars.vin_number as car_vin',
+                'orders.mileage')
+            ->where('orders.id', '=', $id)
+            ->get();
+    }
+
+    public function acw(int $id)
+    {
+        $query1 = DB::table('orders')
+            ->join('defective_acts', 'orders.id', '=', 'defective_acts.order_id')
+            ->join('cars', 'orders.car_id', '=', 'cars.id')
+            ->select('orders.id', DB::raw("CONCAT(cars.brand, ' ', cars.model)"),'orders.service_type','orders.mileage','orders.problem_description')
+            ->where('orders.id', '=', $id);
+
+        $query2 = DB::table('defective_acts')
+        ->join('services', 'defective_acts.id', '=', 'services.defective_act_id')
+        ->join('service_names', 'services.service_name_id', '=', 'service_names.id')
+
+        ->select(
+            'service_names.name', 'services.created_at', 'services.unit', 'services.count',
+            'services.price',
+            DB::raw('(services.price * services.count)'),
+            DB::raw('((services.price * services.count) * 0.12)'),
+            DB::raw('((services.price * services.count) * 1.12)')
+        )
+        ->where('defective_acts.order_id', '=', $id);
+
+        return $query1->union($query2)->get();
     }
 }

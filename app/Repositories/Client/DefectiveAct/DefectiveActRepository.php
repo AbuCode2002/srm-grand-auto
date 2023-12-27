@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\SparePart;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class DefectiveActRepository extends BaseRepository
 {
@@ -91,5 +92,48 @@ class DefectiveActRepository extends BaseRepository
         }
 
         return $defectiveAct;
+    }
+
+    public function acwService(int $id)
+    {
+        return DB::table('defective_acts')
+            ->join('services', 'defective_acts.id', '=', 'services.defective_act_id')
+            ->join('service_names', 'services.service_name_id', '=', 'service_names.id')
+
+            ->select(
+                'service_names.name as service_name',
+                DB::raw("DATE_FORMAT(services.created_at, '%d-%m-%Y') as data"),
+                'services.unit as unit',
+                'services.count as count',
+                'services.price as price',
+                DB::raw('(services.price * services.count) as price_count'),
+                DB::raw('((services.price * services.count) * 0.12) as nds'),
+                DB::raw('((services.price * services.count) * 1.12) as price_count_nds')
+            )
+
+            ->where('defective_acts.order_id', '=', $id)
+            ->get();
+    }
+
+    public function acwPart(int $id)
+    {
+        return DB::table('defective_acts')
+            ->join('services', 'defective_acts.id', '=', 'services.defective_act_id')
+            ->join('spare_parts', 'services.id', '=', 'spare_parts.service_id')
+            ->join('part_names', 'spare_parts.part_name_id', '=', 'part_names.id')
+
+            ->select(
+                'part_names.name as part_name',
+                DB::raw("DATE_FORMAT(spare_parts.created_at, '%d-%m-%Y') as data"),
+                'spare_parts.unit as unit',
+                'spare_parts.count as count',
+                'spare_parts.price as price',
+                DB::raw('(spare_parts.price * spare_parts.count) as price_count'),
+                DB::raw('((spare_parts.price * spare_parts.count) * 0.12) as nds'),
+                DB::raw('((spare_parts.price * spare_parts.count) * 1.12) as price_count_nds')
+            )
+
+            ->where('defective_acts.order_id', '=', $id)
+            ->get();
     }
 }

@@ -383,12 +383,12 @@ const postDefectiveAct = async () => {
     try {
         await api.post(`/api/station/auth/defective-act/${orderId}`, defectiveAct);
 
-        route.push({name: 'status'});
-
-        new window.Swal({
-            title: "Saved succesfully",
-            padding: "2em",
-        });
+        // route.push({name: 'status'});
+        //
+        // new window.Swal({
+        //     title: "Saved succesfully",
+        //     padding: "2em",
+        // });
 
     } catch (error) {
         new window.Swal({

@@ -89,7 +89,7 @@ class DefectiveActRepository extends BaseRepository
 
                     $sparePart->service_id = $service->id;
 
-                    $sparePart->part_name_id = $data->spare_parts[$item][$value]["partNames"]["name"]["id"];
+                    $sparePart->part_name_id = $data->spare_parts[$item][$value]["name"]["id"];
 
                     $sparePart->count = $data->spare_parts[$item][$value]["count"];
 
