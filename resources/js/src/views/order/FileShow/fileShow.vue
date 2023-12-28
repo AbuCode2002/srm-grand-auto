@@ -173,7 +173,8 @@ const installACW = async () => {
 
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `АВР_${orderId}.xlsx`); // Задайте имя файла для скачивания
+        // link.setAttribute('download', `АВР_${orderId}.xlsx`); // Задайте имя файла для скачивания
+        link.setAttribute('download', `АВР_${orderId}.pdf`); // Задайте имя файла для скачивания
         document.body.appendChild(link);
         link.click();
 
