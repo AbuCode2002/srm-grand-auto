@@ -74,7 +74,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
             Route::group(['prefix' => 'defective-act'], static function () {
                 Route::post('/{orderId}', [DefectiveActController::class, 'store'])
                     ->where('orderId', '[0-9]+');
-                Route::get('/ACW/{orderId}', [DefectiveActController::class, 'ACW']);
+                Route::get('/ACW/{orderId}', [\App\Http\Controllers\Client\ACW\ACWController::class, 'ACW']);
             });
 
             Route::group(['prefix' => 'car'], static function () {
