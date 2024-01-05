@@ -3,15 +3,23 @@
 namespace App\Http\Controllers\Client\ACW;
 
 use App\Http\Controllers\BaseController;
+use App\Mail\SendFileWithMail;
 use App\Models\Order;
 use App\Repositories\Client\DefectiveAct\DefectiveActRepository;
 use App\Repositories\Client\Order\OrderRepository;
+use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Excel;
+use Mnvx\Lowrapper\Converter;
+use Mnvx\Lowrapper\Format;
+use Mnvx\Lowrapper\LowrapperParameters;
+use Mpdf\Mpdf;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
+use PhpOffice\PhpSpreadsheet\Writer\Html;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -52,15 +60,34 @@ class ACWController extends BaseController
         $spreadsheet->getActiveSheet()->setCellValue([6, 2], ($acw1[0]->car_vin != null) ? $acw1[0]->car_vin : '-');
         $spreadsheet->getActiveSheet()->setCellValue([7, 2], ($acw1[0]->mileage != null) ? $acw1[0]->mileage : '-');
 
-        $spreadsheet->getActiveSheet()->setCellValue([2, 4], 'Номер по порядку');
-        $spreadsheet->getActiveSheet()->setCellValue([3, 4], 'Наименование работ (услуг)(в разрезе их подвидов в соответсвийс технической спецификаций, заданием,графиком выполнения работ (услуг) при их наличий)');
-        $spreadsheet->getActiveSheet()->setCellValue([4, 4], 'Дата выполнения работ (оказания услуг)');
-        $spreadsheet->getActiveSheet()->setCellValue([5, 4], 'Единица измерения');
-        $spreadsheet->getActiveSheet()->setCellValue([6, 4], 'Колличество');
-        $spreadsheet->getActiveSheet()->setCellValue([7, 4], 'Цена за единицу без НДС (тенге)');
-        $spreadsheet->getActiveSheet()->setCellValue([8, 4], 'Стоимость без НДС(тенге)');
-        $spreadsheet->getActiveSheet()->setCellValue([9, 4], 'Сумма НДС(тенге)');
-        $spreadsheet->getActiveSheet()->setCellValue([10, 4], 'Стоимость с учетом НДС(тенге)');
+        $spreadsheet->getActiveSheet()->setCellValue('B4', 'Номер по порядку');
+        $spreadsheet->getActiveSheet()->getStyle('B4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('C4', 'Наименование работ (услуг)(в разрезе их подвидов в соответсвийс технической спецификаций, заданием,графиком выполнения работ (услуг) при их наличий)');
+        $spreadsheet->getActiveSheet()->getStyle('C4')->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getRowDimension(4)->setRowHeight(130);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+
+        $spreadsheet->getActiveSheet()->setCellValue('D4', 'Дата выполнения работ (оказания услуг)');
+        $spreadsheet->getActiveSheet()->getStyle('D4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('E4', 'Единица измерения');
+        $spreadsheet->getActiveSheet()->getStyle('E4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('F4', 'Колличество');
+        $spreadsheet->getActiveSheet()->getStyle('F4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('G4', 'Цена за единицу без НДС (тенге)');
+        $spreadsheet->getActiveSheet()->getStyle('G4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('H4', 'Стоимость без НДС(тенге)');
+        $spreadsheet->getActiveSheet()->getStyle('H4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('I4', 'Сумма НДС(тенге)');
+        $spreadsheet->getActiveSheet()->getStyle('I4')->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue('J4', 'Стоимость с учетом НДС(тенге)');
+        $spreadsheet->getActiveSheet()->getStyle('J4')->getAlignment()->setWrapText(true);
 
 
         $spreadsheet->getActiveSheet()->setCellValue([3, 5], 'Услуга');
@@ -118,28 +145,16 @@ class ACWController extends BaseController
         $spreadsheet->getActiveSheet()->setCellValue([9, $indexForPrice + 1], $allPriceNotNDSWithCount * 0.12);
         $spreadsheet->getActiveSheet()->setCellValue([10, $indexForPrice + 1], $allPriceNotNDSWithCount * 1.12);
 
-        $spreadsheet->getActiveSheet()->mergeCells('F' . $indexForPrice + 7 - 4 . ':' . 'J' . $indexForPrice + 7 - 4);
-        $spreadsheet->getActiveSheet()->mergeCells('F' . $indexForPrice + 9 - 4 . ':' . 'J' . $indexForPrice + 9 - 4);
-        $spreadsheet->getActiveSheet()->mergeCells('F' . $indexForPrice + 10 - 4 . ':' . 'J' . $indexForPrice + 10 - 4);
-        $spreadsheet->getActiveSheet()->mergeCells('F' . $indexForPrice + 11 - 4 . ':' . 'J' . $indexForPrice + 11 - 4);
-        $spreadsheet->getActiveSheet()->mergeCells('F' . $indexForPrice + 12 - 4 . ':' . 'J' . $indexForPrice + 12 - 4);
+        $spreadsheet->getActiveSheet()->mergeCells('E' . $indexForPrice + 9 - 4 . ':' . 'I' . $indexForPrice + 9 - 4);
+        $spreadsheet->getActiveSheet()->mergeCells('E' . $indexForPrice + 10 - 4 . ':' . 'I' . $indexForPrice + 10 - 4);
+        $spreadsheet->getActiveSheet()->mergeCells('E' . $indexForPrice + 11 - 4 . ':' . 'I' . $indexForPrice + 11 - 4);
+        $spreadsheet->getActiveSheet()->mergeCells('E' . $indexForPrice + 12 - 4 . ':' . 'J' . $indexForPrice + 12 - 4);
 
-        $spreadsheet->getActiveSheet()->setCellValue('F' . $indexForPrice + 7 - 3, 'Приняли:');
-        $spreadsheet->getActiveSheet()->setCellValue('F' . $indexForPrice + 9 - 4, 'Региональный директор ___________');
-        $spreadsheet->getActiveSheet()->setCellValue('F' . $indexForPrice + 10 - 4, 'Началник УТО                ___________');
-        $spreadsheet->getActiveSheet()->setCellValue('F' . $indexForPrice + 11 - 4, 'Механик по ремонту      ___________');
-        $spreadsheet->getActiveSheet()->setCellValue('F' . $indexForPrice + 12 - 4, 'Водитель автотранспортного средства _______________');
-
-        $drawing = new Drawing();
-        $drawing->setName('pechat');
-        $drawing->setDescription('pechat');
-        $drawing->setPath(__DIR__ . '/../../../../../public/assets/images/shablon_pechat.png');
-
-        $spreadsheet->getActiveSheet()->mergeCells('B13:C13');
-
-        $drawing->setCoordinates('B13');
-        $drawing->setHeight(160);
-        $drawing->setWorksheet($spreadsheet->getActiveSheet());
+        $spreadsheet->getActiveSheet()->setCellValue('E' . $indexForPrice + 7 - 2, 'Приняли:');
+        $spreadsheet->getActiveSheet()->setCellValue('E' . $indexForPrice + 9 - 3, 'Региональный директор ___________');
+        $spreadsheet->getActiveSheet()->setCellValue('E' . $indexForPrice + 10 - 3, 'Началник УТО                ___________');
+        $spreadsheet->getActiveSheet()->setCellValue('E' . $indexForPrice + 11 - 3, 'Механик по ремонту      ___________');
+        $spreadsheet->getActiveSheet()->setCellValue('E' . $indexForPrice + 12 - 3, 'Водитель автотранспортного средства _______________');
 
         $styleBordersArray = [
             'borders' => [
@@ -165,7 +180,6 @@ class ACWController extends BaseController
         $spreadsheet->getActiveSheet()->getStyle("D" . (1) . ":D" . (2))->applyFromArray($styleBordersArray1, True);
         $spreadsheet->getActiveSheet()->getStyle("B" . (1) . ":G" . (2))->applyFromArray($styleBordersArray, True);
 
-
         $spreadsheet->getActiveSheet()->getStyle("B" . (4) . ":J" . (4))->applyFromArray($styleBordersArray1, True);
         $spreadsheet->getActiveSheet()->getStyle("B" . (6) . ":J" . (6))->applyFromArray($styleBordersArray1, True);
         $spreadsheet->getActiveSheet()->getStyle("B" . (7) . ":J" . (7))->applyFromArray($styleBordersArray1, True);
@@ -178,28 +192,45 @@ class ACWController extends BaseController
         $spreadsheet->getActiveSheet()->getStyle("F" . (4) . ":G" . (9))->applyFromArray($styleBordersArray1, True);
         $spreadsheet->getActiveSheet()->getStyle("F" . (4) . ":F" . (9))->applyFromArray($styleBordersArray1, True);
 
+        $spreadsheet->getActiveSheet()->getPageSetup()->setOrientation('landscape');
+
+        $drawing = new Drawing();
+        $drawing->setName('pechat');
+        $drawing->setDescription('pechat');
+        $drawing->setPath(__DIR__ . '/../../../../../public/assets/images/печать.jpeg');
+        $drawing->setCoordinates('B13');
+        $spreadsheet->getActiveSheet()->mergeCells('B13:D13');
+        $drawing->setWorksheet($spreadsheet->getActiveSheet());
+
         $tempFilePath = tempnam(sys_get_temp_dir(), 'excel_');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save($tempFilePath);
 
-        $spreadsheet = IOFactory::load($tempFilePath);
+        $converter = new Converter();
 
-        $mpdfWriter = new Mpdf($spreadsheet);
+        $pdfTempFilePath = tempnam(sys_get_temp_dir(), 'pdf');
 
-        $mpdfWriter->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+        $parameters = (new LowrapperParameters())
+            ->setInputFile($tempFilePath)
+            // В каком формате нужен результат
+            ->setOutputFormat(Format::TEXT_PDF)
+            // Файл для сохранения результата
+            ->setOutputFile($pdfTempFilePath);
 
-        $pdfTempFilePath = tempnam(sys_get_temp_dir(), 'pdf_');
-        $mpdfWriter->save($pdfTempFilePath);
-
-        unlink($tempFilePath);
+        $converter->convert($parameters);
 
         $response = new BinaryFileResponse($pdfTempFilePath);
         $response->headers->set('Content-Type', 'application/pdf');
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'название_файла.pdf'
-        );
+        $response->headers->set('Content-Disposition', 'filename="название_файла.pdf"');
+
+        Mail::raw('АВР', function ($mail) use ($pdfTempFilePath, $orderId) {
+            $mail->to('auto-transport.auto@yandex.ru')
+                ->subject('Отправка АВР')
+                ->attach($pdfTempFilePath, [
+                    'as' => 'АВР_'. $orderId .'.pdf', // Опционально: задает имя файла вложения
+                ]);
+        });
 
         return $response;
     }

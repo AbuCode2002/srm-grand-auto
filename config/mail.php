@@ -102,6 +102,9 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'reply_to' => ['address' => 'auto-transport.auto@yandex.ru', 'name' => 'auto transport'],
+
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings
