@@ -2,7 +2,10 @@
 
 set -e
 
-git pull origin main
+
+echo "Deploying..."
+
+git pull origin master
 
 php artisan down
 
@@ -13,3 +16,5 @@ php artisan migrate --force
 php artisan optimize:clear
 
 php artisan serve
+
+echo "Done!"
