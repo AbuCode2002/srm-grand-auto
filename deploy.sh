@@ -7,11 +7,9 @@ echo "Deploying..."
 
 git pull origin master
 
-php artisan down
+composer install --no-dev
 
-php composer install --no-dev --optimize-auto
-
-php artisan migrate --force
+php artisan migrate
 
 php artisan optimize:clear
 
