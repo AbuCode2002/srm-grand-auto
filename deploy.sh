@@ -7,7 +7,7 @@ echo "Deploying..."
 
 git pull origin master
 
-composer install --no-dev
+composer install --ignore-platform-reqs
 
 php artisan migrate
 
