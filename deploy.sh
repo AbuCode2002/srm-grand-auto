@@ -15,4 +15,6 @@ php artisan optimize:clear
 
 php artisan serve
 
+php artisan db:seed
+
 echo "Done!"
