@@ -29,7 +29,7 @@ class OrderSeeder extends Seeder
             $order->mileage = $faker->numerify('#####');
             $order->is_broken = rand(0, 1);
             $order->region_id = Region::all()->random()->id;
-            $order->driver_id = Region::all()->random()->id;
+            $order->driver_id = Driver::all()->random()->id;
             $order->problem_description = $faker->text;
             $order->status = 1;
             $order->contract_id = Contract::all()->random()->id;
