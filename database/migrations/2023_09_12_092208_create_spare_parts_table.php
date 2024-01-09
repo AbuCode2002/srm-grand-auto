@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('spare_parts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('service_id');
-            $table->string('name');
             $table->unsignedBigInteger('count');
             $table->string('unit');
             $table->unsignedDouble('price');
