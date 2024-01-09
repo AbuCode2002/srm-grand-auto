@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreign('part_name_id')
                 ->references('id')
                 ->on('part_names');
-            $table->dropColumn('name');
         });
     }
 
