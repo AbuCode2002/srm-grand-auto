@@ -1,7 +1,7 @@
 import axios from 'axios';
 import router from './router';
 
-axios.defaults.baseURL = 'http://localhost';
+axios.defaults.baseURL = 'http://66.42.32.129';
 
 const api = axios.create();
 
