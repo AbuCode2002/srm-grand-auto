@@ -21,7 +21,7 @@ class UserOrderSeeder extends Seeder
         for ($i = 0; $i < 1; $i++) {
             $userOrder = new UserOrder();
 
-            $userOrder->user_id = 64;
+            $userOrder->user_id = 1;
             $userOrder->order_id = Order::all()->random()->id;
 
             $userOrder->save();
