@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ApplicationSeeder::class,
             StatusesSeeder::class,
+            RoleSeeder::class,
             UserSeeder::class,
             CarTypeSeeder::class,
             RegionSeeder::class,
@@ -31,7 +32,6 @@ class DatabaseSeeder extends Seeder
             DefectiveActSeeder::class,
             PartCategorySeeder::class,
             PartNameSeeder::class,
-            RoleSeeder::class,
             ServiceNameSeeder::class,
             ServiceSeeder::class,
             SparePartSeeder::class,
