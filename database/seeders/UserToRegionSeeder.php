@@ -23,7 +23,7 @@ class UserToRegionSeeder extends Seeder
         for ($i = 0; $i < 1; $i++) {
             $userRegion = new UserToRegion();
 
-            $userRegion->user_id = 64;
+            $userRegion->user_id = 1;
             $userRegion->region_id = Region::all()->random()->id;
 
             $userRegion->save();
