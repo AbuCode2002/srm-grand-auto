@@ -35,10 +35,12 @@ class PartCategorySeeder extends Seeder
 
     public function run()
     {
-        foreach ($this->category as $index => $item) {
+        foreach ($this->category as $item) {
             $partCategory = new PartCategory();
 
-            $partCategory->id = $index;
+            if ($partCategory->name === 'null') {
+                $partCategory->id = 0;
+            }
             $partCategory->name = $item;
 
             $partCategory->save();
