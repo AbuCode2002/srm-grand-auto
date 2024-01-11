@@ -3,6 +3,7 @@ import router from './router';
 
 const api = axios.create();
 
+// axios.defaults.baseURL = 'http://127.0.0.1:8000';
 axios.defaults.baseURL = 'http://66.42.32.129';
 
 api.interceptors.request.use((config) => {

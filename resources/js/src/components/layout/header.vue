@@ -10,7 +10,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item theme-text">
-                        <router-link to="/order/new" class="nav-link">Grand Auro Group</router-link>
+                        <router-link to="/order/new" class="nav-link">Grand Auto Group</router-link>
                     </li>
                 </ul>
                 <div class="d-none horizontal-menu">
