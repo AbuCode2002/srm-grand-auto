@@ -212,7 +212,6 @@
         try {
             const response = await api.get(`/api/admin/auth/user`);
             roleUser.value = response.data.users[0].role_id
-            console.log(response.data.users[0].role_id)
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
         }

@@ -154,7 +154,7 @@ const getServiceName = async () => {
             {unitName: "Штук"},
             {unitName: "Литр"},
             {unitName: "Комплект"},
-            {unitName: "Грамм"},
+            {unitName: "Килограмм"},
             {unitName: "Метр"},
         ];
     } catch (error) {

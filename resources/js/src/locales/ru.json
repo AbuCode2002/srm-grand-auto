@@ -58,5 +58,6 @@
     "total_price_for_the_defective_certificate_without_extra_charge": "Итоговая цена по Дефектному акту без наценки",
     "the_total_amount_of_the_defective_act": "Итоговая сумма по ДА",
     "phone_station": "Номер телефона СТО",
-    "install_acw": "Скачать АВР"
+    "install_acw": "Скачать АВР",
+    "create_order": "Создать заявку"
 }
