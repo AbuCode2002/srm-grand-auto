@@ -1,10 +1,10 @@
 <template xmlns="http://www.w3.org/1999/html">
-    <div v-if="status === 'Заявка закрыта'" style="position: absolute; right: 10%; top: 10px;">
-        <button class="btn btn-success" @click.prevent="installACW">
-            <img src="../../../../../../public/assets/images/install_icon1.png"/>
-            {{ $t('install_acw') }}
-        </button>
-    </div>
+<!--    <div v-if="status === 'Заявка закрыта'" style="position: absolute; right: 10%; top: 10px;">-->
+<!--        <button class="btn btn-success" @click.prevent="installACW">-->
+<!--            <img src="../../../../../../public/assets/images/install_icon1.png"/>-->
+<!--            {{ $t('install_acw') }}-->
+<!--        </button>-->
+<!--    </div>-->
     <div class="panel-body">
         <div class="account-settings-container" style="position: absolute; left: 5%; right: 10%; top: 60px">
             <div class="table-checkable table-highlight-head table-responsive">
@@ -61,25 +61,24 @@
             <div v-if="video" class="text-center mt-4">
                 <video :src="video" controls class="border" width="720" height="360"></video>
             </div>
-
-            <div v-if="file.url && file.url.length > 0 && status === 'Ремонт выполнен' " class="row">
-                <div class="as-footer-container">
-                    <button style="position: absolute; bottom: 30px; left: 30px;"
-                            type="button" class="btn btn-success"
-                            @click.prevent="acceptOrRejectFile(accepted)">Принять
-                    </button>
-                </div>
-
-                <div class="as-footer-container">
-                    <button style="position: absolute; bottom: 30px; right: 30px;"
-                            type="button" class="btn btn-danger"
-                            @click.prevent="acceptOrRejectFile(rejected)">Отклонить
-                    </button>
-                </div>
-
-            </div>
         </div>
 
+        <div v-if="file.url && file.url.length > 0 && status === 'Ремонт выполнен' " class="row">
+            <div class="as-footer-container">
+                <button style="position: absolute; bottom: 30px; left: 30px;"
+                        type="button" class="btn btn-success"
+                        @click.prevent="acceptOrRejectFile(accepted)">Принять
+                </button>
+            </div>
+
+            <div class="as-footer-container">
+                <button style="position: absolute; bottom: 30px; right: 30px;"
+                        type="button" class="btn btn-danger"
+                        @click.prevent="acceptOrRejectFile(rejected)">Отклонить
+                </button>
+            </div>
+
+        </div>
     </div>
     <DialogsWrapper/>
 </template>
@@ -130,6 +129,15 @@ const getFile = async (path) => {
             } else if (contentType.startsWith('video/')) {
                 video.value = path
                 image.value = ''
+            }else if (contentType === 'application/pdf') {
+                const link = document.createElement('a');
+                link.href = path;
+                link.setAttribute('download', `АВР_${orderId}.pdf`); // Задайте имя файла для скачивания
+                document.body.appendChild(link);
+                link.click();
+
+                document.body.removeChild(link);
+                URL.revokeObjectURL(path);
             }
             loading.value = 1;
         })
@@ -185,6 +193,7 @@ const installACW = async () => {
         console.error('Ошибка при получении данных:', error);
     }
 }
+
 </script>
 
 <style lang="css" scoped>
