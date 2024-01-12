@@ -59,5 +59,6 @@
     "the_total_amount_of_the_defective_act": "Итоговая сумма по ДА",
     "phone_station": "Номер телефона СТО",
     "install_acw": "Скачать АВР",
-    "create_order": "Создать заявку"
+    "create_order": "Создать заявку",
+    "hello": "Привет"
 }

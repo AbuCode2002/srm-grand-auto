@@ -155,7 +155,9 @@
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                     </svg>
                 </a>
-
+                <div style="color: #0a0d26; position: absolute; right: 25px">
+                    <h5>{{$t('hello')}} {{user ? user.name : '' }}</h5>
+                </div>
                 <!-- Portal vue/Teleport for Breadcrumb -->
                 <div id="breadcrumb" class="vue-portal-target"></div>
             </header>
@@ -208,55 +210,71 @@
                         <ul id="users" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
                             <li v-if="roleUser === 2">
                                 <router-link to="/order/create-order" @click="toggleMobileMenu;
-                            filter(statusName, status)">{{ $t('create_order') }}">Создать заявку</router-link>
+                            filter(statusName, status)">{{ $t('create_order') }}">Создать заявку
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="/order/new" @click="toggleMobileMenu;
-                            filter(statusName, status)">{{ $t('all_applications') }}</router-link>
+                            filter(statusName, status)">{{ $t('all_applications') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName1, status1)">{{ $t('new_application') }}</router-link>
+                            filter(statusName1, status1)">{{ $t('new_application') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName2, status2)">{{ $t('waiting_for_diagnostic_appointment_from_service_station') }}</router-link>
+                            filter(statusName2, status2)">
+                                    {{ $t('waiting_for_diagnostic_appointment_from_service_station') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName3, status3)">{{ $t('diagnostics_prescribed') }}</router-link>
+                            filter(statusName3, status3)">{{ $t('diagnostics_prescribed') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName4, status4)">{{ $t('yes_is_awaiting_approval_from_the_partner_relations_department') }}</router-link>
+                            filter(statusName4, status4)">
+                                    {{ $t('yes_is_awaiting_approval_from_the_partner_relations_department') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName5, status5)">{{ $t('yes_subject_to_approval_by_the_customer_service_department') }}</router-link>
+                            filter(statusName5, status5)">
+                                    {{ $t('yes_subject_to_approval_by_the_customer_service_department') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName6, status6)">{{ $t('agreed') }}</router-link>
+                            filter(statusName6, status6)">{{ $t('agreed') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName7, status7)">{{ $t('repair_work_is_underway') }}</router-link>
+                            filter(statusName7, status7)">{{ $t('repair_work_is_underway') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName8, status8)">{{ $t('repair_completed') }}</router-link>
+                            filter(statusName8, status8)">{{ $t('repair_completed') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName9, status9)">{{ $t('application_closed') }}</router-link>
+                            filter(statusName9, status9)">{{ $t('application_closed') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName10, status10)">{{ $t('yes_the_act_was_not_accepted') }}</router-link>
+                            filter(statusName10, status10)">{{ $t('yes_the_act_was_not_accepted') }}
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="order/new" @click.prevent="toggleMobileMenu;
-                            filter(statusName11, status11)">{{ $t('not_paid') }}</router-link>
+                            filter(statusName11, status11)">{{ $t('not_paid') }}
+                                </router-link>
                             </li>
                         </ul>
                     </li>
@@ -358,12 +376,13 @@ const logout = async () => {
 };
 
 const roleUser = ref(null)
+const user = ref(null)
 
 const getRole = async () => {
     try {
         const response = await api.get(`/api/admin/auth/user`);
         roleUser.value = response.data.users[0].role_id
-        console.log(response.data.users[0].role_id)
+        user.value = response.data.users[0]
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }

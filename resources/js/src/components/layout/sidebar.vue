@@ -1,6 +1,6 @@
 <template>
     <!--  BEGIN SIDEBAR  -->
-    <div class="sidebar-wrapper sidebar-theme">
+    <div v-if="accessToken" class="sidebar-wrapper sidebar-theme">
         <nav ref="menu" id="sidebar">
             <div class="shadow-bottom"></div>
 
@@ -144,7 +144,7 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import {onMounted, ref} from 'vue';
     import { useStore } from 'vuex';
     import {useRouter} from "vue-router";
     import api from "../../api";
@@ -199,6 +199,22 @@
             }
         }
     });
+
+    const accessToken = ref(localStorage.getItem('access_token'));
+
+    onMounted(() => {
+        updateAccessToken();
+    });
+
+// Слушаем событие перехода между маршрутами
+    router.afterEach(() => {
+        updateAccessToken();
+    });
+
+// Функция для обновления значения accessToken
+    function updateAccessToken() {
+        accessToken.value = localStorage.getItem('access_token');
+    }
 
     const toggleMobileMenu = () => {
         if (window.innerWidth < 991) {
