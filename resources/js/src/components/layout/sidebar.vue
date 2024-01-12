@@ -46,7 +46,7 @@
 
                     <ul id="users" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
                         <li v-if="roleUser === 2">
-                            <router-link to="/order/create-order" @click="toggleMobileMenu">Создать заявку</router-link>
+                            <router-link to="/order/create-order" @click="toggleMobileMenu">{{ $t('create_order') }}</router-link>
                         </li>
                         <li>
                             <router-link to="/order/new" @click="toggleMobileMenu;
